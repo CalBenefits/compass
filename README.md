@@ -1,2 +1,2 @@
-# compass
-Project 1
+# Compass
+
