@@ -17,7 +17,7 @@ git commit -m 'Confirm my changes locally'
 ```
 5. Push changes to your branch: `git push origin *branch_name*`
 
-6. Submit a pull request
+6. Submit a pull request:
 
 _You should see a new button with the label “Compare & Pull Request”). Click on it. This will take the information from the Branch and will request a “Pull Request”_
 
