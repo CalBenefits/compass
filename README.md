@@ -6,7 +6,7 @@
 
 1. Create branch: `git branch *branch_name*`
 
-2. Checkout branch: `git branch`
+2. Checkout branch: `git checkout *branch*`
 
 3. Make changes...
 
