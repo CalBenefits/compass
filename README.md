@@ -21,6 +21,6 @@ git commit -m 'Confirm my changes locally'
 
 _You should see a new button with the label “Compare & Pull Request”). Click on it. This will take the information from the Branch and will request a “Pull Request”_
 
-7. Wait for teammates to review. 
+7. Give it a label, assign your teammates to your pull request and wait for teammates to review. 
 
 8. Once your branch is deleted, merge it: `git branch -d *branch_name*`
