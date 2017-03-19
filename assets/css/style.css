@@ -1,6 +1,28 @@
 @import 'normalize.css';
-
 html {
-	min-height: 100vh;
-	min-width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+span {
+    text-align: center;
+}
+
+#mapsFS,
+#eligibleFS,
+#mapsWIC,
+#eligibleWIC {
+    border: 1px solid #039be5;
+    background: white;
+    margin-left: 9%;
+    margin-right: -9%;
+}
+
+#select-wic,
+#select-fs {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    padding-top: 24%;
+    padding-bottom: 9%;
 }
