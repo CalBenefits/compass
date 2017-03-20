@@ -8,21 +8,31 @@ span {
     text-align: center;
 }
 
+.row {
+    margin-bottom: 0;
+}
+
+#fs-text,
+#wic-text {
+    font-size: 1.6rem;
+}
+
 #mapsFS,
-#eligibleFS,
+#applyFS,
 #mapsWIC,
 #eligibleWIC {
-    border: 1px solid #039be5;
-    background: white;
-    margin-left: 9%;
-    margin-right: -9%;
+    line-height: 1.2;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ee6e73;
+    color: white;
+    background: #ee6e73;
 }
 
 #select-wic,
 #select-fs {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
     padding-top: 24%;
     padding-bottom: 9%;
 }
