@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Office Locator - CalFresh</title>
-    <<meta charset="utf-8">
+    <meta charset="utf-8">
         <meta name="viewport" content='width=device-width, initial-scale=1'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-
 <body>
     <nav>
         <div class="nav-wrapper">
@@ -96,8 +94,8 @@
     };
 
     // format address for query string utility
-    var formatAddr = function() {
-      var temp;
+    var formatAddr = function(address) {
+      var temp = address.split('');
       for (var i = 0; i < temp.length; i++) {
         if (temp[i] === ',') {
           temp.splice(i, 1);
