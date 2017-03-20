@@ -12,6 +12,10 @@ span {
     margin-bottom: 0;
 }
 
+.s1 {
+    width:0;
+}
+
 #fs-text,
 #wic-text {
     font-size: 1.6rem;
@@ -22,10 +26,12 @@ span {
 #mapsWIC,
 #eligibleWIC {
     line-height: 1.2;
+    display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #ee6e73;
     color: white;
+    width:auto;
     background: #ee6e73;
 }
 
