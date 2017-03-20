@@ -1,0 +1,11 @@
+{
+    "esversion": 6,
+    "curly": true,
+    "eqeqeq": true,
+    "strict" true,
+    "unused": "strict",
+    "forin": true,
+    "freeze": true,
+    "funcscope": true,
+    "latedef": "nofunc"
+}
