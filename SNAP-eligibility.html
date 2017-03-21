@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compass</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" type="text/css" href="assets/css/normalize.css">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+     
+    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+<body>
+
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#!" class="brand-logo">Logo</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Programs</a></li>
+                <li><a href="#">Feedback</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Programs</a></li>
+                <li><a href="#">Feedback</a></li>
+            </ul>
+        </div>
+    </nav>
+
+<header id="masthead">
+        <div class="container">
+            <h1>Am I eligible for Food Stamps? </h1>
+        </div>
+</header>
+
+<div class="container content">
+
+    <div class="main-section">
+        <section class="data">
+
+    <div class="panel panel-default panel-primary">
+    <div class="panel-heading">Answer these questions to Determine Eligibility for Supplemental Nutrition Assistance Program (SNAP)/ Food Stamps/ CalFresh !</div>
+    <div class="panel-body">
+      <form>
+
+        <div class="form-group">
+          <label for="zip">Enter Zip code</label>
+          <input type="number" class="form-control" id="zip" placeholder="e.g. 94110">
+        </div>
+
+        <div class="form-group">
+          <label for="household">Household size (excluding member that is age 60+, or is disabled)</label>
+          <input type="number" class="form-control" id="household" placeholder="e.g. 3">
+        </div>
+
+        <div class="form-group">
+          <label for="income">Monthly income (including social security) in dollars $</label>
+          <input type="number" class="form-control" id="income"  placeholder="e.g. $987">
+        </div>
+
+            <button class="btn waves-effect waves-light" id="submitForm" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+        </form>
+    </div>
+    </div>
+</div>
+
+    <div class="result">
+        <p class="correct"></p>
+        <p class="incorrect"></p>
+        <p class="empty"></p>
+    </div>
+
+</div>
+<footer id="footer" class="site-footer"> 
+    <div class="container">
+        &copy; Copyright 2017 COMPASS
+    </div>
+</footer>
+
+<script type="text/javascript" src="./assets/javascript/app.js"></script>
+</body>
+</html>
+
+
+    <!-- <div><p>Based on your responses, you may be eligible for WIC benefits!
+    Our Prescreening Tool does not guarantee that you will be eligible for benefits. Contact the WIC State or local agency serving your area to schedule an appointment. You must apply for benefits at your WIC local agency. 
+
+    Documentation List
+    You will need to bring several documents to your WIC appointment. Please ask your WIC local agency which documents are required. Click on the documentation types below to see examples.
+    Proof of Current Benefits Enrollment
+    Proof of Identity (Woman)
+    Proof of Identity (Child/Infant)
+    Proof of Residency
+    Proof of Pregnancy</p></div>
+
+    <script type="text/javascript">
+        //Supplemental Nutrition Assistance Program (SNAP)/Food Stamps/CalFresh Eligibility
+        //Enter Zip code
+        //is there at least one person is age 60 or older, or is disabled in household?
+        //household size (excluding members that is age 60+, or is disabled)
+        //monthly income (including social security)
+        //Submit - when clicked, link to certain forms
+        $(document).ready(function() {
+        $('select').material_select();
+        });
+        //
+    </script>-->
+
+</body>
+</html>
