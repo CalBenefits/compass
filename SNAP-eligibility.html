@@ -66,20 +66,15 @@
 
         <div class="form-group">
           <label for="income">Monthly income (including social security) in dollars $</label>
-          <input type="number" class="form-control" id="income"  placeholder="e.g. $987">
+          <input type="number" class="form-control" id="income"  placeholder="e.g. 1287">
         </div>
 
-            <button class="btn waves-effect waves-light" id="submitForm" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+            <button class="btn waves-effect waves-light" id="submitFormFS" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
         </form>
     </div>
     </div>
 </div>
 
-    <div class="result">
-        <p class="correct"></p>
-        <p class="incorrect"></p>
-        <p class="empty"></p>
-    </div>
 
 </div>
 <footer id="footer" class="site-footer"> 
@@ -88,21 +83,36 @@
     </div>
 </footer>
 
-<script type="text/javascript" src="./assets/javascript/app.js"></script>
+<script type="text/javascript">
+// Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
+        authDomain: "cal-compass.firebaseapp.com",
+        databaseURL: "https://cal-compass.firebaseio.com",
+        storageBucket: "cal-compass.appspot.com",
+        messagingSenderId: "888186000127"
+    };
+    
+    firebase.initializeApp(config);
+
+    // when the document has loaded  there will be 2 event listeners
+    $(document).ready(function() {
+        // provides nav bar with functionality
+        $(".button-collapse").sideNav();
+
+        // this button directs them to the office locator - fs-(maps page)
+        $('#submitFormFS').on('click', function(event) {
+            event.preventDefault();
+            window.location = "mapFS.html";
+        });
+    });
+
+</script>
 </body>
 </html>
 
 
-    <!-- <div><p>Based on your responses, you may be eligible for WIC benefits!
-    Our Prescreening Tool does not guarantee that you will be eligible for benefits. Contact the WIC State or local agency serving your area to schedule an appointment. You must apply for benefits at your WIC local agency. 
-
-    Documentation List
-    You will need to bring several documents to your WIC appointment. Please ask your WIC local agency which documents are required. Click on the documentation types below to see examples.
-    Proof of Current Benefits Enrollment
-    Proof of Identity (Woman)
-    Proof of Identity (Child/Infant)
-    Proof of Residency
-    Proof of Pregnancy</p></div>
+    <!-- 
 
     <script type="text/javascript">
         //Supplemental Nutrition Assistance Program (SNAP)/Food Stamps/CalFresh Eligibility

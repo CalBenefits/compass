@@ -46,21 +46,19 @@
         <section class="data">
 
     <div class="panel panel-default panel-primary">
-    <div class="panel-heading">Answer these questions to Determine Eligibility for Supplemental Nutrition Assistance Program (SNAP)/ Food Stamps/ CalFresh !</div>
+    <div class="panel-heading">Answer these questions to Determine Eligibility for WIC Benefits!</div>
 
     <div class="panel-body">
       
 
       <form>
 
-      
-
         <div class="form-group">
           <label for="zip">Enter Zip code</label>
           <input type="number" class="form-control" id="zip" placeholder="e.g. 94110">
         </div>
 
-        <label>Does at least one of your household members...</label>
+        <label>Does at least one of the following describe someone in your household: 1) is pregnant 2) has had a baby (or been pregnant) within the last 6 months 3) is currently breastfeeding a baby that is less than 12 months old 4) is a baby, child or foster child under the age of 5? </label>
           <select class="browser-default" id="pregnancy">
             <option value="0" disabled selected>Choose your option</option>
             <option value='1'>Yes</option>
@@ -74,7 +72,7 @@
 
         <div class="form-group">
           <label for="income">Monthly income (including social security) in dollars $</label>
-          <input type="number" class="form-control" id="income"  placeholder="e.g. $987">
+          <input type="number" class="form-control" id="income"  placeholder="e.g. 1287">
         </div>
 
             <button class="btn waves-effect waves-light" id="submitForm" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
@@ -94,28 +92,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
 
     <script type="text/javascript">
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
+        authDomain: "cal-compass.firebaseapp.com",
+        databaseURL: "https://cal-compass.firebaseio.com",
+        storageBucket: "cal-compass.appspot.com",
+        messagingSenderId: "888186000127"
+    };
+    
+    firebase.initializeApp(config);
     
 // when the document has loaded  there will be 2 event listeners
     $(document).ready(function() {
-        $('select').material_select();
+        //$('select').material_select();
         // provides nav bar with functionality
         $(".button-collapse").sideNav();
         
-        // this button directs them to the form to determine eleigibility for FS
+        // this button directs them to the WIC Map, along with the eligibility results
         $('#submitForm').click(function(event) {
             event.preventDefault();
-            var pregnancyCheck = $('#pregnancy').val();
-            //console.log(pregnancyCheck)
+             var pregnancyCheck = $('#pregnancy').val();
+             //console.log(pregnancyCheck)
              var householdCheck = $('#household').val();
              var incomeCheck = $('#income').val();
+
              var incomeArray = [0, 1832, 2470, 3108, 3747, 4385, 5023, 5663, 6304];
              if (pregnancyCheck === '1' && householdCheck > 8 && (incomeCheck <= (6304 + (householdCheck - 8)*642))) {
-                window.location = "https://google.com/";
+                window.location = 'mapWIC.html';
             } else if (pregnancyCheck === '1' && householdCheck <= 8 && (incomeCheck <= incomeArray[householdCheck])){
-                window.location = "https://google.com/";
+                window.location = "mapWIC.html";
             } else if (pregnancyCheck !== '0'){
                 window.location = "https://getcalfresh.org/" ;
-            }
+            };
             
       });
         
