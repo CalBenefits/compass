@@ -31,46 +31,90 @@
     </nav>
     <div class="container">
         <div class="row">
-            <div class="col2 m12 l12" id="select-wic">
+            <div class="col s12 m12 l12" id="select-wic">
                 <span class="flow-text" id="wic-text">Women, Infant and Children (WIC)</span>
             </div>
         </div>
         <div class="row">
-            <div class= "col m3 l2"></div>
-            <div class="col s5 m3 l4">
+            <div class="col m3 l1"></div>
+            <div class="col s5 m3 l5">
                 <a class="waves-effect waves-light btn-large" id="eligibleWIC">Am I eligible?</a>
             </div>
-            <div class="col"></div>
-            <div class="col s5 m3 l4">
+            <div class="col s2"></div>
+            <div class="col s5 m3 l5">
                 <a class="waves-effect waves-light btn-large" id="mapsWIC">Resources near me
             </a>
             </div>
-            <div class= "col m3 l2"></div>
+            <div class="col m3 l1"></div>
         </div>
         <div class="row">
-            <div class="col2 m12 l12" id="select-fs">
+            <div class="col s12 m12 l12" id="select-fs">
                 <span class="flow-text" id="fs-text">Supplemental Nutrition Assistance Program (SNAP, CalFresh, Foodstamps)</span>
             </div>
         </div>
         <div class="row">
-        <div class= "col m3 l2"></div>
-            <div class="col s5 m3 l4">
+            <div class="col m3 l1"></div>
+            <div class="col s5 m3 l5">
                 <a class="waves-effect waves-light btn-large" id="applyFS">Apply Now!</a>
             </div>
-            <div class="col"></div>
-            <div class="col s5 m3 l4">
+            <div class="col s2"></div>
+            <div class="col s5 m3 l5">
                 <a class="waves-effect waves-light btn-large" id="mapsFS">Resources near me</a>
             </div>
-            <div class= "col m3 l2"></div>
+            <div class="col m3 l1"></div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <button id="btnLogin">Log In!</button>
+            </div>
         </div>
     </div>
-
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
     <script type="text/javascript">
-    // when the document has loaded  there will be 4 event listeners
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
+        authDomain: "cal-compass.firebaseapp.com",
+        databaseURL: "https://cal-compass.firebaseio.com",
+        storageBucket: "cal-compass.appspot.com",
+        messagingSenderId: "888186000127"
+    };
+    
+    firebase.initializeApp(config);
+
+    var provider = new firebase.auth.GoogleAuthProvider();
+
+    btnLogin.addEventListener('click', function() {
+
+        firebase.auth().signInWithRedirect(provider);
+
+        firebase.auth().getRedirectResult().then(function(result) {
+            if (result.credential) {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                var token = result.credential.accessToken;
+                // ...
+            }
+            // The signed-in user info.
+            var user = result.user;
+            console.log("user info: ", user);
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
+    })
+        // when the document has loaded  there will be 4 event listeners
     $(document).ready(function() {
+
+
         // provides nav bar with functionality
         $(".button-collapse").sideNav();
         // this button directs them to the form to determine eleigibility for WIC
@@ -98,7 +142,5 @@
         });
     });
     </script>
+    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
 </body>
-
-</html>
-<!DOCTYPE html>
