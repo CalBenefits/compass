@@ -1,6 +1,16 @@
 {
+  "database": {
+    "rules": "database.rules.json"
+  },
   "hosting": {
-    "public": "app",
+    "public": "public",
+    // "redirects": [
+    //   {
+    //     "source": "/",
+    //     "destination": "/index.html",
+    //     "type": 302
+    //   }
+    // ],
     "ignore": [
       "firebase.json",
       "**/.*",
