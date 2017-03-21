@@ -93,12 +93,10 @@
       </div>
        <div class="row">
         <div class="input-field col s12">
-      <input type="checkbox" id="test6"/>
-      <label for="test6">Subscribe to Compass's News</label>
+      <input type="checkbox" id="subscribeBox"/>
+      <label for="subscribeBox">Subscribe to Compass's News</label>
         </div>
       </div>
-
-      
         </div>
       </div>
     </form>
@@ -120,8 +118,38 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript">
+
     $(document).ready(() => {
         $(".button-collapse").sideNav();
+
+          
+         $("#submitButton").on("click", function(event) {
+        // event.preventDefault() prevents submit button from trying to send a form.
+        event.preventDefault()
+
+
+         // clears input and textarea forms after submitting 
+         $("input").val("");
+         $("textarea").val("");
+      });
+
+         var inputbox = $( "#subscribeBox:checkbox" )
+         console.log(inputbox)
+         if (inputbox.checked!){
+          alert("checked")
+         }
+         else
+
+      //     $(input).on("click", function(event) {
+      //   // event.preventDefault() prevents submit button from trying to send a form.
+      //   event.preventDefault()
+      //  console.log("i am clicked")
+        
+      // });
+
+
+
+
     });
     </script>
 </body>
