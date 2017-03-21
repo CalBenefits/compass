@@ -6,17 +6,14 @@
     <meta charset="utf-8">
    
     <!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style type="text/css">
 
-       #hero {
-        height: 419px;
+    
 
-       }
-
-       #hero-title{
+       #welcome_page-title{
         font-size: 70px;
        }
 
@@ -72,18 +69,21 @@
     </nav>
 
     <main>
-    <div id="hero">
-        <div class="container" id="hero-text-container">
+    <div id="welcome_page">
+        <div class="container" id="welcome_page-container">
             <div class="row">
                 <div class="col col s12 m12 l12 center-align">
-                    <h1 id="hero-title" itemprop="description"><strong class="bold">Compass</strong><span class="thin"> is the simplest way to<br>determine your eligibility  for CalFresh and WIC and find the closest assistance locations </span></h1>
+                    <h1 id="welcome_page-title" itemprop="description"><strong class="bold">Compass</strong><span class="thin"> is the simplest way to<br>determine your eligibility  for CalFresh and WIC and find the closest assistance locations </span></h1>
                 </div>
             </div>
             <div class="row" >
                 <div class="col col s12 m12 l12">
                     <div class="center-align">
+                    <!--    Spanish language Button -->
                         <a href="#create" class="btn-large waves-effect waves-light z-depth-5" id="EspButton">Español</a>
+                  <!--    English language Button -->
                         <a href="#learn" class="btn-large waves-effect waves-light z-depth-5" id="EngButton">English</a>
+
                     </div>
                 </div>
             </div>
@@ -101,12 +101,12 @@
         $(".button-collapse").sideNav();
 
 
-
+// button initiates Google Translate API and directs to the program selection page
          $('#EspButton').on('click', function(event) {
          
             location = "#";
         });
-
+ // button directs to the program selection page
           $('#EngButton').on('click', function(event) {
             
             location = "program-selection.html";
