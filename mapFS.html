@@ -78,6 +78,15 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js'></script>
     <script>
     $(document).ready(function() {
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
+            authDomain: "cal-compass.firebaseapp.com",
+            databaseURL: "https://cal-compass.firebaseio.com",
+            storageBucket: "cal-compass.appspot.com",
+            messagingSenderId: "888186000127"
+        };
+        firebase.initializeApp(config);
         // bring up modal
         $('#modal-one').modal('open'); 
         // initialize side nav
