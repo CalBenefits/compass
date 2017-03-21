@@ -1,39 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Welcome</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content='width=device-width, initial-scale=1'>
-  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+    <title>Welcome</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
+
 <body>
-	<nav>
-	    <div class="nav-wrapper">
-	    	<a href="#!" class="brand-logo">Logo</a>
-	      	<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-	      	<ul class="right hide-on-med-and-down">
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#!" class="brand-logo">Logo</a>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="mapFS.html">Programs</a></li>
                 <li><a href="#">Feedback</a></li>
-	      	</ul>
-	      	<ul class="side-nav" id="mobile-demo">
-	        	<li><a href="#">Home</a></li>
-	        	<li><a href="#">About</a></li>
-	        	<li><a href="mapFS.html">Programs</a></li>
-	        	<li><a href="#">Feedback</a></li>
-	      	</ul>
-	    </div>
-	 </nav>
-	<script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="mapFS.html">Programs</a></li>
+                <li><a href="#">Feedback</a></li>
+            </ul>
+        </div>
+    </nav>
+    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
     <script>
-    	$(document).ready(() => {
-    		$(".button-collapse").sideNav();
-    	});
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
+        authDomain: "cal-compass.firebaseapp.com",
+        databaseURL: "https://cal-compass.firebaseio.com",
+        storageBucket: "cal-compass.appspot.com",
+        messagingSenderId: "888186000127"
+    };
+    firebase.initializeApp(config);
+
+    $(document).ready(() => {
+        $(".button-collapse").sideNav();
+        
+    });
     </script>
 </body>
+
 </html>
