@@ -68,26 +68,26 @@
     <form class="col s10" class="card-panel hoverable">
       <div class="row">
         <div class="input-field col s12">
-          <input id="name" type="text" class="validate">
+          <input id="name-input" type="text" class="validate">
           <label for="name" data-error="incorrect" data-success="correct">Your Name</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-         <input id="email" type="email" class="validate">
+         <input id="email-input" type="email" class="validate">
           <label for="email" data-error="incorrect" data-success="correct">Email</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-           <input id="name" type="text" class="validate">
+           <input id="subject-input" type="text" class="validate">
           <label for="subject" data-error="incorrect" data-success="correct">Subject</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
 
-           <textarea id="textarea" class="materialize-textarea" data-length="1000"></textarea>
+           <textarea id="message-input" class="materialize-textarea" data-length="1000"></textarea>
           <label for="textarea">Message</label>
         </div>
       </div>
@@ -108,9 +108,6 @@
        </button>
   </div>
   </div> 
-
-
-
 </div>
 
 
@@ -122,23 +119,55 @@
     $(document).ready(() => {
         $(".button-collapse").sideNav();
 
-          
+    
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAqQU-O5ExpPqyyjJqpmpqPrp7tb_72NTU",
+    authDomain: "cool-project-383e7.firebaseapp.com",
+    databaseURL: "https://cool-project-383e7.firebaseio.com",
+    storageBucket: "cool-project-383e7.appspot.com",
+    messagingSenderId: "136454220232"
+  };
+  firebase.initializeApp(config);;
+
+    // Create a variable to reference the database
+    var database = firebase.database();
+
+    // Initial Values
+    var name = "";
+    var email = "";
+    var subject = "";
+    var textarea = "";
+      
          $("#submitButton").on("click", function(event) {
         // event.preventDefault() prevents submit button from trying to send a form.
         event.preventDefault()
 
 
+      name = $("#name-input").val();
+      email = $("#email-input").val();
+      subject = $("#subject-input").val();
+      message = $("#message-input").val();
+console.log(name)
+      database.ref().set({
+        name: name,
+        email: email,
+        subject: subject,
+        message: message
+      });
+
+console.log(database.ref().set())
          // clears input and textarea forms after submitting 
          $("input").val("");
          $("textarea").val("");
       });
 
-         var inputbox = $( "#subscribeBox:checkbox" )
-         console.log(inputbox)
-         if (inputbox.checked!){
-          alert("checked")
-         }
-         else(){}
+         // var inputbox = $( "#subscribeBox:checkbox" )
+         // console.log(inputbox)
+         // if (inputbox.checked!){
+         //  alert("checked")
+         // }
+         // else(){}
 
       //     $(input).on("click", function(event) {
       //   // event.preventDefault() prevents submit button from trying to send a form.
