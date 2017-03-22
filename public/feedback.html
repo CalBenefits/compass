@@ -150,7 +150,8 @@
       email = $("#email-input").val();
       subject = $("#subject-input").val();
       message = $("#message-input").val();
-console.log(name)
+
+
       database.ref().set({
         name: name,
         email: email,
@@ -158,10 +159,12 @@ console.log(name)
         message: message
       });
 
-console.log(database.ref().set())
+
+
          // clears input and textarea forms after submitting 
          $("input").val("");
          $("textarea").val("");
+
       });
 
          // var inputbox = $( "#subscribeBox:checkbox" )
