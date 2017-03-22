@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Feedback</title>
     <meta charset="utf-8">
@@ -8,184 +7,154 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <style type="text/css">
-
-      .brand-logo {
+        .brand-logo {
             height: 1.5em;
             width: 1.5em;
             margin: .25em .15em;
         }
 
-       #submitButton{
-        margin: 10px 0 30px 0;
-       }
-
+        #submitButton{
+            margin: 10px 0 30px 0;
+        }
     </style>
 </head>
-
 <body>
     <nav>
         <div class="nav-wrapper">
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="program-selection.html">Programs</a></li>
-                <li><a href="feedbck.html">Feedback</a></li>
+                <li><a href="index.html" class='waves-effect'>Home</a></li>
+                <li><a href="about.html" class='waves-effect'>About</a></li>
+                <li><a href="program-selection.html" class='waves-effect'>Programs</a></li>
+                <li><a href="feedbck.html" class='waves-effect'>Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="program-selection.html">Programs</a></li>
-                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="index.html" class='waves-effect'>Home</a></li>
+                <li><a href="about.html" class='waves-effect'>About</a></li>
+                <li><a href="program-selection.html" class='waves-effect'>Programs</a></li>
+                <li><a href="feedback.html" class='waves-effect'>Feedback</a></li>
             </ul>
         </div>
     </nav>
-
-<div class="container">
-
-<div class="row">
-    <section class="col s12">
-<!-- header row -->
-    <div class="row">
-     <div class="col s12 m12 l12">
-        <h2 class="section-header">Feedback</h2>
+    <div class="container">
+        <div class="row">
+            <section class="col s12">
+            <!-- header row -->
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <h2 class="section-header">Feedback</h2>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <!--  paragraph row -->
+            <div class="row">
+                <div class="col s11 m12 l12">
+                    <p class="flow-text">Have a question, comment, feature suggestion, or a just want to rant? We're excited to have your feedback.</p>
+                    <p class="flow-text">Send us your message and we'll get back to you as soon as possible. </p>
+                </div>
+            </div>
+            </section>
+        </div> 
+        <div class="row">
+            <form class="col s10" class="card-panel hoverable">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="name-input" type="text" class="validate">
+                        <label for="name" data-error="incorrect" data-success="correct">Your Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email-input" type="email" class="validate">
+                        <label for="email" data-error="incorrect" data-success="correct">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="subject-input" type="text" class="validate clearable">
+                        <label for="subject" data-error="incorrect" data-success="correct">Subject</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="message-input" class="materialize-textarea clearable" data-length="1000"></textarea>
+                        <label for="textarea">Message</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="checkbox" id="subscribeBox"/>
+                        <label for="subscribeBox">Subscribe to Compass's News</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="input-field col s10">
+                <div class="right">
+                    <button id="submitButton" class="btn waves-effect waves-light " type="submit" name="action">    Send
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div> 
         </div>
 
-    </div>
-    <div class="divider"></div>
-   <!--  paragraph row -->
-    <div class="row">
-     <div class="col s11 m12 l12">
-        <p class="flow-text">Have a question, comment, feature suggestion, or a just want to rant? We're excited to have your feedback.</p>
-<p class="flow-text">Send us your message and we'll get back to you as soon as possible. </p>
-        </div>
-    </div>
-    </section>
-  </div> 
 
-    <div class="row">
-    <form class="col s10" class="card-panel hoverable">
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="name-input" type="text" class="validate">
-          <label for="name" data-error="incorrect" data-success="correct">Your Name</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-         <input id="email-input" type="email" class="validate">
-          <label for="email" data-error="incorrect" data-success="correct">Email</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-           <input id="subject-input" type="text" class="validate">
-          <label for="subject" data-error="incorrect" data-success="correct">Subject</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
+        <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+        <script type="text/javascript">
 
-           <textarea id="message-input" class="materialize-textarea" data-length="1000"></textarea>
-          <label for="textarea">Message</label>
-        </div>
-      </div>
-       <div class="row">
-        <div class="input-field col s12">
-      <input type="checkbox" id="subscribeBox"/>
-      <label for="subscribeBox">Subscribe to Compass's News</label>
-        </div>
-      </div>
-        </div>
-      </div>
-    </form>
-    <div class="row">
-        <div class="input-field col s10">
-        <div class="right">
-       <button id="submitButton" class="btn waves-effect waves-light " type="submit" name="action">Send
-          <i class="material-icons right">send</i>
-       </button>
-  </div>
-  </div> 
-</div>
+        $(document).ready(function() {
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyAqQU-O5ExpPqyyjJqpmpqPrp7tb_72NTU",
+                authDomain: "cool-project-383e7.firebaseapp.com",
+                databaseURL: "https://cool-project-383e7.firebaseio.com",
+                storageBucket: "cool-project-383e7.appspot.com",
+                messagingSenderId: "136454220232"
+            };
+            
+            firebase.initializeApp(config);;
+            
+            $(".button-collapse").sideNav();
+
+            // Create a variable to reference the database
+            var rootRef = firebase.database().ref();
+            // feedback ref
+            var feedbackRef = rootRef.child('feedback'); 
+
+            // Initial Values
+            var name;
+            var email;
+            var subject;
+            var textarea;
+              
+            $("#submitButton").on("click", function(event) {
+                // event.preventDefault() prevents submit button from trying to send a form.
+                event.preventDefault()
+
+                name = $("#name-input").val();
+                email = $("#email-input").val();
+                subject = $("#subject-input").val();
+                message = $("#message-input").val();
 
 
-    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script type="text/javascript">
+                var feedback = {
+                    name: name,
+                    email: email,
+                    subject: subject,
+                    message: message
+                };
 
-    $(document).ready(() => {
-        $(".button-collapse").sideNav();
+                feedbackRef.push(feedback); 
 
-    
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAqQU-O5ExpPqyyjJqpmpqPrp7tb_72NTU",
-    authDomain: "cool-project-383e7.firebaseapp.com",
-    databaseURL: "https://cool-project-383e7.firebaseio.com",
-    storageBucket: "cool-project-383e7.appspot.com",
-    messagingSenderId: "136454220232"
-  };
-  firebase.initializeApp(config);;
-
-    // Create a variable to reference the database
-    var database = firebase.database();
-
-    // Initial Values
-    var name = "";
-    var email = "";
-    var subject = "";
-    var textarea = "";
-      
-         $("#submitButton").on("click", function(event) {
-        // event.preventDefault() prevents submit button from trying to send a form.
-        event.preventDefault()
-
-
-      name = $("#name-input").val();
-      email = $("#email-input").val();
-      subject = $("#subject-input").val();
-      message = $("#message-input").val();
-
-
-      database.ref().set({
-        name: name,
-        email: email,
-        subject: subject,
-        message: message
-      });
-
-
-
-         // clears input and textarea forms after submitting 
-         $("input").val("");
-         $("textarea").val("");
-
-      });
-
-         // var inputbox = $( "#subscribeBox:checkbox" )
-         // console.log(inputbox)
-         // if (inputbox.checked!){
-         //  alert("checked")
-         // }
-         // else(){}
-
-      //     $(input).on("click", function(event) {
-      //   // event.preventDefault() prevents submit button from trying to send a form.
-      //   event.preventDefault()
-      //  console.log("i am clicked")
-        
-      // });
-
-
-
-
-    });
+                // clears input and textarea forms after submitting 
+                $(".clearable").val("");
+            });
+        });
     </script>
 </body>
-
 </html>
