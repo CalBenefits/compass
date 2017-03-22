@@ -2,12 +2,50 @@
 <html>
 
 <head>
-    <title>Welcome</title>
+    <title>Compass</title>
     <meta charset="utf-8">
-    <meta name="viewport" content='width=device-width, initial-scale=1'>
+   
+    <!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style type="text/css">
+
+    
+
+       #welcome_page-title{
+        font-size: 70px;
+       }
+
+       nav {
+        background-color: #006064;
+
+       }
+
+       
+       #EspButton{
+        font-size: 44px;
+        height: 94px;
+        line-height: 94px;
+        margin-right: 30px;
+        margin-top: 70px;
+        background-color: #ffffff;
+        color: #9e9e9e;
+
+       }
+
+       #EngButton{
+        font-size: 44px;
+        height: 94px;
+        line-height: 94px;
+        margin-left: 30px;
+        margin-top: 70px;
+        background-color: #ffffff;
+        color: #9e9e9e;
+
+       }
+
+    </style>
 </head>
 
 <body>
@@ -18,35 +56,65 @@
             <ul class="right hide-on-med-and-down">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
-                <li><a href="/program-selection.html">Programs</a></li>
+                <li><a href="#">Programs</a></li>
                 <li><a href="#">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">About</a></li>
-                <li><a href="mapFS.html">Programs</a></li>
+                <li><a href="#">Programs</a></li>
                 <li><a href="#">Feedback</a></li>
             </ul>
         </div>
     </nav>
+
+    <main>
+    <div id="welcome_page">
+        <div class="container" id="welcome_page-container">
+            <div class="row">
+                <div class="col col s12 m12 l12 center-align">
+                    <h1 id="welcome_page-title" itemprop="description"><strong class="bold">Compass</strong><span class="thin"> is the simplest way to<br>determine your eligibility  for CalFresh and WIC and find the closest assistance locations </span></h1>
+                </div>
+            </div>
+            <div class="row" >
+                <div class="col col s12 m12 l12">
+                    <div class="center-align">
+                    <!--    Spanish language Button -->
+                        <a href="#create" class="btn-large waves-effect waves-light z-depth-5" id="EspButton">Español</a>
+                  <!--    English language Button -->
+                        <a href="#learn" class="btn-large waves-effect waves-light z-depth-5" id="EngButton">English</a>
+
+                    </div>
+                </div>
+            </div>
+      
+            </div>
+        </div>
+     
+    </div>
+</main>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
-    <script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
-        authDomain: "cal-compass.firebaseapp.com",
-        databaseURL: "https://cal-compass.firebaseio.com",
-        storageBucket: "cal-compass.appspot.com",
-        messagingSenderId: "888186000127"
-    };
-    firebase.initializeApp(config);
-
+    <script type="text/javascript">
     $(document).ready(() => {
         $(".button-collapse").sideNav();
-        
+
+
+// button initiates Google Translate API and directs to the program selection page
+         $('#EspButton').on('click', function(event) {
+         
+            location = "#";
+        });
+ // button directs to the program selection page
+          $('#EngButton').on('click', function(event) {
+            
+            location = "program-selection.html";
+        });
+
+
+
+
     });
     </script>
 </body>
