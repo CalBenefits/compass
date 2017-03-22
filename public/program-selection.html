@@ -19,7 +19,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="program-selection.html">Programs</a></li>
-                <li><a href="feedbck.html">Feedback</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="index.html">Home</a></li>
@@ -84,21 +84,24 @@
     };
 
     firebase.initializeApp(config);
+    var rootRef = firebase.database().ref();
+    var usersRef = rootRef.child('users');
+    var provider = new firebase.auth.GoogleAuthProvider();
 
     // when the document has loaded  there will be 4 event listeners
     $(document).ready(function() {
         // when the button is clicked 
-            
+
         btnLogin.addEventListener('click', function(event) {
+
             event.preventDefault();
-            var provider = new firebase.auth.GoogleAuthProvider();
 
             console.log("provider", provider);
 
             // firebase.auth().signInWithRedirect(provider);
 
             // firebase.auth().getRedirectResult().then(function(result) {
-                firebase.auth().signInWithPopup(provider).then(function(result) {
+            firebase.auth().signInWithPopup(provider).then(function(result) {
                 if (result.credential) {
                     // This gives you a Google Access Token. You can use it to access the Google API.
                     var token = result.credential.accessToken;
@@ -106,7 +109,24 @@
                 }
                 // The signed-in user info.
                 // var user = result.user;
-                console.log("user info: ", result);
+                console.log("user info: ", result.user.displayName);
+
+                const user = {
+                    name: result.user.displayName,
+                    income: "",
+                    famSize: "",
+                    zipcode: ""
+                }
+                // ref.child('users').child(user.uid)
+                var userRef = usersRef.child(user.uid); 
+
+                usersRef.set(user);
+
+                console.log("This is it: ", JSON.stringify(usersRef));
+
+                console.log(JSON.stringify(rootRef.child('usersRef').child(user.uid)).val());
+
+
                 debugger;
             }).catch(function(error) {
                 // Handle Errors here.
@@ -119,9 +139,6 @@
                 // ...
             });
 
-            var compass = firebase.ref().child('cal-compass');
-
-            
         });
 
         // provides nav bar with functionality
