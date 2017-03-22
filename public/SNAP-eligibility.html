@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Compass</title>
     <meta charset="utf-8">
@@ -8,22 +9,15 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
-     
-    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
 <body>
-
     <nav>
         <div class="nav-wrapper">
             <a href="#!" class="brand-logo">Logo</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-           <ul class="right hide-on-med-and-down">
+            <ul class="right hide-on-med-and-down">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="program-selection.html">Programs</a></li>
@@ -37,95 +31,90 @@
             </ul>
         </div>
     </nav>
-
-<header id="masthead">
+    <header id="masthead">
         <div class="container">
             <h1>Am I eligible for Food Stamps? </h1>
         </div>
-</header>
-
-<div class="container content">
-
-    <div class="main-section">
-        <section class="data">
-
-    <div class="panel panel-default panel-primary">
-    <div class="panel-heading">Answer these questions to Determine Eligibility for Supplemental Nutrition Assistance Program (SNAP)/ Food Stamps/ CalFresh !</div>
-    <div class="panel-body">
-      <form>
-
-        <div class="form-group">
-          <label for="zip">Enter Zip code</label>
-          <input type="number" class="form-control" id="zip" placeholder="e.g. 94110">
+    </header>
+    <div class="container content">
+        <div class="main-section">
+            <section class="data">
+                <div class="panel panel-default panel-primary">
+                    <div class="panel-heading">Answer these questions to Determine Eligibility for Supplemental Nutrition Assistance Program (SNAP)/ Food Stamps/ CalFresh !</div>
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="zip">Enter Zip code</label>
+                                <input type="number" class="form-control" id="zip" placeholder="e.g. 94110">
+                            </div>
+                            <div class="form-group">
+                                <label for="household">Household size (excluding member that is age 60+, or is disabled)</label>
+                                <input type="number" class="form-control" id="household" placeholder="e.g. 3">
+                            </div>
+                            <div class="form-group">
+                                <label for="income">Monthly income (including social security) in dollars $</label>
+                                <input type="number" class="form-control" id="income" placeholder="e.g. 1287">
+                            </div>
+                            <button class="btn waves-effect waves-light" id="submitFormFS" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
+                        </form>
+                    </div>
+                </div>
         </div>
-
-        <div class="form-group">
-          <label for="household">Household size (excluding member that is age 60+, or is disabled)</label>
-          <input type="number" class="form-control" id="household" placeholder="e.g. 3">
+    </div>
+    <footer id="footer" class="site-footer">
+        <div class="container">
+            &copy; Copyright 2017 COMPASS
         </div>
-
-        <div class="form-group">
-          <label for="income">Monthly income (including social security) in dollars $</label>
-          <input type="number" class="form-control" id="income"  placeholder="e.g. 1287">
-        </div>
-
-            <button class="btn waves-effect waves-light" id="submitFormFS" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
-        </form>
-    </div>
-    </div>
-</div>
-
-
-</div>
-<footer id="footer" class="site-footer"> 
-    <div class="container">
-        &copy; Copyright 2017 COMPASS
-    </div>
-</footer>
-
-<script type="text/javascript">
-// Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
-        authDomain: "cal-compass.firebaseapp.com",
-        databaseURL: "https://cal-compass.firebaseio.com",
-        storageBucket: "cal-compass.appspot.com",
-        messagingSenderId: "888186000127"
-    };
-    
-    firebase.initializeApp(config);
-
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
     // when the document has loaded  there will be 2 event listeners
     $(document).ready(function() {
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
+            authDomain: "cal-compass.firebaseapp.com",
+            databaseURL: "https://cal-compass.firebaseio.com",
+            storageBucket: "cal-compass.appspot.com",
+            messagingSenderId: "888186000127"
+        };
+
+        firebase.initializeApp(config);
+        var rootRef = firebase.database().ref();
+        // var usersRef = rootRef.child('users');
+        // var userRef = usersRef.child(user.id);
+        var updates = {};
+
         // provides nav bar with functionality
         $(".button-collapse").sideNav();
 
         // this button directs them to the office locator - fs-(maps page)
         $('#submitFormFS').on('click', function(event) {
+
             event.preventDefault();
-            window.location = "mapFS.html";
+
+
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    console.log(user.displayName, "is logged in");
+                    // User is signed in.
+                    // add deets to updates obj
+                    updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
+                    // write updates
+                    rootRef.update(updates);
+                    // off to maps 
+                    // window.location = "mapFS.html";
+                } else {
+                    console.log('No user is signed in.');
+                }
+            });
+            // deets to change
+
         });
     });
-
-</script>
+    </script>
 </body>
-</html>
 
-
-    <!-- 
-
-    <script type="text/javascript">
-        //Supplemental Nutrition Assistance Program (SNAP)/Food Stamps/CalFresh Eligibility
-        //Enter Zip code
-        //is there at least one person is age 60 or older, or is disabled in household?
-        //household size (excluding members that is age 60+, or is disabled)
-        //monthly income (including social security)
-        //Submit - when clicked, link to certain forms
-        $(document).ready(function() {
-        $('select').material_select();
-        });
-        //
-    </script>-->
-
-</body>
 </html>

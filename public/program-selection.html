@@ -19,7 +19,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="program-selection.html">Programs</a></li>
-                <li><a href="feedbck.html">Feedback</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="index.html">Home</a></li>
@@ -74,40 +74,46 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
     <script type="text/javascript">
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
-        authDomain: "cal-compass.firebaseapp.com",
-        databaseURL: "https://cal-compass.firebaseio.com",
-        storageBucket: "cal-compass.appspot.com",
-        messagingSenderId: "888186000127"
-    };
-
-    firebase.initializeApp(config);
-
     // when the document has loaded  there will be 4 event listeners
     $(document).ready(function() {
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
+            authDomain: "cal-compass.firebaseapp.com",
+            databaseURL: "https://cal-compass.firebaseio.com",
+            storageBucket: "cal-compass.appspot.com",
+            messagingSenderId: "888186000127"
+        };
+
+        firebase.initializeApp(config);
+        var rootRef = firebase.database().ref();
+        var usersRef = rootRef.child('users');
+        var provider = new firebase.auth.GoogleAuthProvider();
+
         // when the button is clicked 
-            
         btnLogin.addEventListener('click', function(event) {
             event.preventDefault();
-            var provider = new firebase.auth.GoogleAuthProvider();
-
-            console.log("provider", provider);
-
-            // firebase.auth().signInWithRedirect(provider);
-
-            // firebase.auth().getRedirectResult().then(function(result) {
-                firebase.auth().signInWithPopup(provider).then(function(result) {
+            firebase.auth().signInWithPopup(provider).then(function(result) {
                 if (result.credential) {
                     // This gives you a Google Access Token. You can use it to access the Google API.
                     var token = result.credential.accessToken;
-                    // ...
+                    var user = result.user;
+                    console.log(user.displayName);
+
+                    var uid = user.uid;
+                    console.log(uid);
+                    var userRef = usersRef.child(uid);
+                    const deets = {
+                      name: result.user.displayName,
+                      income: "",
+                      famSize: "",
+                      zipcode: ""
+                    };
+
+                    userRef.set(deets);
                 }
                 // The signed-in user info.
-                // var user = result.user;
-                console.log("user info: ", result);
-                debugger;
+                // var user = result.user.displayName;
             }).catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
@@ -119,9 +125,6 @@
                 // ...
             });
 
-            var compass = firebase.ref().child('cal-compass');
-
-            
         });
 
         // provides nav bar with functionality
@@ -129,7 +132,7 @@
         // this button directs them to the form to determine eleigibility for WIC
         $('#eligibleWIC').on('click', function(event) {
             event.preventDefault();
-            window.location = "#";
+            window.location = "SNAP-eligibility.html";
         });
 
         // this button directs them to the office locator -wic-(maps page)

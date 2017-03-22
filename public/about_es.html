@@ -27,36 +27,45 @@
                 <li><a href="#" class='waves-effect'>Programas</a></li>
                 <li><a href="#" class='waves-effect'>Reacción</a></li>
             </ul>
-         </div>      
+        </div>
     </nav>
-<!-- About section -->
+    <!-- About section -->
     <div class="container">
-    <div class="row">
-    <section class="col s12">
-<!-- header row -->
-    <div class="row">
-     <div class="col s12 m12 l12">
-        <h2 class="section-header">Sobre</h2>
+        <div class="row">
+            <section class="col s12">
+                <!-- header row -->
+                <div class="row">
+                    <div class="col s12 m12 l12">
+                        <h2 class="section-header">Sobre</h2>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <!--  paragraph row -->
+                <div class="row">
+                    <div class="col s11 m12 l12">
+                        <p class="flow-text">
+                            Compass es un recurso que cualquiera puede usar para localizar los recursos alimentarios y nutricionales del Supplemental Nutrition Assistance Program (SNAP) y Women, Infants, and Children (WIC). Compass te dirá - en inglés o español - si es probable calificar y dónde encontrar la oficina más cercana.</p>
+                    </div>
+                </div>
+            </section>
         </div>
-
     </div>
-    <div class="divider"></div>
-   <!--  paragraph row -->
-    <div class="row">
-     <div class="col s11 m12 l12">
-        <p class="flow-text">
-        Compass es un recurso que cualquiera puede usar para localizar los recursos alimentarios y nutricionales del Supplemental Nutrition Assistance Program (SNAP) y Women, Infants, and Children (WIC). Compass te dirá - en inglés o español - si es probable calificar y dónde encontrar la oficina más cercana.</p>
-        </div>
-    </div>
-    </section>
-  </div> 
-</div> 
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript">
     $(document).ready(() => {
         $(".button-collapse").sideNav();
+
+        var config = {
+            apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
+            authDomain: "cal-compass.firebaseapp.com",
+            databaseURL: "https://cal-compass.firebaseio.com",
+            storageBucket: "cal-compass.appspot.com",
+            messagingSenderId: "888186000127"
+        };
+
+        firebase.initializeApp(config);
     });
     </script>
 </body>
