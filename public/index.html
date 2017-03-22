@@ -4,16 +4,12 @@
 <head>
     <title>Compass</title>
     <meta charset="utf-8">
-   
     <!-- Compiled and minified CSS -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <style type="text/css">
-
-    
-
-         #GetStarted{
+      #GetStarted{
         font-size: 64px;
         height: 134px;
         line-height: 134px;
@@ -21,7 +17,13 @@
         margin-top: 550px;
         background-color: #ffffff;
         color: #9e9e9e;
-       }
+      }
+
+       .brand-logo {
+            height: 1.5em;
+            width: 1.5em;
+            margin: .25em .15em;
+        }
        
        #EspButton{
         font-size: 44px;
@@ -43,31 +45,28 @@
        }
     </style>
 </head>
-
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="#!" class="brand-logo">Logo</a>
+            <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Programs</a></li>
-                <li><a href="#">Feedback</a></li>
+                <li><a href="index.html" class='waves-effect'>Home</a></li>
+                <li><a href="about.html" class='waves-effect'>About</a></li>
+                <li><a href="program-selection.html" class='waves-effect'>Programs</a></li>
+                <li><a href="feedbck.ht" class='waves-effect'>Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Programs</a></li>
-                <li><a href="#">Feedback</a></li>
+                <li><a href="index.html class='waves-effect'">Home</a></li>
+                <li><a href="about.html" class='waves-effect'>About</a></li>
+                <li><a href="program-selection.html" class='waves-effect'>Programs</a></li>
+                <li><a href="feedback.html" class='waves-effect'>Feedback</a></li>
             </ul>
         </div>
     </nav>
-
     <main>
     <div id="welcome_page">
         <div class="container" id="welcome_page-container">
-
         <div class="row" >
                 <div class="col col s12 m12 l12">
                     <div class="center-align">
@@ -75,8 +74,7 @@
                         <a href="#create" class="btn-large waves-effect waves-light z-depth-5" id="GetStarted">Get Started</a>
                               </div>
                 </div>
-            </div>
-            
+          </div>
             <div class="row" >
                 <div class="col col s12 m12 l12">
                     <div class="center-align">
@@ -84,15 +82,12 @@
                         <a href="#create" class="btn-large waves-effect waves-light z-depth-5" id="EspButton">Español</a>
                   <!--    English language Button -->
                         <a href="#learn" class="btn-large waves-effect waves-light z-depth-5" id="EngButton">English</a>
-
                     </div>
                 </div>
             </div>
-      
             </div>
         </div>
-     
-    </div>
+      </div>
 </main>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
