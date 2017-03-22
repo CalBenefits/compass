@@ -2,9 +2,9 @@
 <html>
 
 <head>
-    <title>Welcome</title>
+    <title>About</title>
     <meta charset="utf-8">
-    <meta name="viewport" content='width=device-width, initial-scale=1'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -27,26 +27,35 @@
                 <li><a href="#" class='waves-effect'>Programs</a></li>
                 <li><a href="#" class='waves-effect'>Feedback</a></li>
             </ul>
-        </div>
+         </div>      
     </nav>
+<!-- About section -->
+    <div class="container">
+    <div class="row">
+    <section class="col s12">
+<!-- header row -->
+    <div class="row">
+     <div class="col s12 m12 l12">
+        <h2 class="section-header">About</h2>
+        </div>
+
+    </div>
+    <div class="divider"></div>
+   <!--  paragraph row -->
+    <div class="row">
+     <div class="col s11 m12 l12">
+        <p class="flow-text">Compass is a resource anyone can use to locate local Supplemental Nutrition Assistance Program (SNAP) and Women, Infants, and Children (WIC) food and nutrition resources. Compass will tell you–in English or Spanish–whether you're likely to qualify and where to find the nearest office.</p>
+        </div>
+    </div>
+    </section>
+  </div> 
+</div> 
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
-    <script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
-        authDomain: "cal-compass.firebaseapp.com",
-        databaseURL: "https://cal-compass.firebaseio.com",
-        storageBucket: "cal-compass.appspot.com",
-        messagingSenderId: "888186000127"
-    };
-    firebase.initializeApp(config);
-
+    <script type="text/javascript">
     $(document).ready(() => {
         $(".button-collapse").sideNav();
-        
     });
     </script>
 </body>
