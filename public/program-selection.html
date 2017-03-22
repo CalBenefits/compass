@@ -16,16 +16,16 @@
             <a href="#!" class="brand-logo">Logo</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Programs</a></li>
-                <li><a href="#">Feedback</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="program-selection.html">Programs</a></li>
+                <li><a href="feedbck.html">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Programs</a></li>
-                <li><a href="#">Feedback</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="program-selection.html">Programs</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
             </ul>
         </div>
     </nav>
@@ -87,24 +87,27 @@
 
     // when the document has loaded  there will be 4 event listeners
     $(document).ready(function() {
-
+        // when the button is clicked 
+            
         btnLogin.addEventListener('click', function(event) {
-
             event.preventDefault();
-
             var provider = new firebase.auth.GoogleAuthProvider();
 
-            firebase.auth().signInWithRedirect(provider);
+            console.log("provider", provider);
 
-            firebase.auth().getRedirectResult().then(function(result) {
+            // firebase.auth().signInWithRedirect(provider);
+
+            // firebase.auth().getRedirectResult().then(function(result) {
+                firebase.auth().signInWithPopup(provider).then(function(result) {
                 if (result.credential) {
                     // This gives you a Google Access Token. You can use it to access the Google API.
                     var token = result.credential.accessToken;
                     // ...
                 }
                 // The signed-in user info.
-                var user = result.user;
-                console.log("user", user.displayName);
+                // var user = result.user;
+                console.log("user info: ", result);
+                debugger;
             }).catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
@@ -115,8 +118,11 @@
                 var credential = error.credential;
                 // ...
             });
-        })
 
+            var compass = firebase.ref().child('cal-compass');
+
+            
+        });
 
         // provides nav bar with functionality
         $(".button-collapse").sideNav();
