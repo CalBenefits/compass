@@ -95,9 +95,15 @@
         // firebase.auth().onAuthStateChanged(function(user) {
         var usersRef = rootRef.child('users');
         // var childRef = usersRef.child();
-        var updates = {};
-
         firebase.auth().onAuthStateChanged(function(user) {
+            $('#submitForm').click(function(event) {
+                event.preventDefault();
+                var updates = {};
+                updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
+                // write updates
+                rootRef.update(updates);
+                window.location = "mapWIC.html";
+            });
             if (user) {
                 firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
                     console.log(snap.val().language);
@@ -150,11 +156,6 @@
                         }
                     }
                 });
-
-                updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
-                // write updates
-                rootRef.update(updates);
-
                 // off to maps 
             } else {
                 console.log('No user is signed in.');
@@ -164,12 +165,7 @@
         //$('select').material_select();
         // provides nav bar with functionality
 
-        // this button directs them to the WIC Map, along with the eligibility results
-        $('#submitForm').click(function(event) {
-            event.preventDefault();
-            window.location = "mapWIC.html";
-
-        });
+        // this button directs them to the WIC Map, along with the eligibility result;
         var pregnancyCheck = $('#pregnancy').val();
         //console.log(pregnancyCheck)
         var householdCheck = $('#household').val();
@@ -186,29 +182,6 @@
 
     });
     </script>
-    <!-- <div><p>Based on your responses, you may be eligible for WIC benefits!
-    Our Prescreening Tool does not guarantee that you will be eligible for benefits. Contact the WIC State or local agency serving your area to schedule an appointment. You must apply for benefits at your WIC local agency. 
-
-    Documentation List
-    You will need to bring several documents to your WIC appointment. Please ask your WIC local agency which documents are required. Click on the documentation types below to see examples.
-    Proof of Current Benefits Enrollment
-    Proof of Identity (Woman)
-    Proof of Identity (Child/Infant)
-    Proof of Residency
-    Proof of Pregnancy</p></div>
-
-    <script type="text/javascript">
-        //Supplemental Nutrition Assistance Program (SNAP)/Food Stamps/CalFresh Eligibility
-        //Enter Zip code
-        //is there at least one person is age 60 or older, or is disabled in household?
-        //household size (excluding members that is age 60+, or is disabled)
-        //monthly income (including social security)
-        //Submit - when clicked, link to certain forms
-        $(document).ready(function() {
-        $('select').material_select();
-        });
-        //
-    </script>-->
 </body>
 
 </html>
