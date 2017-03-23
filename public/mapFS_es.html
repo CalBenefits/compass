@@ -9,68 +9,70 @@
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        
-        .container {
-            height: 100%;
-            width: 100%;
-        }
-
-        .nav-wrapper {
-            padding: 0 1em;
-        }
-
-        .brand-logo {
-            height: 1.5em;
-            width: 1.5em;
-            margin: .25em .15em;
-        }
-
-        #map {
-            height: 65%;
-            width: 100%;
-        }
-
-        .collection {
-            margin: 0;
-        }
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .container {
+        height: 100%;
+        width: 100%;
+    }
+    
+    .nav-wrapper {
+        padding: 0 1em;
+    }
+    
+    .brand-logo {
+        height: 1.5em;
+        width: 1.5em;
+        margin: .25em .15em;
+    }
+    
+    #map {
+        height: 65%;
+        width: 100%;
+    }
+    
+    .collection {
+        margin: 0;
+    }
     </style>
 </head>
+
 <body>
     <nav>
         <div class="nav-wrapper">
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class='waves-effect'>Casa</a></li>
-                <li><a href="about.html" class='waves-effect'>Sobre</a></li>
-                <li><a href="program-selection.html" class='waves-effect'>Programas</a></li>
-                <li><a href="feedback.html" class='waves-effect'>Reacción</a></li>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="index.html" class='waves-effect' id="home">Casa</a></li>
+                <li><a href="about.html" class='waves-effect' id="about">Sobre</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="programs">Programas</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="feedback">Reacción</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html" class='waves-effect'>Casa</a></li>
-                <li><a href="about.html" class='waves-effect'>Sobre</a></li>
-                <li><a href="program-selection.html" class='waves-effect'>Programas</a></li>
-                <li><a href="feedback.html" class='waves-effect'>Reacción</a></li>
+                <li><a href="index.html" class='waves-effect' id="home">Casa</a></li>
+                <li><a href="about.html" class='waves-effect' id="about">Sobre</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="programs">Programas</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="feedback">Reacción</a></li>
             </ul>
         </div>
     </nav>
     <div class='container'>
         <div id="map"></div>
-            <div class='modal-content'>
-                <ul class="collection with-header">
-                    <li class="collection-header"><h4>No se olvide...</h4></li>
-                    <li class="collection-item">Su licencia de conducir</li>
-                    <li class="collection-item">A second item</li>
-                    <li class="collection-item">A third item</li>
-                </ul>
-            </div>
+        <div class='modal-content'>
+            <ul class="collection with-header">
+                <li class="collection-header">
+                    <h4 id="fsMapHeader">No se olvide...</h4></li>
+                <li class="collection-item" id="fsItemOne">Su licencia de conducir</li>
+                <li class="collection-item" id="fsItemTwo">A second item</li>
+                <li class="collection-item" id="fsItemThree">A third item</li>
+            </ul>
         </div>
+    </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -88,7 +90,7 @@
         };
         firebase.initializeApp(config);
         // bring up modal
-        $('#modal-one').modal('open'); 
+        $('#modal-one').modal('open');
         // initialize side nav
         $(".button-collapse").sideNav({
             menuWidth: 125,
@@ -97,7 +99,25 @@
             draggable: true
         });
     });
-    
+
+
+    var feedbackTrans = {
+        menu: {
+            home: 'Casa',
+            about: 'Sobre',
+            programs: 'Programas',
+            feedback: 'Reacción'
+        },
+
+        body: {
+            fsMapHeader: "No se olvide...",
+            fsItemOne: "Su licencia de conducir",
+            fsItemTwo: "segundo",
+            fsItemThree: "tres"
+
+        }
+    }
+
     // determines language to render for map
     var langState = 'en';
 
@@ -346,23 +366,25 @@
                             }
                             // if image, display
                             if (result.photos) {
-                                placeDetails.image = result.photos[0].getUrl({'maxWidth': 250});
+                                placeDetails.image = result.photos[0].getUrl({
+                                    'maxWidth': 250
+                                });
                                 // construct infoWindow content
                                 var contentTemplate = "" +
-                                                      "<div id='content'>" +
-                                                      "<h5>{{name}}</h5>" +
-                                                      "<img src={{image}} alt={{name}}>" +
-                                                      "<p><a href={{navLink}}>Go</a></p>" +
-                                                      "</div>";
+                                    "<div id='content'>" +
+                                    "<h5>{{name}}</h5>" +
+                                    "<img src={{image}} alt={{name}}>" +
+                                    "<p><a href={{navLink}}>Go</a></p>" +
+                                    "</div>";
                             } else {
                                 var contentTemplate = "" +
-                                                      "<div id='content'>" +
-                                                      "<h5>{{name}}</h5>" +
-                                                      "<p><a href={{navLink}}>Go</a></p>" +
-                                                      "</div>";
+                                    "<div id='content'>" +
+                                    "<h5>{{name}}</h5>" +
+                                    "<p><a href={{navLink}}>Go</a></p>" +
+                                    "</div>";
                             }
                             // add content to this marker's infoWindow
-                            infoWindow.setContent(Mustache.render(contentTemplate, placeDetails)); 
+                            infoWindow.setContent(Mustache.render(contentTemplate, placeDetails));
                             // create a marker for this place
                             var marker = new google.maps.Marker({
                                 map: map,
@@ -371,11 +393,11 @@
                                     location: result.geometry.location,
                                     placeId: result.place_id
                                 },
-                                infoWindow: infoWindow   
-                            }); 
+                                infoWindow: infoWindow
+                            });
                             // attach a listener to each marker
                             google.maps.event.addListener(marker, 'click', function() {
-                                return this.infoWindow.open(map, this); 
+                                return this.infoWindow.open(map, this);
                             });
                         }
                     }
@@ -387,4 +409,5 @@
     }
     </script>
 </body>
+
 </html>

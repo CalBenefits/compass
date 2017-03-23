@@ -10,37 +10,42 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style type="text/css">
+        .brand-logo {
+        height: 1.5em;
+        width: 1.5em;
+    </style>
 </head>
 
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="#!" class="brand-logo">Logo</a>
+            <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="program-selection.html">Programs</a></li>
-                <li><a href="feedbck.html">Feedback</a></li>
+                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
+                <li><a href="about.html" class='waves-effect' id="about">About</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="program-selection.html">Programs</a></li>
-                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
+                <li><a href="about.html" class='waves-effect' id="about">About</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
         </div>
     </nav>
     <header id="masthead">
         <div class="container">
-            <h1>Type in your zip code eblow to find the office nearest you!</h1>
+            <h1 id="snapForm1">Type in your zip code below to find the office nearest you!</h1>
         </div>
     </header>
     <div class="container content">
         <div class="main-section">
             <section class="data">
                 <div class="panel panel-default panel-primary">
-                    <div class="panel-heading">Please fill out the form below</div>
+                    <div class="panel-heading" id="snapForm2">Please fill out the form below</div>
                     <div class="panel-body">
                         <form>
                             <div class="form-group">
@@ -61,17 +66,31 @@
                 </div>
         </div>
     </div>
-    <footer id="footer" class="site-footer">
-        <div class="container">
-            &copy; Copyright 2017 COMPASS
-        </div>
-    </footer>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript">
     // when the document has loaded  there will be 2 event listeners
     $(document).ready(function() {
+
+        var feedbackTrans = {
+            menu: {
+                home: 'Casa',
+                about: 'Sobre',
+                programs: 'Programas',
+                feedback: 'Reacción'
+            },
+
+            body: {
+                snapForm1: "Escriba su código postal abajo para encontrar la oficina más cercana a usted",
+                snapForm2: "Por favor, rellene el siguiente formulario",
+                zip: "Ejemplo: 94110 (obligatorio)",
+                household: "3 (opcional)",
+                income: "1287 (opcional)",
+                submitFormFS: "Enviar"
+            }
+        }
+
         // Initialize Firebase
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",

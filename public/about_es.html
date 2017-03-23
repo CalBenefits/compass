@@ -16,16 +16,16 @@
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class='waves-effect'>Casa</a></li>
-                <li><a href="about.html" class='waves-effect'>Sobre</a></li>
-                <li><a href="program-selection.html" class='waves-effect'>Programas</a></li>
-                <li><a href="feedback.html" class='waves-effect'>Reacción</a></li>
+                <li><a href="index.html" class='waves-effect' id="home">Casa</a></li>
+                <li><a href="about.html" class='waves-effect' id="about">Sobre</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="programs">Programas</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="feedback">Reacción</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html" class='waves-effect'>Casa</a></li>
-                <li><a href="about.html" class='waves-effect'>Sobre</a></li>
-                <li><a href="program-selection.html" class='waves-effect'>Programas</a></li>
-                <li><a href="feedback.html" class='waves-effect'>Reacción</a></li>
+                <li><a href="index.html" class='waves-effect' id="home">Casa</a></li>
+                <li><a href="about.html" class='waves-effect' id="about">Sobre</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="programs">Programas</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="feedback">Reacción</a></li>
             </ul>
         </div>
     </nav>
@@ -36,14 +36,14 @@
                 <!-- header row -->
                 <div class="row">
                     <div class="col s12 m12 l12">
-                        <h2 class="section-header">Sobre</h2>
+                        <h2 class="section-header" id="header-about">Sobre</h2>
                     </div>
                 </div>
                 <div class="divider"></div>
                 <!--  paragraph row -->
                 <div class="row">
                     <div class="col s11 m12 l12">
-                        <p class="flow-text">
+                        <p class="flow-text" id="text-about">
                             Compass es un recurso que cualquiera puede usar para localizar los recursos alimentarios y nutricionales del Supplemental Nutrition Assistance Program (SNAP) y Women, Infants, and Children (WIC). Compass te dirá - en inglés o español - si es probable calificar y dónde encontrar la oficina más cercana.</p>
                     </div>
                 </div>
@@ -56,6 +56,20 @@
     <script type="text/javascript">
     $(document).ready(() => {
         $(".button-collapse").sideNav();
+
+        var feedbackTrans = {
+            menu: {
+                home: 'Casa',
+                about: 'Sobre',
+                programs: 'Programas',
+                feedback: 'Reacción'
+            },
+
+            body: {
+                header_about: "Sobre",
+                text_about: "Compass es un recurso que cualquiera puede usar para localizar los recursos alimentarios y nutricionales del Supplemental Nutrition Assistance Program (SNAP) y Women, Infants, and Children (WIC). Compass te dirá - en inglés o español - si es probable calificar y dónde encontrar la oficina más cercana."
+            }
+        }
 
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",

@@ -23,16 +23,16 @@
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="program-selection.html">Programs</a></li>
-                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
+                <li><a href="about.html" class='waves-effect' id="about">About</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
+                <li><a href="feedbck.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="program-selection.html">Programs</a></li>
-                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
+                <li><a href="about.html" class='waves-effect' id="about">About</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
+                <li><a href="feedbck.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
         </div>
     </nav>
@@ -63,6 +63,21 @@
     $(document).ready(() => {
         $(".button-collapse").sideNav();
 
+        var feedbackTrans = {
+            menu: {
+                home: 'Casa',
+                about: 'Sobre',
+                programs: 'Programas',
+                feedback: 'Reacción'
+            },
+
+            body: {
+                header_about: "Sobre",
+                text_about: "Compass es un recurso que cualquiera puede usar para localizar los recursos alimentarios y nutricionales del Supplemental Nutrition Assistance Program (SNAP) y Women, Infants, and Children (WIC). Compass te dirá - en inglés o español - si es probable calificar y dónde encontrar la oficina más cercana."
+            }
+
+        }
+
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
             authDomain: "cal-compass.firebaseapp.com",
@@ -74,16 +89,9 @@
         firebase.initializeApp(config);
 
         firebase.auth().onAuthStateChanged(function(user) {
-            
+
             if (user) {
                 console.log(user.displayName, "is logged in");
-                // User is signed in.
-                // add deets to updates obj
-                // updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
-                // write updates
-                // rootRef.update(updates);
-                // off to maps 
-                // window.location = "mapFS.html";
             } else {
                 console.log('No user is signed in.');
             }
