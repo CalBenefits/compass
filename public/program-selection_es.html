@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style type="text/css">
+    .brand-logo {
+        height: 1.5em;
+        width: 1.5em;
+        margin: .25em .15em;
+    }
+    </style>
 </head>
 
 <body>
@@ -16,23 +23,23 @@
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class='waves-effect'>Casa</a></li>
-                <li><a href="about.html" class='waves-effect'>Sobre</a></li>
-                <li><a href="program-selection.html" class='waves-effect'>Programas</a></li>
-                <li><a href="feedback.html" class='waves-effect'>Reacción</a></li>
+                <li><a href="index.html" class='waves-effect' id="home">Casa</a></li>
+                <li><a href="about.html" class='waves-effect' id="about">Sobre</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="programs">Programas</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="feedback">Reacción</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html" class='waves-effect'>Casa</a></li>
-                <li><a href="about.html" class='waves-effect'>Sobre</a></li>
-                <li><a href="program-selection.html" class='waves-effect'>Programas</a></li>
-                <li><a href="feedback.html" class='waves-effect'>Reacción</a></li>
+                <li><a href="index.html" class='waves-effect' id="home">Casa</a></li>
+                <li><a href="about.html" class='waves-effect' id="about">Sobre</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="programs">Programas</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="feedback">Reacción</a></li>
             </ul>
         </div>
     </nav>
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12" id="select-wic">
-                <span class="flow-text" id="wic-text">Women, Infant and Children (WIC)</span>
+                <span class="flow-text" id="wic-text">Mujeres, Bebés y Niños (WIC)</span>
             </div>
         </div>
         <div class="row">
@@ -49,7 +56,7 @@
         </div>
         <div class="row">
             <div class="col s12 m12 l12" id="select-fs">
-                <span class="flow-text" id="fs-text">Supplemental Nutrition Assistance Program (SNAP, CalFresh, Foodstamps)</span>
+                <span class="flow-text" id="fs-text">Programa de Asistencia de Nutrición Suplementaria (SNAP, CalFresh, Foodstamps)</span>
             </div>
         </div>
         <div class="row">
@@ -62,11 +69,6 @@
                 <a class="waves-effect waves-light btn-large" id="mapsFS">Recursos cerca de mí</a>
             </div>
             <div class="col m3 l1"></div>
-        </div>
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <button id="btnLogin">¡Iniciar sesión!</button>
-            </div>
         </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
@@ -85,7 +87,25 @@
 
     firebase.initializeApp(config);
 
-    // when the document has loaded  there will be 4 event listeners
+    var feedbackTrans = {
+            menu: {
+                home: 'Casa',
+                about: 'Sobre',
+                programs: 'Programas',
+                feedback: 'Reacción'
+            },
+
+            body: {
+                wic_text: "Mujeres, Bebés y Niños (WIC)",
+                fs_text: "Programa de Asistencia de Nutrición Suplementaria(SNAP, CalFresh, Foodstamps)",
+                eligibleWIC: "¿Soy elegible?",
+                mapsWIC: "Recursos cerca de mí",
+                applyFS: "¡Aplica ya!",
+                mapsFS: "Recursos cerca de mí"
+            }
+
+        }
+        // when the document has loaded  there will be 4 event listeners
     $(document).ready(function() {
 
         btnLogin.addEventListener('click', function(event) {
