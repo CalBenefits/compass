@@ -23,16 +23,14 @@
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
                 <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
                 <li><a href="feedbck.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
-                <li><a href="about.html" class='waves-effect' id="about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
-                <li><a href="feedbck.html" class='waves-effect' id="feedback">Feedback</a></li>
+                <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
+                <li><a href="feedbck.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
             </ul>
         </div>
     </nav>
@@ -43,14 +41,14 @@
                 <!-- header row -->
                 <div class="row">
                     <div class="col s12 m12 l12">
-                        <h2 class="section-header">About</h2>
+                        <h2 class="section-header" id="header">About</h2>
                     </div>
                 </div>
                 <div class="divider"></div>
                 <!--  paragraph row -->
                 <div class="row">
                     <div class="col s11 m12 l12">
-                        <p class="flow-text">Compass is a resource anyone can use to locate local Supplemental Nutrition Assistance Program (SNAP) and Women, Infants, and Children (WIC) food and nutrition resources. Compass will tell you–in English or Spanish–whether you're likely to qualify and where to find the nearest office.</p>
+                        <p class="flow-text" id="text-about">Compass is a resource anyone can use to locate local Supplemental Nutrition Assistance Program (SNAP) and Women, Infants, and Children (WIC) food and nutrition resources. Compass will tell you–in English or Spanish–whether you're likely to qualify and where to find the nearest office.</p>
                     </div>
                 </div>
             </section>
@@ -62,22 +60,6 @@
     <script type="text/javascript">
     $(document).ready(() => {
         $(".button-collapse").sideNav();
-
-        var feedbackTrans = {
-            menu: {
-                home: 'Casa',
-                about: 'Sobre',
-                programs: 'Programas',
-                feedback: 'Reacción'
-            },
-
-            body: {
-                header_about: "Sobre",
-                text_about: "Compass es un recurso que cualquiera puede usar para localizar los recursos alimentarios y nutricionales del Supplemental Nutrition Assistance Program (SNAP) y Women, Infants, and Children (WIC). Compass te dirá - en inglés o español - si es probable calificar y dónde encontrar la oficina más cercana."
-            }
-
-        }
-
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
             authDomain: "cal-compass.firebaseapp.com",
@@ -89,12 +71,42 @@
         firebase.initializeApp(config);
 
         firebase.auth().onAuthStateChanged(function(user) {
-
             if (user) {
-                console.log(user.displayName, "is logged in");
-            } else {
-                console.log('No user is signed in.');
-            }
+                firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
+                    console.log(snap.val().language);
+                    if (snap.val().language === "spanish") {
+                        console.log("Si!");
+                        languageStatus = true;
+                        console.log(languageStatus);
+                        if (languageStatus === true) {
+                            var feedbackTrans = {
+                                menu: {
+                                    home: 'Casa',
+                                    about: 'Sobre',
+                                    programs: 'Programas',
+                                    feedback: 'Reacción'
+                                },
+
+                                body: {
+                                    header_about: "Sobre",
+                                    text_about: "Compass es un recurso que cualquiera puede usar para localizar los recursos alimentarios y nutricionales del Supplemental Nutrition Assistance Program (SNAP) y Women, Infants, and Children (WIC). Compass te dirá - en inglés o español - si es probable calificar y dónde encontrar la oficina más cercana."
+                                }
+                            };
+                            $('#home').text(feedbackTrans.menu.home);
+                            $('#about').text(feedbackTrans.menu.about);
+                            $('#programs').text(feedbackTrans.menu.programs);
+                            $('#feedback').text(feedbackTrans.menu.feedback);
+                            $('#mobile-home').text(feedbackTrans.menu.home);
+                            $('#mobile-about').text(feedbackTrans.menu.about);
+                            $('#mobile-programs').text(feedbackTrans.menu.programs);
+                            $('#header').text(feedbackTrans.body.header_about);
+                            $('#text-about').text(feedbackTrans.body.text_about);
+                        } else {
+                            console.log('No user is signed in.');
+                        }
+                    };
+                });
+            };
         });
 
     });

@@ -48,16 +48,14 @@
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
                 <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
-                <li><a href="about.html" class='waves-effect' id="about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
-                <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
+                <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
             </ul>
         </div>
     </nav>
@@ -91,17 +89,47 @@
         firebase.initializeApp(config);
 
         firebase.auth().onAuthStateChanged(function(user) {
-
+            console.log(user.displayName);
             if (user) {
-                console.log(user.displayName, "is logged in");
-                // User is signed in.
-                // write updates
-                // rootRef.update(updates);
-                // off to maps 
-                // window.location = "mapFS.html";
+                firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
+                    console.log(snap.val().language);
+                    if (snap.val().language === "spanish") {
+                        console.log("Si!");
+                        languageStatus = true;
+                        console.log(languageStatus);
+                        if (languageStatus === true) {
+                            var feedbackTrans = {
+                                menu: {
+                                    home: 'Casa',
+                                    about: 'Sobre',
+                                    programs: 'Programas',
+                                    feedback: 'Reacción'
+                                },
+                                body: {
+                                    fsMapHeader: "No se olvide...",
+                                    fsItemOne: "Su licencia de conducir",
+                                    fsItemTwo: "segundo",
+                                    fsItemThree: "tres"
+                                }
+                            }
+                            $('#home').text(feedbackTrans.menu.home);
+                            $('#about').text(feedbackTrans.menu.about);
+                            $('#programs').text(feedbackTrans.menu.programs);
+                            $('#feedback').text(feedbackTrans.menu.feedback);
+                            $('#mobile-home').text(feedbackTrans.menu.home);
+                            $('#mobile-about').text(feedbackTrans.menu.about);
+                            $('#mobile-programs').text(feedbackTrans.menu.programs);
+                            $('#mobile-feedback').text(feedbackTrans.menu.feedback);
+                            $('#fsMapHeader').text(feedbackTrans.body.fsMapHeader);
+                            $('#fsItemOne').text(feedbackTrans.body.fsItemOne);
+                            $('#fsItemTwo').text(feedbackTrans.body.fsItemTwo);
+                            $('#fsItemThree').text(feedbackTrans.body.fsItemThree);
+                        }
+                    }
+                });
             } else {
                 console.log('No user is signed in.');
-            }
+            };
         });
         // bring up modal
         $('#modal-one').modal('open');
@@ -113,23 +141,6 @@
             draggable: true
         });
     });
-
-    var feedbackTrans = {
-        menu: {
-            home: 'Casa',
-            about: 'Sobre',
-            programs: 'Programas',
-            feedback: 'Reacción'
-        },
-
-        body: {
-            fsMapHeader: "No se olvide...",
-            fsItemOne: "Su licencia de conducir",
-            fsItemTwo: "segundo",
-            fsItemThree: "tres"
-
-        }
-    }
 
     // determines language to render for map
     var langState = 'en';

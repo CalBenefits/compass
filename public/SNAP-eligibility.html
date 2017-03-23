@@ -23,13 +23,11 @@
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
                 <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
                 <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
@@ -49,15 +47,15 @@
                     <div class="panel-body">
                         <form>
                             <div class="form-group">
-                                <label for="zip">Enter Zip code</label>
+                                <label for="zip" id="enterZip">Enter Zip code</label>
                                 <input type="number" class="form-control" id="zip" placeholder="e.g. 94110 (required)" required>
                             </div>
                             <div class="form-group">
-                                <label for="household">Household size</label>
+                                <label for="household" id="label2">Household size</label>
                                 <input type="number" class="form-control" id="household" placeholder="e.g. 3 (optional)">
                             </div>
                             <div class="form-group">
-                                <label for="income">Monthly income (in dollars)</label>
+                                <label for="income" id="label3">Monthly income (in dollars)</label>
                                 <input type="number" class="form-control" id="income" placeholder="e.g. 1287 (optional)">
                             </div>
                             <button class="btn waves-effect waves-light" id="submitFormFS" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
@@ -72,25 +70,6 @@
     <script type="text/javascript">
     // when the document has loaded  there will be 2 event listeners
     $(document).ready(function() {
-
-        var feedbackTrans = {
-            menu: {
-                home: 'Casa',
-                about: 'Sobre',
-                programs: 'Programas',
-                feedback: 'Reacción'
-            },
-
-            body: {
-                snapForm1: "Escriba su código postal abajo para encontrar la oficina más cercana a usted",
-                snapForm2: "Por favor, rellene el siguiente formulario",
-                zip: "Ejemplo: 94110 (obligatorio)",
-                household: "3 (opcional)",
-                income: "1287 (opcional)",
-                submitFormFS: "Enviar"
-            }
-        }
-
         // Initialize Firebase
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
@@ -109,13 +88,61 @@
         // provides nav bar with functionality
         $(".button-collapse").sideNav();
 
-        // this button directs them to the office locator - fs-(maps page)
-        $('#submitFormFS').on('click', function(event) {
+        firebase.auth().onAuthStateChanged(function(user) {
+            firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
+                console.log(snap.val().language);
+                if (snap.val().language === "spanish") {
+                    console.log("Si!");
+                    languageStatus = true;
+                    console.log(languageStatus);
+                    if (languageStatus === true) {
+                        var feedbackTrans = {
+                            menu: {
+                                home: 'Casa',
+                                about: 'Sobre',
+                                programs: 'Programas',
+                                feedback: 'Reacción'
+                            },
 
-            event.preventDefault();
+                            body: {
+                                snapForm1: "Escriba su código postal abajo para encontrar la oficina más cercana a usted",
+                                snapForm2: "Por favor, rellene el siguiente formulario",
+                                enterZip: "Introduzca código postal",
+                                zip: "Ejemplo: 94110 (obligatorio)",
+                                label2: "Número de personas que viven en su hogar",
+                                household: "3 (opcional)",
+                                label3: "Ingresos mensuales (en dólares)",
+                                income: "1287 (opcional)",
+                                submitFormFS: "Enviar"
+                            }
+                        }
+                        $('#home').text(feedbackTrans.menu.home);
+                        $('#about').text(feedbackTrans.menu.about);
+                        $('#programs').text(feedbackTrans.menu.programs);
+                        $('#feedback').text(feedbackTrans.menu.feedback);
+                        $('#mobile-home').text(feedbackTrans.menu.home);
+                        $('#mobile-about').text(feedbackTrans.menu.about);
+                        $('#mobile-programs').text(feedbackTrans.menu.programs);
+                        $('#mobile-feedback').text(feedbackTrans.menu.feedback);
+                        $('#snapForm1').text(feedbackTrans.body.snapForm1);
+                        $('#snapForm2').text(feedbackTrans.body.snapForm2);
+                        $('#enterZip').text(feedbackTrans.body.enterZip);
+                        $('#zip').text(feedbackTrans.body.zip);
+                        $('#label2').text(feedbackTrans.body.label2);
+                        $('#household').text(feedbackTrans.body.household);
+                        $('#label3').text(feedbackTrans.body.label3);
+                        $('#income').text(feedbackTrans.body.income);
+                        $('#submitFormFS').text(feedbackTrans.body.submitFormFS);
 
+                    };
+                }
+            });
 
-            firebase.auth().onAuthStateChanged(function(user) {
+            // this button directs them to the office locator - fs-(maps page)
+            $('#submitFormFS').on('click', function(event) {
+
+                event.preventDefault();
+
                 if (user) {
                     console.log(user.displayName, "is logged in");
                     // User is signed in.
@@ -123,14 +150,11 @@
                     updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
                     // write updates
                     rootRef.update(updates);
-                    // off to maps 
-                    // window.location = "mapFS.html";
+
                 } else {
                     console.log('No user is signed in.');
                 }
             });
-            // deets to change
-
         });
     });
     </script>
