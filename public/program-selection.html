@@ -63,11 +63,6 @@
             </div>
             <div class="col m3 l1"></div>
         </div>
-        <div class="row">
-            <div class="col s12 m12 l12">
-                <button id="btnLogin">Log In!</button>
-            </div>
-        </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -76,7 +71,9 @@
     <script type="text/javascript">
     // when the document has loaded  there will be 4 event listeners
     $(document).ready(function() {
-        // Initialize Firebase
+
+
+        //Initialize Firebase
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
             authDomain: "cal-compass.firebaseapp.com",
@@ -86,45 +83,19 @@
         };
 
         firebase.initializeApp(config);
-        var rootRef = firebase.database().ref();
-        var usersRef = rootRef.child('users');
-        var provider = new firebase.auth.GoogleAuthProvider();
 
-        // when the button is clicked 
-        btnLogin.addEventListener('click', function(event) {
-            event.preventDefault();
-            firebase.auth().signInWithPopup(provider).then(function(result) {
-                if (result.credential) {
-                    // This gives you a Google Access Token. You can use it to access the Google API.
-                    var token = result.credential.accessToken;
-                    var user = result.user;
-                    console.log(user.displayName);
+        firebase.auth().onAuthStateChanged(function(user) {
 
-                    var uid = user.uid;
-                    console.log(uid);
-                    var userRef = usersRef.child(uid);
-                    const deets = {
-                      name: result.user.displayName,
-                      income: "",
-                      famSize: "",
-                      zipcode: ""
-                    };
-
-                    userRef.set(deets);
-                }
-                // The signed-in user info.
-                // var user = result.user.displayName;
-            }).catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // The email of the user's account used.
-                var email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
-                var credential = error.credential;
-                // ...
-            });
-
+            if (user) {
+                console.log(user.displayName, "is logged in");
+                // User is signed in.
+                // write updates
+                // rootRef.update(updates);
+                // off to maps 
+                // window.location = "mapFS.html";
+            } else {
+                console.log('No user is signed in.');
+            }
         });
 
         // provides nav bar with functionality
@@ -132,7 +103,7 @@
         // this button directs them to the form to determine eleigibility for WIC
         $('#eligibleWIC').on('click', function(event) {
             event.preventDefault();
-            window.location = "SNAP-eligibility.html";
+            window.location = "WIC-eligibility.html";
         });
 
         // this button directs them to the office locator -wic-(maps page)
@@ -150,7 +121,7 @@
         // this button directs them to the office locator - fs-(maps page)
         $('#mapsFS').on('click', function(event) {
             event.preventDefault();
-            window.location = "mapFS.html";
+            window.location = "SNAP-eligibility.html";
         });
     });
     </script>

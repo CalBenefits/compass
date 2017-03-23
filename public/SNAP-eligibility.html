@@ -33,27 +33,27 @@
     </nav>
     <header id="masthead">
         <div class="container">
-            <h1>Am I eligible for Food Stamps? </h1>
+            <h1>Type in your zip code eblow to find the office nearest you!</h1>
         </div>
     </header>
     <div class="container content">
         <div class="main-section">
             <section class="data">
                 <div class="panel panel-default panel-primary">
-                    <div class="panel-heading">Answer these questions to Determine Eligibility for Supplemental Nutrition Assistance Program (SNAP)/ Food Stamps/ CalFresh !</div>
+                    <div class="panel-heading">Please fill out the form below</div>
                     <div class="panel-body">
                         <form>
                             <div class="form-group">
                                 <label for="zip">Enter Zip code</label>
-                                <input type="number" class="form-control" id="zip" placeholder="e.g. 94110">
+                                <input type="number" class="form-control" id="zip" placeholder="e.g. 94110 (required)" required>
                             </div>
                             <div class="form-group">
-                                <label for="household">Household size (excluding member that is age 60+, or is disabled)</label>
-                                <input type="number" class="form-control" id="household" placeholder="e.g. 3">
+                                <label for="household">Household size</label>
+                                <input type="number" class="form-control" id="household" placeholder="e.g. 3 (optional)">
                             </div>
                             <div class="form-group">
-                                <label for="income">Monthly income (including social security) in dollars $</label>
-                                <input type="number" class="form-control" id="income" placeholder="e.g. 1287">
+                                <label for="income">Monthly income (in dollars)</label>
+                                <input type="number" class="form-control" id="income" placeholder="e.g. 1287 (optional)">
                             </div>
                             <button class="btn waves-effect waves-light" id="submitFormFS" type="submit" name="action">Submit<i class="material-icons right">send</i></button>
                         </form>

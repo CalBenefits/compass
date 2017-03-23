@@ -72,7 +72,23 @@
         };
 
         firebase.initializeApp(config);
-        
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            
+            if (user) {
+                console.log(user.displayName, "is logged in");
+                // User is signed in.
+                // add deets to updates obj
+                // updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
+                // write updates
+                // rootRef.update(updates);
+                // off to maps 
+                // window.location = "mapFS.html";
+            } else {
+                console.log('No user is signed in.');
+            }
+        });
+
     });
     </script>
 </body>

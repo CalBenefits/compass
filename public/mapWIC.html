@@ -75,7 +75,6 @@
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-<<<<<<< HEAD
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js'></script>
     <script>
     $(document).ready(function() {
@@ -88,6 +87,20 @@
             messagingSenderId: "888186000127"
         };
         firebase.initializeApp(config);
+
+        firebase.auth().onAuthStateChanged(function(user) {
+
+            if (user) {
+                console.log(user.displayName, "is logged in");
+                // User is signed in.
+                // write updates
+                // rootRef.update(updates);
+                // off to maps 
+                // window.location = "mapFS.html";
+            } else {
+                console.log('No user is signed in.');
+            }
+        });
         
         // bring up modal
         $('#modal-one').modal('open'); 
