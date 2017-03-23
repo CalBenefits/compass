@@ -23,16 +23,14 @@
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
                 <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
-                <li><a href="about.html" class='waves-effect' id="about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
-                <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
+                <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
             </ul>
         </div>
     </nav>
@@ -78,25 +76,6 @@
     <script type="text/javascript">
     // when the document has loaded  there will be 4 event listeners
     $(document).ready(function() {
-
-        var feedbackTrans = {
-            menu: {
-                home: 'Casa',
-                about: 'Sobre',
-                programs: 'Programas',
-                feedback: 'Reacción'
-            },
-
-            body: {
-                wic_text: "Mujeres, Bebés y Niños (WIC)",
-                fs_text: "Programa de Asistencia de Nutrición Suplementaria(SNAP, CalFresh, Foodstamps)",
-                eligibleWIC: "¿Soy elegible?",
-                mapsWIC: "Recursos cerca de mí",
-                applyFS: "¡Aplica ya!",
-                mapsFS: "Recursos cerca de mí"
-            }
-
-        };
         //Initialize Firebase
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
@@ -109,16 +88,50 @@
         firebase.initializeApp(config);
 
         firebase.auth().onAuthStateChanged(function(user) {
-
             if (user) {
-                console.log(user.displayName, "is logged in");
-                // User is signed in.
-                // write updates
-                // rootRef.update(updates);
-                // off to maps 
-                // window.location = "mapFS.html";
+                console.log(user.displayName);
+                firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
+                    console.log(snap.val().language);
+                    if (snap.val().language === "spanish") {
+                        console.log("Si!");
+                        languageStatus = true;
+                        console.log(languageStatus);
+                        if (languageStatus === true) {
+                            var feedbackTrans = {
+                                menu: {
+                                    home: 'Casa',
+                                    about: 'Sobre',
+                                    programs: 'Programas',
+                                    feedback: 'Reacción'
+                                },
+                                body: {
+                                    wic_text: "Mujeres, Bebés y Niños (WIC)",
+                                    fs_text: "Programa de Asistencia de Nutrición Suplementaria(SNAP, CalFresh, Foodstamps)",
+                                    eligibleWIC: "¿Soy elegible?",
+                                    mapsWIC: "Recursos cerca de mí",
+                                    applyFS: "¡Aplica ya!",
+                                    mapsFS: "Recursos cerca de mí"
+                                }
+                            };
+                            $('#home').text(feedbackTrans.menu.home);
+                            $('#about').text(feedbackTrans.menu.about);
+                            $('#programs').text(feedbackTrans.menu.programs);
+                            $('#feedback').text(feedbackTrans.menu.feedback);
+                            $('#mobile-home').text(feedbackTrans.menu.home);
+                            $('#mobile-about').text(feedbackTrans.menu.about);
+                            $('#mobile-programs').text(feedbackTrans.menu.programs);
+                            $('#mobile-feedback').text(feedbackTrans.menu.feedback);
+                            $('#wic-text').text(feedbackTrans.body.wic_text);
+                            $('#fs-text').text(feedbackTrans.body.fs_text);
+                            $('#eligibleWIC').text(feedbackTrans.body.eligibleWIC);
+                            $('#mapsWIC').text(feedbackTrans.body.mapsWIC);
+                            $('#applyFS').text(feedbackTrans.body.applyFS);
+                            $('#mapsFS').text(feedbackTrans.body.mapsFS);
+                        };
+                    };
+                });
             } else {
-                console.log('No user is signed in.');
+                console.log('no user!');
             }
         });
 
@@ -145,7 +158,7 @@
         // this button directs them to the office locator - fs-(maps page)
         $('#mapsFS').on('click', function(event) {
             event.preventDefault();
-            window.location = "SNAP-eligibility.html";
+            window.location = "mapFS.html";
         });
     });
     </script>

@@ -48,16 +48,14 @@
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
                 <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
-                <li><a href="about.html" class='waves-effect' id="about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
-                <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
+                <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
             </ul>
         </div>
     </nav>
@@ -91,19 +89,48 @@
         firebase.initializeApp(config);
 
         firebase.auth().onAuthStateChanged(function(user) {
-
             if (user) {
-                console.log(user.displayName, "is logged in");
-                // User is signed in.
-                // write updates
-                // rootRef.update(updates);
-                // off to maps 
-                // window.location = "mapFS.html";
+                console.log(user.displayName);
+                firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
+                    console.log(snap.val().language);
+                    if (snap.val().language === "spanish") {
+                        console.log("Si!");
+                        languageStatus = true;
+                        console.log(languageStatus);
+                        if (languageStatus === true) {
+                            var feedbackTrans = {
+                                menu: {
+                                    home: 'Casa',
+                                    about: 'Sobre',
+                                    programs: 'Programas',
+                                    feedback: 'Reacción'
+                                },
+                                body: {
+                                    wicMapHeader: "No se olvide...",
+                                    wicItemOne: "Su licencia de conducir",
+                                    wicItemTwo: "segundo",
+                                    wicItemThree: "tres"
+                                }
+                            };
+                            $('#home').text(feedbackTrans.menu.home);
+                            $('#about').text(feedbackTrans.menu.about);
+                            $('#programs').text(feedbackTrans.menu.programs);
+                            $('#feedback').text(feedbackTrans.menu.feedback);
+                            $('#mobile-home').text(feedbackTrans.menu.home);
+                            $('#mobile-about').text(feedbackTrans.menu.about);
+                            $('#mobile-programs').text(feedbackTrans.menu.programs);
+                            $('#mobile-feedback').text(feedbackTrans.menu.feedback);
+                            $('#wicMapHeader').text(feedbackTrans.body.wicMapHeader);
+                            $('#wicItemOne').text(feedbackTrans.body.wicItemOne);
+                            $('#wicItemTwo').text(feedbackTrans.body.wicItemTwo);
+                            $('#wicItemThree').text(feedbackTrans.body.wicItemThree);
+                        }
+                    }
+                });
             } else {
                 console.log('No user is signed in.');
-            }
+            };
         });
-
         // bring up modal
         $('#modal-one').modal('open');
         // initialize side nav
@@ -113,314 +140,297 @@
             closeOnClick: true,
             draggable: true
         });
-    });
 
-    var feedbackTrans = {
-        menu: {
-            home: 'Casa',
-            about: 'Sobre',
-            programs: 'Programas',
-            feedback: 'Reacción'
-        },
+        // determines language to render for map
+        var langState = 'en';
 
-        body: {
-            wicMapHeader: "No se olvide...",
-            wicItemOne: "Su licencia de conducir",
-            wicItemTwo: "segundo",
-            wicItemThree: "tres"
-
+        switch (langState) {
+            case 'en':
+                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=en&libraries=places&callback=init />");
+                break;
+            case 'es':
+                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                break;
         }
-    }
 
-    // determines language to render for map
-    var langState = 'en';
-
-    switch (langState) {
-        case 'en':
-            $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=en&libraries=places&callback=init />");
-            break;
-        case 'es':
-            $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
-            break;
-    }
-
-    // random element utility
-    var getRandomElement = function(arr, n) {
-        var result = new Array(n),
-            len = arr.length,
-            taken = new Array(len);
-        if (n > len) {
-            throw new RangeError("getRandom: more elements taken than available");
-        }
-        while (n--) {
-            var x = Math.floor(Math.random() * len);
-            result[n] = arr[x in taken ? taken[x] : x];
-            taken[x] = --len;
-        }
-        return result[0];
-    };
-
-    // format address for query string utility
-    var formatAddr = function(address) {
-        var temp = address.split('');
-        for (var i = 0; i < temp.length; i++) {
-            if (temp[i] === ',') {
-                temp.splice(i, 1);
+        // random element utility
+        var getRandomElement = function(arr, n) {
+            var result = new Array(n),
+                len = arr.length,
+                taken = new Array(len);
+            if (n > len) {
+                throw new RangeError("getRandom: more elements taken than available");
             }
-        }
-        for (var j = 0; j < temp.length; j++) {
-            if (temp[j] === ' ') {
-                temp.splice(j, 1, '+');
+            while (n--) {
+                var x = Math.floor(Math.random() * len);
+                result[n] = arr[x in taken ? taken[x] : x];
+                taken[x] = --len;
             }
-        }
-        return temp.join('');
-    };
+            return result[0];
+        };
 
-    // map render callback
-    function init() {
-        // variable to contain LatLng object converted from the user's zip
-        var zipLatLng;
-        // setup our geocoder object
-        var Geocoder = new google.maps.Geocoder();
+        // format address for query string utility
+        var formatAddr = function(address) {
+            var temp = address.split('');
+            for (var i = 0; i < temp.length; i++) {
+                if (temp[i] === ',') {
+                    temp.splice(i, 1);
+                }
+            }
+            for (var j = 0; j < temp.length; j++) {
+                if (temp[j] === ' ') {
+                    temp.splice(j, 1, '+');
+                }
+            }
+            return temp.join('');
+        };
 
-        Geocoder.geocode({
-            address: '94601'
-        }, function(results, status) {
-            if (status == 'OK') {
-                // LatLng object returned by the callback passed to the '.geocode()' method
-                zipLatLng = results[0].geometry.location;
-                // create and assign map object
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    center: zipLatLng,
-                    // 4 is ~country-level, while 10 is ~city-level
-                    zoom: 10,
-                    scrollwheel: false
-                });
-                // style map (retro)
-                // configure our map's style
-                var styledMapType = new google.maps.StyledMapType(
-                    [{
-                        elementType: 'geometry',
-                        stylers: [{
-                            color: '#ebe3cd'
-                        }]
-                    }, {
-                        elementType: 'labels.text.fill',
-                        stylers: [{
-                            color: '#523735'
-                        }]
-                    }, {
-                        elementType: 'labels.text.stroke',
-                        stylers: [{
-                            color: '#f5f1e6'
-                        }]
-                    }, {
-                        featureType: 'administrative',
-                        elementType: 'geometry.stroke',
-                        stylers: [{
-                            color: '#c9b2a6'
-                        }]
-                    }, {
-                        featureType: 'administrative.land_parcel',
-                        elementType: 'geometry.stroke',
-                        stylers: [{
-                            color: '#dcd2be'
-                        }]
-                    }, {
-                        featureType: 'administrative.land_parcel',
-                        elementType: 'labels.text.fill',
-                        stylers: [{
-                            color: '#ae9e90'
-                        }]
-                    }, {
-                        featureType: 'landscape.natural',
-                        elementType: 'geometry',
-                        stylers: [{
-                            color: '#dfd2ae'
-                        }]
-                    }, {
-                        featureType: 'poi',
-                        elementType: 'geometry',
-                        stylers: [{
-                            color: '#dfd2ae'
-                        }]
-                    }, {
-                        featureType: 'poi',
-                        elementType: 'labels.text.fill',
-                        stylers: [{
-                            color: '#93817c'
-                        }]
-                    }, {
-                        featureType: 'poi.park',
-                        elementType: 'geometry.fill',
-                        stylers: [{
-                            color: '#a5b076'
-                        }]
-                    }, {
-                        featureType: 'poi.park',
-                        elementType: 'labels.text.fill',
-                        stylers: [{
-                            color: '#447530'
-                        }]
-                    }, {
-                        featureType: 'road',
-                        elementType: 'geometry',
-                        stylers: [{
-                            color: '#f5f1e6'
-                        }]
-                    }, {
-                        featureType: 'road.arterial',
-                        elementType: 'geometry',
-                        stylers: [{
-                            color: '#fdfcf8'
-                        }]
-                    }, {
-                        featureType: 'road.highway',
-                        elementType: 'geometry',
-                        stylers: [{
-                            color: '#f8c967'
-                        }]
-                    }, {
-                        featureType: 'road.highway',
-                        elementType: 'geometry.stroke',
-                        stylers: [{
-                            color: '#e9bc62'
-                        }]
-                    }, {
-                        featureType: 'road.highway.controlled_access',
-                        elementType: 'geometry',
-                        stylers: [{
-                            color: '#e98d58'
-                        }]
-                    }, {
-                        featureType: 'road.highway.controlled_access',
-                        elementType: 'geometry.stroke',
-                        stylers: [{
-                            color: '#db8555'
-                        }]
-                    }, {
-                        featureType: 'road.local',
-                        elementType: 'labels.text.fill',
-                        stylers: [{
-                            color: '#806b63'
-                        }]
-                    }, {
-                        featureType: 'transit.line',
-                        elementType: 'geometry',
-                        stylers: [{
-                            color: '#dfd2ae'
-                        }]
-                    }, {
-                        featureType: 'transit.line',
-                        elementType: 'labels.text.fill',
-                        stylers: [{
-                            color: '#8f7d77'
-                        }]
-                    }, {
-                        featureType: 'transit.line',
-                        elementType: 'labels.text.stroke',
-                        stylers: [{
-                            color: '#ebe3cd'
-                        }]
-                    }, {
-                        featureType: 'transit.station',
-                        elementType: 'geometry',
-                        stylers: [{
-                            color: '#dfd2ae'
-                        }]
-                    }, {
-                        featureType: 'water',
-                        elementType: 'geometry.fill',
-                        stylers: [{
-                            color: '#b9d3c2'
-                        }]
-                    }, {
-                        featureType: 'water',
-                        elementType: 'labels.text.fill',
-                        stylers: [{
-                            color: '#92998d'
-                        }]
-                    }], {
-                        name: 'Styled Map'
-                    }
-                );
-                map.mapTypes.set('styled_map', styledMapType);
-                map.setMapTypeId('styled_map');
-                // set map viewport
-                map.setCenter(zipLatLng);
-                // create service object for our map
-                var Service = new google.maps.places.PlacesService(map);
-                // run a .nearbySearch() for the closest SNAP office 
-                Service.nearbySearch({
-                    location: zipLatLng,
-                    keyword: 'WIC',
-                    radius: '10000',
-                }, function(results, status) {
-                    if (status == google.maps.places.PlacesServiceStatus.OK) {
-                        var markers = [];
-                        // iterate through results
-                        for (var i = 0; i < results.length; i++) {
-                            var result = results[i];
-                            var placeLatLng = result.geometry.location;
-                            // labels for each marker
-                            var labels = ['🍠', '🍄', '🥒', '🌶', '🌽', '🥕', '🥔', '🍆', '🥑', '🍅', '🥝', '🍓', '🍇', '🍊', '🍉', '🍎', '🍞'];
-                            // create an infoWindow object
-                            var infoWindow = new google.maps.InfoWindow({
-                                maxWidth: 250
-                            });
-                            // the result's details
-                            var placeDetails = {
-                                name: result.name
-                            };
-                            // format maps link based on user's operating system
-                            if (navigator.platform.indexOf("iPhone") != -1 || (navigator.platform.indexOf("iPod") != -1) || (navigator.platform.indexOf("iPad") != -1)) {
-                                placeDetails.navLink = "maps://maps.google.com/maps?daddr=" + formatAddr(result.vicinity);
-                            } else {
-                                placeDetails.navLink = "http://maps.google.com/maps?daddr=" + formatAddr(result.vicinity);
-                            }
-                            // if image, display
-                            if (result.photos) {
-                                placeDetails.image = result.photos[0].getUrl({
-                                    'maxWidth': 250
-                                });
-                                // construct infoWindow content
-                                var contentTemplate = "" +
-                                    "<div id='content'>" +
-                                    "<h5>{{name}}</h5>" +
-                                    "<img src={{image}} alt={{name}}>" +
-                                    "<p><a href={{navLink}}>Go</a></p>" +
-                                    "</div>";
-                            } else {
-                                var contentTemplate = "" +
-                                    "<div id='content'>" +
-                                    "<h5>{{name}}</h5>" +
-                                    "<p><a href={{navLink}}>Go</a></p>" +
-                                    "</div>";
-                            }
-                            // add content to this marker's infoWindow
-                            infoWindow.setContent(Mustache.render(contentTemplate, placeDetails));
-                            // create a marker for this place
-                            var marker = new google.maps.Marker({
-                                map: map,
-                                label: getRandomElement(labels, 1),
-                                place: {
-                                    location: result.geometry.location,
-                                    placeId: result.place_id
-                                },
-                                infoWindow: infoWindow
-                            });
-                            // attach a listener to each marker
-                            google.maps.event.addListener(marker, 'click', function() {
-                                return this.infoWindow.open(map, this);
-                            });
+        // map render callback
+        function init() {
+            // variable to contain LatLng object converted from the user's zip
+            var zipLatLng;
+            // setup our geocoder object
+            var Geocoder = new google.maps.Geocoder();
+
+            Geocoder.geocode({
+                address: '94601'
+            }, function(results, status) {
+                if (status == 'OK') {
+                    // LatLng object returned by the callback passed to the '.geocode()' method
+                    zipLatLng = results[0].geometry.location;
+                    // create and assign map object
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        center: zipLatLng,
+                        // 4 is ~country-level, while 10 is ~city-level
+                        zoom: 10,
+                        scrollwheel: false
+                    });
+                    // style map (retro)
+                    // configure our map's style
+                    var styledMapType = new google.maps.StyledMapType(
+                        [{
+                            elementType: 'geometry',
+                            stylers: [{
+                                color: '#ebe3cd'
+                            }]
+                        }, {
+                            elementType: 'labels.text.fill',
+                            stylers: [{
+                                color: '#523735'
+                            }]
+                        }, {
+                            elementType: 'labels.text.stroke',
+                            stylers: [{
+                                color: '#f5f1e6'
+                            }]
+                        }, {
+                            featureType: 'administrative',
+                            elementType: 'geometry.stroke',
+                            stylers: [{
+                                color: '#c9b2a6'
+                            }]
+                        }, {
+                            featureType: 'administrative.land_parcel',
+                            elementType: 'geometry.stroke',
+                            stylers: [{
+                                color: '#dcd2be'
+                            }]
+                        }, {
+                            featureType: 'administrative.land_parcel',
+                            elementType: 'labels.text.fill',
+                            stylers: [{
+                                color: '#ae9e90'
+                            }]
+                        }, {
+                            featureType: 'landscape.natural',
+                            elementType: 'geometry',
+                            stylers: [{
+                                color: '#dfd2ae'
+                            }]
+                        }, {
+                            featureType: 'poi',
+                            elementType: 'geometry',
+                            stylers: [{
+                                color: '#dfd2ae'
+                            }]
+                        }, {
+                            featureType: 'poi',
+                            elementType: 'labels.text.fill',
+                            stylers: [{
+                                color: '#93817c'
+                            }]
+                        }, {
+                            featureType: 'poi.park',
+                            elementType: 'geometry.fill',
+                            stylers: [{
+                                color: '#a5b076'
+                            }]
+                        }, {
+                            featureType: 'poi.park',
+                            elementType: 'labels.text.fill',
+                            stylers: [{
+                                color: '#447530'
+                            }]
+                        }, {
+                            featureType: 'road',
+                            elementType: 'geometry',
+                            stylers: [{
+                                color: '#f5f1e6'
+                            }]
+                        }, {
+                            featureType: 'road.arterial',
+                            elementType: 'geometry',
+                            stylers: [{
+                                color: '#fdfcf8'
+                            }]
+                        }, {
+                            featureType: 'road.highway',
+                            elementType: 'geometry',
+                            stylers: [{
+                                color: '#f8c967'
+                            }]
+                        }, {
+                            featureType: 'road.highway',
+                            elementType: 'geometry.stroke',
+                            stylers: [{
+                                color: '#e9bc62'
+                            }]
+                        }, {
+                            featureType: 'road.highway.controlled_access',
+                            elementType: 'geometry',
+                            stylers: [{
+                                color: '#e98d58'
+                            }]
+                        }, {
+                            featureType: 'road.highway.controlled_access',
+                            elementType: 'geometry.stroke',
+                            stylers: [{
+                                color: '#db8555'
+                            }]
+                        }, {
+                            featureType: 'road.local',
+                            elementType: 'labels.text.fill',
+                            stylers: [{
+                                color: '#806b63'
+                            }]
+                        }, {
+                            featureType: 'transit.line',
+                            elementType: 'geometry',
+                            stylers: [{
+                                color: '#dfd2ae'
+                            }]
+                        }, {
+                            featureType: 'transit.line',
+                            elementType: 'labels.text.fill',
+                            stylers: [{
+                                color: '#8f7d77'
+                            }]
+                        }, {
+                            featureType: 'transit.line',
+                            elementType: 'labels.text.stroke',
+                            stylers: [{
+                                color: '#ebe3cd'
+                            }]
+                        }, {
+                            featureType: 'transit.station',
+                            elementType: 'geometry',
+                            stylers: [{
+                                color: '#dfd2ae'
+                            }]
+                        }, {
+                            featureType: 'water',
+                            elementType: 'geometry.fill',
+                            stylers: [{
+                                color: '#b9d3c2'
+                            }]
+                        }, {
+                            featureType: 'water',
+                            elementType: 'labels.text.fill',
+                            stylers: [{
+                                color: '#92998d'
+                            }]
+                        }], {
+                            name: 'Styled Map'
                         }
-                    }
-                });
-            } else {
-                alert('Geocode error: ' + status);
-            }
-        });
-    }
+                    );
+                    map.mapTypes.set('styled_map', styledMapType);
+                    map.setMapTypeId('styled_map');
+                    // set map viewport
+                    map.setCenter(zipLatLng);
+                    // create service object for our map
+                    var Service = new google.maps.places.PlacesService(map);
+                    // run a .nearbySearch() for the closest SNAP office 
+                    Service.nearbySearch({
+                        location: zipLatLng,
+                        keyword: 'WIC',
+                        radius: '10000',
+                    }, function(results, status) {
+                        if (status == google.maps.places.PlacesServiceStatus.OK) {
+                            var markers = [];
+                            // iterate through results
+                            for (var i = 0; i < results.length; i++) {
+                                var result = results[i];
+                                var placeLatLng = result.geometry.location;
+                                // labels for each marker
+                                var labels = ['🍠', '🍄', '🥒', '🌶', '🌽', '🥕', '🥔', '🍆', '🥑', '🍅', '🥝', '🍓', '🍇', '🍊', '🍉', '🍎', '🍞'];
+                                // create an infoWindow object
+                                var infoWindow = new google.maps.InfoWindow({
+                                    maxWidth: 250
+                                });
+                                // the result's details
+                                var placeDetails = {
+                                    name: result.name
+                                };
+                                // format maps link based on user's operating system
+                                if (navigator.platform.indexOf("iPhone") != -1 || (navigator.platform.indexOf("iPod") != -1) || (navigator.platform.indexOf("iPad") != -1)) {
+                                    placeDetails.navLink = "maps://maps.google.com/maps?daddr=" + formatAddr(result.vicinity);
+                                } else {
+                                    placeDetails.navLink = "http://maps.google.com/maps?daddr=" + formatAddr(result.vicinity);
+                                }
+                                // if image, display
+                                if (result.photos) {
+                                    placeDetails.image = result.photos[0].getUrl({
+                                        'maxWidth': 250
+                                    });
+                                    // construct infoWindow content
+                                    var contentTemplate = "" +
+                                        "<div id='content'>" +
+                                        "<h5>{{name}}</h5>" +
+                                        "<img src={{image}} alt={{name}}>" +
+                                        "<p><a href={{navLink}}>Go</a></p>" +
+                                        "</div>";
+                                } else {
+                                    var contentTemplate = "" +
+                                        "<div id='content'>" +
+                                        "<h5>{{name}}</h5>" +
+                                        "<p><a href={{navLink}}>Go</a></p>" +
+                                        "</div>";
+                                }
+                                // add content to this marker's infoWindow
+                                infoWindow.setContent(Mustache.render(contentTemplate, placeDetails));
+                                // create a marker for this place
+                                var marker = new google.maps.Marker({
+                                    map: map,
+                                    label: getRandomElement(labels, 1),
+                                    place: {
+                                        location: result.geometry.location,
+                                        placeId: result.place_id
+                                    },
+                                    infoWindow: infoWindow
+                                });
+                                // attach a listener to each marker
+                                google.maps.event.addListener(marker, 'click', function() {
+                                    return this.infoWindow.open(map, this);
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    alert('Geocode error: ' + status);
+                }
+            });
+        }
+    });
     </script>
 </body>
 
