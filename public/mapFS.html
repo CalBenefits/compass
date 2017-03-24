@@ -31,12 +31,17 @@
     }
     
     #map {
-        height: 65%;
+        height: 100%;
         width: 100%;
     }
     
     .collection {
         margin: 0;
+    }
+
+    #form-modal {
+        top: 20% !important;
+        height: 70vh !important;
     }
 
     #language-modal {
@@ -120,13 +125,13 @@
                     </div>
                 </form>
                 <div class="row buttons">
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
             </div>
         </div>
-        <div id='reminder-modal' class='modal'>
+        <div id='reminder-modal' class='modal bottom-sheet'>
             <div class='modal-content'>
                 <ul class="collection with-header">
                     <li class="collection-header">
@@ -143,6 +148,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js'></script>
     <script>
+        var zip, wic, langState; 
+
         // random element utility
         function getRandomElement(arr, n) {
             var result = new Array(n),
@@ -177,8 +184,6 @@
 
         // map render callback
         function init() { 
-            console.log('init called');
-            console.log('zip:', zip);  
             // variable to contain LatLng object converted from the user's zip
             var zipLatLng;
             // setup our geocoder object
@@ -424,6 +429,7 @@
         }
         
         $(document).ready(function() {
+            console.log('hello?'); 
             // Initialize Firebase
             var config = {
                 apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
@@ -467,16 +473,16 @@
                 wic: {}
             };
 
-            var zip, wic; 
-
             // initialize modals
             $('#language-modal').modal(); 
             $('#form-modal').modal({dismissible: false});
             $('#reminder-modal').modal(); 
 
             firebase.auth().onAuthStateChanged(function(user) {
+                console.log('onAuthStateChanged callback'); 
                 // if user signed in
                 if (user) {
+                    console.log('user:', user); 
                     firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
                         if (snap.val().language === 'spanish') {
                             langState = 'es';
@@ -505,8 +511,10 @@
                             $('.collection-header > h4').text(mapTrans.snap.reminderModal.header);
                             $('.collection').children('colletion-item').eq[0].text(mapTrans.snap.reminderModal.id);
                             $('.collection').children('colletion-item').eq[1].text(mapTrans.snap.reminderModal.proof);
+                        // if english 
                         } else {
                             if (snap.val().zipcode) {
+                                zip = snap.val().zipcode; 
                                 // zip is no longer required
                                 $('#zip').attr('aria-required', 'false'); 
                                 // append ('use current zip') 
@@ -517,13 +525,12 @@
                                 })); 
                             }
                         }
+                        console.log('where my modal'); 
                         // open form modal
-                        $('.form-modal').modal('open');
+                        $('#form-modal').modal('open');
                         // 'use current zip' event listener, which kicks off map and opens reminder-modal
                         $('#continue-zip').on('click', function(event) {
-                            event.preventDefault(); 
-                            // assign zip
-                            zip = snap.val().zipcode; 
+                            event.preventDefault();  
                             // render map
                             if (langState === 'es') {
                                 $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=en&libraries=places&callback=init />");
@@ -539,6 +546,7 @@
                         $('button[type="submit"]').on('click', function(event) {
                             event.preventDefault(); 
                             zip = $('#zip').val().trim(); 
+                            console.log($('#zip').val().trim()); 
                             // push to firebase
                             var updates = {};
                             updates['/users/' + user.uid + '/zipcode/'] = zip;
@@ -559,6 +567,8 @@
             }); 
         });
         ////////// TO DO
+        // reminder-modal needs to be taller
+        // close infoWindow on next click
         // window.referrer => which urls ref user to wic? 
         // google translate api for infoWindows
         // wic map up and running
