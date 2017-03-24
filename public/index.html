@@ -4,10 +4,10 @@
 <head>
     <title>Compass</title>
     <meta charset="utf-8">
-    <!-- Compiled and minified CSS -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style type="text/css">
     .brand-logo {
         height: 1.5em;
@@ -37,6 +37,17 @@
     
     #GetStarted {
         margin-top: 10%;
+        line-height: 1.2;
+        font-size: 1.7em; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #ee6e73;
+        color: white;
+        width: auto;
+        background: #ee6e73;
+        margin-bottom: 10%;
+        height: auto;
     }
     </style>
 </head>
@@ -47,13 +58,11 @@
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-               <!--  <li><a href="index.html" class='waves-effect' id="home">Home</a></li> -->
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
                 <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
-                <li><a href="feedbck.ht" class='waves-effect' id="feedback">Feedback</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <!-- <li><a href="index.html class='waves-effect'" id="mobile-home">Home</a></li> -->
                 <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
                 <li><a href="program-selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
@@ -62,21 +71,17 @@
     </nav>
     <div class="container" id="welcome_page-container">
         <div class="row">
-            <div class="col col s12 m12 l12">
-                <div class="center-align">
-                    <!--    Spanish language Button -->
-                    <a href="#create" class="btn-large waves-effect waves-light z-depth-5" id="GetStarted">Login with Google to get started! ------ ¡Inicia sesión con Google para empezar!</a>
-                </div>
+            <div class="col s12 m12 l12">
+                <a class="waves-effect waves-light btn-large" id="GetStarted">
+                    Click here to login with google and get started!<br><br>
+                    ¡Haga clic aquí para iniciar sesión con google y empezar!
+                </a>
             </div>
         </div>
         <div class="row">
-            <div class="col col s12 m12 l12">
-                <div class="center-align">
-                    <!--    Spanish language Button -->
-                    <a href="#create" class="btn-large waves-effect waves-light z-depth-5" id="EspButton">Español</a>
-                    <!--    English language Button -->
-                    <a href="#learn" class="btn-large waves-effect waves-light z-depth-5" id="EngButton">English</a>
-                </div>
+            <div class="col s12 m12 l12">
+                <a href="#create" class="btn-large waves-effect waves-light z-depth-5" id="EspButton">Español</a>
+                <a href="#learn" class="btn-large waves-effect waves-light z-depth-5" id="EngButton">English</a>
             </div>
         </div>
     </div>
