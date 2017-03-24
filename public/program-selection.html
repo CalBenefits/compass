@@ -131,7 +131,6 @@
             if (user) {
                 console.log(user.displayName);
                 firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
-                    console.log(snap.val().language);
                     if (snap.val().language === "spanish") {
                         console.log("Si!");
                         languageStatus = true;
