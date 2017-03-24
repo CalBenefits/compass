@@ -6,13 +6,53 @@
     <meta charset="utf-8">
     <meta name="viewport" content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <style type="text/css">
     .brand-logo {
         height: 1.5em;
         width: 1.5em;
         margin: .25em .15em;
+    }
+    
+    html {
+        min-height: 100vh;
+        min-width: 100vw;
+    }
+    
+    span {
+        text-align: center;
+    }
+    .row {
+        margin-bottom: 0;
+    }
+    
+    #fs-text,
+    #wic-text {
+        font-size: 1.6rem;
+    }
+    /*button padding*/
+    #mapsFS,
+    #applyFS,
+    #mapsWIC,
+    #eligibleWIC {
+        line-height: 1.2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #26a69a;
+        color: white;
+        width: auto;
+        background: #26a69a;
+        margin-bottom: 10%;
+    }
+    
+    #select-wic,
+    #select-fs {
+        display: flex;
+        justify-content: center;
+        padding-top: 13%;
+        padding-bottom: 9%;
     }
     </style>
 </head>
