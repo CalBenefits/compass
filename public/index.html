@@ -11,6 +11,7 @@
     <style type="text/css">
     body {
         background-image: url('assets/img/family_eating.jpg');
+        background-size: 100% 100%;
     }
     
     .brand-logo {
@@ -46,6 +47,7 @@
         width: auto;
         background: #26a69a;
         margin-bottom: 10%;
+        padding:5%;
         height: auto;
     }
     </style>
@@ -73,10 +75,10 @@
             <div class="col m4 l4"></div>
             <div class="col s12 m4 l4">
                 <a class="waves-effect waves-light btn-large getStarted">
-                    Click here to login with google and get started!    
+                    Get started!    
                 </a>
                 <a class="waves-effect waves-light btn-large getStarted">
-                    ¡Haga clic aquí para iniciar sesión con google y empezar!
+                    ¡Empezar!
                 </a>
             </div>
             <div class="col m4 l4"></div>
@@ -130,25 +132,15 @@
             showLang();
             // calling 'hide #GetStarted button + show language buttons' on click event 
             event.preventDefault();
-            firebase.auth().signInWithPopup(provider).then(function(result) {
+
+            firebase.auth().signInWithRedirect(provider);
+
+            firebase.auth().getRedirectResult().then(function(result) {
                 if (result.credential) {
                     // This gives you a Google Access Token. You can use it to access the Google API.
                     var token = result.credential.accessToken;
                     var user = result.user;
-                    console.log(user.displayName);
-
-                    var uid = user.uid;
-                    console.log(uid);
-                    var userRef = usersRef.child(uid);
-                    const deets = {
-                        name: result.user.displayName,
-                        income: "",
-                        famSize: "",
-                        zipcode: "",
-                        language: "",
-                    };
-
-                    userRef.set(deets);
+                    alert('user:', user.displayName);
                 }
                 // The signed-in user info.
                 // var user = result.user.displayName;
@@ -167,8 +159,17 @@
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-                console.log(user.displayName);
                 showLang();
+                var uid = user.uid;
+                var userRef = usersRef.child(uid);
+                const deets = {
+                    name: user.displayName,
+                    income: "",
+                    famSize: "",
+                    zipcode: "",
+                    language: "",
+                };
+                userRef.set(deets);
                 $('#EspButton').on('click', function(event) {
                     var rootRef = firebase.database().ref();
                     var updates = {};
