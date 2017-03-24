@@ -100,9 +100,16 @@
                 event.preventDefault();
                 var updates = {};
                 updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
+                updates['/users/' + user.id + '/famSize/'] = $('#household').val();
+                updates['/users/'] + user.id + '/income/'] = $('#income').val();
+                if ($('#pregnancy').val() === '1') {
+                    updates['/users/' + user.id + '/wicEligible/'] = "true"; 
+                } else {
+                    updates['/users/' + user.id + '/wicEligible/'] = "false";
+                }
                 // write updates
                 rootRef.update(updates);
-                window.location = "mapWIC.html";
+                window.location = "map.html";
             });
             if (user) {
                 firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
@@ -156,7 +163,6 @@
                         }
                     }
                 });
-                // off to maps 
             } else {
                 console.log('No user is signed in.');
             }
@@ -166,16 +172,16 @@
         // provides nav bar with functionality
 
         // this button directs them to the WIC Map, along with the eligibility result;
-        var pregnancyCheck = $('#pregnancy').val();
-        //console.log(pregnancyCheck)
-        var householdCheck = $('#household').val();
-        var incomeCheck = $('#income').val();
+        // var pregnancyCheck = $('#pregnancy').val();
+        // //console.log(pregnancyCheck)
+        // var householdCheck = $('#household').val();
+        // var incomeCheck = $('#income').val();
 
-        var incomeArray = [0, 1832, 2470, 3108, 3747, 4385, 5023, 5663, 6304];
-        if (pregnancyCheck === '1' && householdCheck > 8 && (incomeCheck <= (6304 + (householdCheck - 8) * 642))) {
-            window.location = 'mapWIC.html';
-        } else if (pregnancyCheck === '1' && householdCheck <= 8 && (incomeCheck <= incomeArray[householdCheck])) {
-            window.location = "mapWIC.html";
+        // var incomeArray = [0, 1832, 2470, 3108, 3747, 4385, 5023, 5663, 6304];
+        // if (pregnancyCheck === '1' && householdCheck > 8 && (incomeCheck <= (6304 + (householdCheck - 8) * 642))) {
+        //     window.location = 'mapWIC.html';
+        // } else if (pregnancyCheck === '1' && householdCheck <= 8 && (incomeCheck <= incomeArray[householdCheck])) {
+        //     window.location = "mapWIC.html";
             // } else if (pregnancyCheck !== '0') {
             // window.location = "https://getcalfresh.org/";
         };
