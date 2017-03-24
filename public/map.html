@@ -50,6 +50,10 @@
         width: 55vw !important;
     }
 
+    #reminder-modal {
+        height: 40vh !important;
+    }
+
     .modal-content {
         height: 35vh;
     }
@@ -417,7 +421,7 @@
                                 });
                                 // attach a listener to each marker
                                 google.maps.event.addListener(marker, 'click', function() {
-                                    return this.infoWindow.open(map, this);
+                                    this.infoWindow.open(map, this);
                                 });
                             }
                         }
@@ -533,9 +537,9 @@
                             event.preventDefault();  
                             // render map
                             if (langState === 'es') {
-                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=en&libraries=places&callback=init />");
-                            } else {
                                 $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                            } else {
+                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
                             }
                             // close form-modal
                             $('#form-modal').modal('close'); 
@@ -545,17 +549,17 @@
                         // submit event listener, which pushes zip to db, kicks off map and opens reminder-modal
                         $('button[type="submit"]').on('click', function(event) {
                             event.preventDefault(); 
+                            console.log(langState); 
                             zip = $('#zip').val().trim(); 
-                            console.log($('#zip').val().trim()); 
                             // push to firebase
                             var updates = {};
                             updates['/users/' + user.uid + '/zipcode/'] = zip;
                             rootRef.update(updates);
                             // render map
                             if (langState === 'es') {
-                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=en&libraries=places&callback=init />");
-                            } else {
                                 $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                            } else {
+                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
                             }
                             // close form-modal
                             $('#form-modal').modal('close'); 
@@ -567,7 +571,6 @@
             }); 
         });
         ////////// TO DO
-        // reminder-modal needs to be taller
         // close infoWindow on next click
         // window.referrer => which urls ref user to wic? 
         // google translate api for infoWindows
