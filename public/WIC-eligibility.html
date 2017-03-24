@@ -26,16 +26,14 @@
             <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
                 <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html" class='waves-effect' id="home">Home</a></li>
-                <li><a href="about.html" class='waves-effect' id="about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
-                <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
+                <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
+                <li><a href="program-selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
+                <li><a href="feedback.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
             </ul>
         </div>
     </nav>
@@ -75,38 +73,14 @@
                 </div>
         </div>
     </div>
-    <footer id="footer" class="site-footer">
-        <div class="container">
-            &copy; Copyright 2017 COMPASS
-        </div>
-    </footer>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript">
     $(document).ready(function() {
 
-        var feedbackTrans = {
-            menu: {
-                home: 'Casa',
-                about: 'Sobre',
-                programs: 'Programas',
-                feedback: 'Reacción'
-            },
+        var languageStatus;
 
-            body: {
-                wicEligibility: "¿Soy elegible para beneficios de WIC?",
-                wicText1: "Responda estas preguntas para determinar la elegibilidad para los beneficios de WIC.",
-                zipCode: "Introduzca código postal",
-                wicText2: "¿Al menos uno de los siguientes describe a alguien en su hogar: 1) está embarazada 2) ha tenido un bebé (o estado embarazada) en los últimos 6 meses 3) actualmente está amamantando a un bebé menor de 12 meses 4) es Un bebé, un niño o un niño de crianza menor de 5 años de edad? ",
-                wicText3: "Elija su opción",
-                yes: "Sí",
-                no: "No",
-                wicText4: "Tamaño del hogar (excluyendo miembro que es mayor de 60 años, o está deshabilitado)",
-                wicText5: "Ingresos mensuales (incluyendo seguro social) en dólares $",
-                submitForm: "Enviar"
-            }
-        }
-
+        $(".button-collapse").sideNav();
 
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
@@ -118,70 +92,96 @@
 
         firebase.initializeApp(config);
         var rootRef = firebase.database().ref();
-        var updates = {};
+        // firebase.auth().onAuthStateChanged(function(user) {
+        var usersRef = rootRef.child('users');
+        // var childRef = usersRef.child();
+        firebase.auth().onAuthStateChanged(function(user) {
+            $('#submitForm').click(function(event) {
+                event.preventDefault();
+                var updates = {};
+                updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
+                // write updates
+                rootRef.update(updates);
+                window.location = "mapWIC.html";
+            });
+            if (user) {
+                firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
+                    console.log(snap.val().language);
+                    if (snap.val().language === "spanish") {
+                        console.log("Si!");
+                        languageStatus = true;
+                        console.log(languageStatus);
+
+                        if (languageStatus === true) {
+                            var feedbackTrans = {
+                                menu: {
+                                    home: 'Casa',
+                                    about: 'Sobre',
+                                    programs: 'Programas',
+                                    feedback: 'Reacción'
+                                },
+
+                                body: {
+                                    wicEligibility: "¿Soy elegible para beneficios de WIC?",
+                                    wicText1: "Responda estas preguntas para determinar la elegibilidad para los beneficios de WIC.",
+                                    zipCode: "Introduzca código postal",
+                                    wicText2: "¿Al menos uno de los siguientes describe a alguien en su hogar: 1) está embarazada 2) ha tenido un bebé (o estado embarazada) en los últimos 6 meses 3) actualmente está amamantando a un bebé menor de 12 meses 4) es Un bebé, un niño o un niño de crianza menor de 5 años de edad? ",
+                                    wicText3: "Elija su opción",
+                                    yes: "Sí",
+                                    no: "No",
+                                    wicText4: "Tamaño del hogar (excluyendo miembro que es mayor de 60 años, o está deshabilitado)",
+                                    wicText5: "Ingresos mensuales (incluyendo seguro social) en dólares $",
+                                    submitForm: "Enviar"
+                                }
+                            }
+                            $('#home').text(feedbackTrans.menu.home);
+                            $('#about').text(feedbackTrans.menu.about);
+                            $('#programs').text(feedbackTrans.menu.programs);
+                            $('#feedback').text(feedbackTrans.menu.feedback);
+                            $('#mobile-home').text(feedbackTrans.menu.home);
+                            $('#mobile-about').text(feedbackTrans.menu.about);
+                            $('#mobile-programs').text(feedbackTrans.menu.programs);
+                            $('#mobile-feedback').text(feedbackTrans.menu.feedback);
+                            $('#wicEligibility').text(feedbackTrans.body.wicEligibility);
+                            $('#wicText1').text(feedbackTrans.body.wicText1);
+                            $('#zipCode').text(feedbackTrans.body.zipCode);
+                            $('#wicText2').text(feedbackTrans.body.wicText2);
+                            $('#wicText3').text(feedbackTrans.body.wicText3);
+                            $('#yes').text(feedbackTrans.body.yes);
+                            $('#no').text(feedbackTrans.body.no);
+                            $('#wicText4').text(feedbackTrans.body.wicText4);
+                            $('#wicText5').text(feedbackTrans.body.wicText5);
+                            $('#submitForm').text(feedbackTrans.body.submitForm);
+
+                        }
+                    }
+                });
+                // off to maps 
+            } else {
+                console.log('No user is signed in.');
+            }
+        });
 
         //$('select').material_select();
         // provides nav bar with functionality
-        $(".button-collapse").sideNav();
 
-        // this button directs them to the WIC Map, along with the eligibility results
-        $('#submitForm').click(function(event) {
-            event.preventDefault();
-            firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                    console.log(user.displayName, "is logged in");
-                    // User is signed in.
-                    // add deets to updates obj
-                    updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
-                    // write updates
-                    rootRef.update(updates);
-                    // off to maps 
-                    // window.location = "mapFS.html";
-                } else {
-                    console.log('No user is signed in.');
-                }
-            });
-            var pregnancyCheck = $('#pregnancy').val();
-            //console.log(pregnancyCheck)
-            var householdCheck = $('#household').val();
-            var incomeCheck = $('#income').val();
+        // this button directs them to the WIC Map, along with the eligibility result;
+        var pregnancyCheck = $('#pregnancy').val();
+        //console.log(pregnancyCheck)
+        var householdCheck = $('#household').val();
+        var incomeCheck = $('#income').val();
 
-            var incomeArray = [0, 1832, 2470, 3108, 3747, 4385, 5023, 5663, 6304];
-            if (pregnancyCheck === '1' && householdCheck > 8 && (incomeCheck <= (6304 + (householdCheck - 8) * 642))) {
-                window.location = 'mapWIC.html';
-            } else if (pregnancyCheck === '1' && householdCheck <= 8 && (incomeCheck <= incomeArray[householdCheck])) {
-                window.location = "mapWIC.html";
-                // } else if (pregnancyCheck !== '0') {
-                // window.location = "https://getcalfresh.org/";
-            };
-
-        });
+        var incomeArray = [0, 1832, 2470, 3108, 3747, 4385, 5023, 5663, 6304];
+        if (pregnancyCheck === '1' && householdCheck > 8 && (incomeCheck <= (6304 + (householdCheck - 8) * 642))) {
+            window.location = 'mapWIC.html';
+        } else if (pregnancyCheck === '1' && householdCheck <= 8 && (incomeCheck <= incomeArray[householdCheck])) {
+            window.location = "mapWIC.html";
+            // } else if (pregnancyCheck !== '0') {
+            // window.location = "https://getcalfresh.org/";
+        };
 
     });
     </script>
-    <!-- <div><p>Based on your responses, you may be eligible for WIC benefits!
-    Our Prescreening Tool does not guarantee that you will be eligible for benefits. Contact the WIC State or local agency serving your area to schedule an appointment. You must apply for benefits at your WIC local agency. 
-
-    Documentation List
-    You will need to bring several documents to your WIC appointment. Please ask your WIC local agency which documents are required. Click on the documentation types below to see examples.
-    Proof of Current Benefits Enrollment
-    Proof of Identity (Woman)
-    Proof of Identity (Child/Infant)
-    Proof of Residency
-    Proof of Pregnancy</p></div>
-
-    <script type="text/javascript">
-        //Supplemental Nutrition Assistance Program (SNAP)/Food Stamps/CalFresh Eligibility
-        //Enter Zip code
-        //is there at least one person is age 60 or older, or is disabled in household?
-        //household size (excluding members that is age 60+, or is disabled)
-        //monthly income (including social security)
-        //Submit - when clicked, link to certain forms
-        $(document).ready(function() {
-        $('select').material_select();
-        });
-        //
-    </script>-->
 </body>
 
 </html>
