@@ -14,7 +14,6 @@
         width: 1.5em;
         margin: .25em .15em;
     }
-    
     #submitButton {
         margin: 10px 0 30px 0;
     }
@@ -38,7 +37,7 @@
             </ul>
         </div>
     </nav>
-    <div class="container">
+    <div class="container" id='clear'>
         <div class="row">
             <section class="col s12">
                 <!-- header row -->
@@ -62,25 +61,25 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="name" type="text" class="validate">
-                        <label for="name" id="name-feild" data-error="incorrect" data-success="correct">Your Name</label>
+                        <label for="name" id="name-field" data-error="incorrect" data-success="correct">Your Name</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="email" type="email" class="validate">
-                        <label for="email" id="email-feild" data-error="incorrect" data-success="correct">Email</label>
+                        <label for="email" id="email-field" data-error="incorrect" data-success="correct">Email</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="subject" type="text" class="validate clearable">
-                        <label for="subject" id="subject-feild" data-error="incorrect" data-success="correct">Subject</label>
+                        <label for="subject" id="subject-field" data-error="incorrect" data-success="correct">Subject</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <textarea id="message" class="materialize-textarea clearable" data-length="1000"></textarea>
-                        <label for="textarea" id="message-feild">Message</label>
+                        <label for="textarea" id="message-field">Message</label>
                     </div>
                 </div>
             </form>
@@ -94,112 +93,110 @@
                 </div>
             </div>
         </div>
-        <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-        <script type="text/javascript">
-        $(document).ready(() => {
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(() => {
 
-            $(".button-collapse").sideNav();
+        $(".button-collapse").sideNav();
 
-            var config = {
-                apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
-                authDomain: "cal-compass.firebaseapp.com",
-                databaseURL: "https://cal-compass.firebaseio.com",
-                storageBucket: "cal-compass.appspot.com",
-                messagingSenderId: "888186000127"
+        var config = {
+            apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
+            authDomain: "cal-compass.firebaseapp.com",
+            databaseURL: "https://cal-compass.firebaseio.com",
+            storageBucket: "cal-compass.appspot.com",
+            messagingSenderId: "888186000127"
+        };
+
+        firebase.initializeApp(config);
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
+                    console.log(snap.val().language);
+                    if (snap.val().language === "spanish") {
+                        console.log("Si!");
+                        languageStatus = true;
+                        console.log(languageStatus);
+                        if (languageStatus === true) {
+                            var feedbackTrans = {
+                                menu: {
+                                    home: 'Casa',
+                                    about: 'Sobre',
+                                    programs: 'Programas',
+                                    feedback: 'Reacción'
+                                },
+                                body: {
+                                    header_feedback: "Reacción",
+                                    callout1: '¿Tiene una pregunta, un comentario, una sugerencia de funciones o simplemente desea hacer un comentario? Estamos muy contentos de recibir sus comentarios.',
+                                    callout2: 'Envíenos su mensaje y nos pondremos en contacto con usted lo antes posible.'
+                                },
+                                form: {
+                                    name: "Tu Nombre",
+                                    email: "Email",
+                                    subject: "Tema",
+                                    message: "Mensaje",
+                                    submit: "Enviar"
+                                }
+                            }
+                            $('#home').text(feedbackTrans.menu.home);
+                            $('#about').text(feedbackTrans.menu.about);
+                            $('#programs').text(feedbackTrans.menu.programs);
+                            $('#feedback').text(feedbackTrans.menu.feedback);
+                            $('#mobile-home').text(feedbackTrans.menu.home);
+                            $('#mobile-about').text(feedbackTrans.menu.about);
+                            $('#mobile-programs').text(feedbackTrans.menu.programs);
+                            $('#mobile-feedback').text(feedbackTrans.menu.feedback);
+                            $('#header-feedback').text(feedbackTrans.body.header_feedback);
+                            $('#callout1').text(feedbackTrans.body.callout1);
+                            $('#callout2').text(feedbackTrans.body.callout2);
+                            $('#name-field').text(feedbackTrans.form.name);
+                            $('#email-field').text(feedbackTrans.form.email);
+                            $('#subject-field').text(feedbackTrans.form.subject);
+                            $('#message-field').text(feedbackTrans.form.message);
+                            $('#submit').text(feedbackTrans.form.submit)
+                        } else {
+                            console.log('No user is signed in.');
+                        }
+                    };
+                });
+            };
+        });
+
+        // Create a variable to reference the database
+        var rootRef = firebase.database().ref();
+        // feedback ref
+        var feedbackRef = rootRef.child('feedback');
+
+        $("#submit").on("click", function(event) {
+            event.preventDefault()
+            var name = $("#name").val();
+            var email = $("#email").val();
+            var subject = $("#subject").val();
+            var message = $("#message").val();
+
+            var feedback = {
+                name: name,
+                email: email,
+                subject: subject,
+                message: message
             };
 
-            firebase.initializeApp(config);
+            feedbackRef.push(feedback);
 
-            firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                    firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
-                        console.log(snap.val().language);
-                        if (snap.val().language === "spanish") {
-                            console.log("Si!");
-                            languageStatus = true;
-                            console.log(languageStatus);
-                            if (languageStatus === true) {
-                                var feedbackTrans = {
-                                    menu: {
-                                        home: 'Casa',
-                                        about: 'Sobre',
-                                        programs: 'Programas',
-                                        feedback: 'Reacción'
-                                    },
-                                    body: {
-                                        header_feedback: "Reacción",
-                                        callout1: '¿Tiene una pregunta, un comentario, una sugerencia de funciones o simplemente desea hacer un comentario? Estamos muy contentos de recibir sus comentarios.',
-                                        callout2: 'Envíenos su mensaje y nos pondremos en contacto con usted lo antes posible.'
-                                    },
-                                    form: {
-                                        name: "Tu Nombre",
-                                        email: "Email",
-                                        subject: "Tema",
-                                        message: "Mensaje",
-                                        submit: "Enviar"
-                                    }
-                                }
-                                $('#home').text(feedbackTrans.menu.home);
-                                $('#about').text(feedbackTrans.menu.about);
-                                $('#programs').text(feedbackTrans.menu.programs);
-                                $('#feedback').text(feedbackTrans.menu.feedback);
-                                $('#mobile-home').text(feedbackTrans.menu.home);
-                                $('#mobile-about').text(feedbackTrans.menu.about);
-                                $('#mobile-programs').text(feedbackTrans.menu.programs);
-                                $('#mobile-feedback').text(feedbackTrans.menu.feedback);
-                                $('#header-feedback').text(feedbackTrans.body.header_feedback);
-                                $('#callout1').text(feedbackTrans.body.callout1);
-                                $('#callout2').text(feedbackTrans.body.callout2);
-                                $('#name-feild').text(feedbackTrans.form.name);
-                                $('#email-feild').text(feedbackTrans.form.email);
-                                $('#subject-feild').text(feedbackTrans.form.subject);
-                                $('#message-feild').text(feedbackTrans.form.message);
-                                $('#submit').text(feedbackTrans.form.submit)
-                            } else {
-                                console.log('No user is signed in.');
-                            }
-                        };
-                    });
-                };
-            });
-
-            // Create a variable to reference the database
-            var rootRef = firebase.database().ref();
-            // feedback ref
-            var feedbackRef = rootRef.child('feedback');
-
-            // Initial Values
-            var name;
-            var email;
-            var subject;
-            var textarea;
-
-            $("#submit").on("click", function(event) {
-                // event.preventDefault() prevents submit button from trying to send a form.
-                event.preventDefault()
-
-                name = $("#name").val();
-                email = $("#email").val();
-                subject = $("#subject").val();
-                message = $("#message").val();
+            // clears input and textarea forms after submitting 
+            if (languageStatus === true) {
+                $('#clear').text('Gracias por sus comentarios!');
+            } else {
+                $("#clear").replaceWith("<div class='container'><h2>Thanks for your feedback!</h2></div>");
+            }
 
 
-                var feedback = {
-                    name: name,
-                    email: email,
-                    subject: subject,
-                    message: message
-                };
-
-                feedbackRef.push(feedback);
-
-                // clears input and textarea forms after submitting 
-                $(".clearable").val("");
-            });
         });
-        </script>
+    });
+    </script>
 </body>
 
 </html>
