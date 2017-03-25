@@ -518,7 +518,6 @@
                 },
                 // errorElement: 'div',
                 errorPlacement: function(error, element) {
-                    console.log('error:', error, 'element:', element); 
                     var placement = $(element).data('error');
                     if (placement) {
                         $(placement).append(error)
@@ -531,16 +530,11 @@
             firebase.auth().onAuthStateChanged(function(user) {
                 // if user signed in
                 if (user) {
-                    console.log('signed in'); 
                     firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
                         // if wic
-                        console.log(localStorage.getItem('wic')); 
                         if (localStorage.getItem('wic') === 'true') {
-                            console.log('wic true'); 
-                            console.log(snap.val().wicEligible); 
                             wic = true;
                             // if referrer = program_selection.html, bring up zip modal
-                            console.log('referrer:', document.referrer); 
                             if (document.referrer === 'https://cal-compass.firebaseapp.com/program_selection.html') {
                                 $('.wic-clearable').remove(); 
                                 // spanish speaker
@@ -654,7 +648,6 @@
                                     $('#reminder-modal-wic').modal('open'); 
                                 });
                             } else {
-                                console.log('other referrer'); 
                                 zip = snap.val().zipcode; 
                                 if (snap.val().language === 'spanish') {
                                     langState = 'es';
@@ -666,7 +659,6 @@
                                     $("label[for='zip']").text(mapTrans.snap.formModal.zip);
                                     $("button[type='submit']").text(mapTrans.snap.formModal.submit)
                                     // tranlsate reminder modal to spanish
-                                    console.log('wic:', snap.val().wicEligible); 
                                     if (snap.val().wicEligible === 'true') {
                                         $('.collection-header > h4').text(mapTrans.wic.reminderModal.headerEligible);
                                     } else {
@@ -753,7 +745,6 @@
                                     });
                                 }
                             }
-                            console.log('...'); 
                             // open form modal
                             $('#form-modal').modal('open');
                             // submit event listener, which pushes zip to db, kicks off map and opens reminder-modal
