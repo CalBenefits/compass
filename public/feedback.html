@@ -26,8 +26,6 @@
         webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
-        height: 100%;
-        width: 100%;
         font-family: 'Poppins', sans-serif;
     }
     
@@ -61,55 +59,53 @@
             </ul>
         </div>
     </nav>
-    <div class="container" id='clear'>
-        <div class="row">
-            <section class="col s12">
-                <!-- header row -->
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <h2 class="section-header center-align" id="header-feedback">How can we improve?</h2>
-                    </div>
+    <div class="container">
+        <section>
+            <!-- header row -->
+            <div class="row">
+                <div class="col m12 l12">
+                    <h2 class="section-header center-align" id="header-feedback">How can we improve?</h2>
                 </div>
-                <div class="divider"></div>
-                <!--  paragraph row -->
-                <div class="row">
-                    <div class="col m12 l12">
-                        <p class="flow-text" id="callout1">Have a question, comment, feature suggestion, or just want to rant? We're excited to have your feedback!</p>
-                        <p class="flow-text" id="callout2">Send us a message and we'll get back to you as soon as possible. </p>
-                    </div>
+            </div>
+            <div class="divider"></div>
+            <!--  paragraph row -->
+            <div class="row">
+                <div class="col m12 l12">
+                    <p class="flow-text" id="callout1">Have a question, comment, feature suggestion, or just want to rant? We're excited to have your feedback!</p>
+                    <p class="flow-text" id="callout2">Send us a message and we'll get back to you as soon as possible. </p>
                 </div>
-            </section>
-        </div>
-        <div class="row">
-            <form>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="name" type="text" class="validate" pattern="^(?:[\u00c0-\u01ffa-zA-Z'-]){2,}(?:\s[\u00c0-\u01ffa-zA-Z'-]{2,})+$" required='' aria-required='true'>
-                        <label for="name" id="name-field" data-error="incorrect" data-success="correct">Your Name</label>
-                    </div>
+            </div>
+        </section>
+    </div>
+    <div class="container">
+        <form class="valign">
+            <div class="row">
+                <div class="input-field">
+                    <input id="name" type="text" class="validate" pattern="^(?:[\u00c0-\u01ffa-zA-Z'-]){2,}(?:\s[\u00c0-\u01ffa-zA-Z'-]{2,})+$" required='' aria-required='true'>
+                    <label for="name" id="name-field" data-error="incorrect" data-success="correct">Your Name</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="email" type="email" class="validate" required='' aria-required='true'>
-                        <label for="email" id="email-field" data-error="incorrect" data-success="correct">Email</label>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="email" type="email" class="validate" required='' aria-required='true'>
+                    <label for="email" id="email-field" data-error="incorrect" data-success="correct">Email</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input id="subject" type="text" class="validate clearable">
-                        <label for="subject" id="subject-field" minlength='6' data-error="incorrect" data-success="correct" required='' aria-required='true'>Subject</label>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <input id="subject" type="text" class="validate clearable">
+                    <label for="subject" id="subject-field" minlength='6' data-error="incorrect" data-success="correct" required='' aria-required='true'>Subject</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                        <textarea id="message" class="materialize-textarea clearable" minlength='10' data-success='' data-error='correct' required='correct' aria-required='true'></textarea>
-                        <label for="textarea" id="message-field">Message</label>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="input-field">
+                    <textarea id="message" class="materialize-textarea clearable" minlength='10' data-success='' data-error='correct' required='correct' aria-required='true'></textarea>
+                    <label for="textarea" id="message-field">Message</label>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
         <div class="row" id="submit">
-            <div class="input-field col s10">
+            <div class="input-field">
                 <div class="right">
                     <button id="submit" class="btn waves-effect waves-light " type="submit" name="action"> Send
                         <i class="material-icons right">send</i>
@@ -126,7 +122,7 @@
     <script type="text/javascript">
     $(document).ready(() => {
 
-        var languageStatus; 
+        var languageStatus;
 
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
@@ -147,9 +143,9 @@
             if (user) {
                 firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
                     if (snap.val().language) {
-                        language = 'spanish'; 
+                        language = 'spanish';
                     }
-                }); 
+                });
                 firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
                     console.log(snap.val().language);
                     if (snap.val().language === "spanish") {
@@ -195,8 +191,8 @@
                     }
                 });
             };
-        }); 
-        $("#submit").on("click", function(event) {    
+        });
+        $("#submit").on("click", function(event) {
             event.preventDefault()
             var name = $("#name").val();
             var email = $("#email").val();
@@ -214,9 +210,9 @@
 
             // clears input and textarea forms after submitting 
             if (languageStatus === true) {
-                $('#clear').replaceWith('<div class="container"><h2>Gracias por sus comentarios!</h2></div>');
+                $('#header-feedback').text('Gracias por sus comentarios!');
             } else {
-                $("#clear").replaceWith("<div class='container'><h2>Thanks for your feedback!</h2></div>");
+                $("#header-feedback").text("Thanks for your feedback!");
             }
         });
     });
