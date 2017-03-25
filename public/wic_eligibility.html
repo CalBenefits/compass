@@ -95,7 +95,6 @@
     }
     </style>
 </head>
-
 <body>
     <nav>
         <div class="nav-wrapper">
@@ -196,6 +195,9 @@
                 updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
                 updates['/users/' + user.uid + '/famSize/'] = $('#household').val();
                 updates['/users/' + user.uid + '/income/'] = $('#income').val();
+                if ($('#pregnancy').val() === '2') {
+                    updates['/users/' + user.uid + '/wicEligible/'] = "false";
+                }
                 if ($('#pregnancy').val() === '1' && $('#household').val() > 8 && ($('#income').val() <= (6304 + ($('#household').val() - 8) * 642))) {
                     updates['/users/' + user.uid + '/wicEligible/'] = "true"; 
                 } else if ($('#pregnancy').val() === '1' && $('#household').val() <= 8 && (($('#income').val() <= incomeArray[$('#household').val()]))) {
@@ -211,6 +213,7 @@
                 localStorage.setItem('wic', 'true'); 
                 window.location = "map.html";
             });
+            
             if (user) {
                 firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
                     if (snap.val().language === "spanish") {
@@ -264,45 +267,45 @@
             }
         });
 
-    $.validator.addMethod( "zipcodeCA", function( value, element ) {
-    return this.optional( element ) || /^9[0-6]\d\d\d$/.test( value );
-}, "The specified ZIP Code is invalid" );
+        $.validator.addMethod( "zipcodeCA", function( value, element ) {
+            return this.optional( element ) || /^9[0-6]\d\d\d$/.test( value );
+        }, "The specified ZIP Code is invalid" );
 
-            // validate signup form on keyup and submit
-            $("#form").validate({
-                rules: {
-                   
-                    zipcode: {
-                        required: true,
-                        zipcodeCA : true,
-                        minlength: 5,
-                        maxlength: 5
-                    },
-                   
+        // validate signup form on keyup and submit
+        $("#form").validate({
+            rules: {
+               
+                zipcode: {
+                    required: true,
+                    zipcodeCA : true,
+                    minlength: 5,
+                    maxlength: 5
                 },
+               
+            },
 
-                messages: {
-                   
-                    zipcode: {
-                        required: "Please enter a Zip code",
-                        maxlength: "Zip code must consist of 5 characters",
-                        minlength: "Zip code must consist of 5 characters"
-                    },
-                       
+            messages: {
+               
+                zipcode: {
+                    required: "Please enter a Zip code",
+                    maxlength: "Zip code must consist of 5 characters",
+                    minlength: "Zip code must consist of 5 characters"
                 },
+                   
+            },
 
-                 errorElement : 'div',
-                errorPlacement: function(error, element) {
-                    
+             errorElement : 'div',
+            errorPlacement: function(error, element) {
+                
 
-                        var placement = $(element).data('error');
-                      if (placement) {
-                        $(placement).append(error)
-                      } else {
-                        error.insertAfter(element);
-                      } 
-                }
-            });
+                    var placement = $(element).data('error');
+                  if (placement) {
+                    $(placement).append(error)
+                  } else {
+                    error.insertAfter(element);
+                  } 
+            }
+        });
 
     });
     </script>

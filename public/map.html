@@ -537,6 +537,7 @@
                         console.log(localStorage.getItem('wic')); 
                         if (localStorage.getItem('wic') === 'true') {
                             console.log('wic true'); 
+                            console.log(snap.val().wicEligible); 
                             wic = true;
                             // if referrer = program_selection.html, bring up zip modal
                             console.log('referrer:', document.referrer); 
@@ -642,6 +643,8 @@
                                     } else {
                                         if (snap.val().wicEligible) {
                                             $('.collection-header > h4').text("You're eligible! Remember to bring");
+                                        } else {
+                                            $('.collection-header > h4').text("You might want to bring...");
                                         }
                                         $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
                                     }
@@ -651,6 +654,7 @@
                                     $('#reminder-modal-wic').modal('open'); 
                                 });
                             } else {
+                                console.log('other referrer'); 
                                 zip = snap.val().zipcode; 
                                 if (snap.val().language === 'spanish') {
                                     langState = 'es';
@@ -662,6 +666,7 @@
                                     $("label[for='zip']").text(mapTrans.snap.formModal.zip);
                                     $("button[type='submit']").text(mapTrans.snap.formModal.submit)
                                     // tranlsate reminder modal to spanish
+                                    console.log('wic:', snap.val().wicEligible); 
                                     if (snap.val().wicEligible === 'true') {
                                         $('.collection-header > h4').text(mapTrans.wic.reminderModal.headerEligible);
                                     } else {
@@ -673,8 +678,10 @@
                                     // spanish map
                                     $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
                                 } else {
-                                    if (snap.val().wicEligible) {
+                                    if (snap.val().wicEligible === 'true') {
                                         $('.collection-header > h4').text("You're eligible! Remember to bring");
+                                    } else {
+                                        $('.collection-header > h4').text("You might want to bring...");
                                     }
                                     // english map
                                     $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
