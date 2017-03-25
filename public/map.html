@@ -460,7 +460,6 @@
 
             var mapTrans = {
                 menu: {
-                    home: 'Casa',
                     about: 'Sobre',
                     programs: 'Programas',
                     feedback: 'Reacción'
@@ -499,7 +498,6 @@
                 if (user) {
                     firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
                         // if wic
-                        console.log(snap.val().wicEligible); 
                         if (localStorage.getItem('wic') === 'true') {
                             wic = true;
                             // if referrer = program_selection.html, bring up zip modal
@@ -507,17 +505,18 @@
                                 $('.wic-clearable').remove(); 
                                 // spanish speaker
                                 if (snap.val().language === 'spanish') {
+                                    console.log('espanish'); 
                                     langState = 'es';
                                     // translate nav to spanish
-                                    $('.home').text(mapTrans.home);
-                                    $('.about').text(mapTrans.about);
-                                    $('.programs').text(mapTrans.programs);
-                                    $('.feedback').text(mapTrans.feedback); 
+                                    $('.about').text(mapTrans.menu.about);
+                                    $('.programs').text(mapTrans.menu.programs);
+                                    $('.feedback').text(mapTrans.menu.feedback); 
                                     // translate form modal to spanish
                                     $("label[for='zip']").text(mapTrans.snap.formModal.zip);
                                     $("input[type='submit']").text(mapTrans.snap.formModal.submit); 
                                     // tranlsate reminder modal to spanish
-                                    if (snap.val().wicEligible) {
+                                    console.log('wicEligible:', snap.val().wicEligible); 
+                                    if (snap.val().wicEligible === 'true') {
                                         $('.collection-header > h4').text(mapTrans.wic.reminderModal.headerEligible);
                                     } else {
                                         $('.collection-header > h4').text(mapTrans.wic.reminderModal.header);
