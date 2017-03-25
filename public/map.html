@@ -395,7 +395,7 @@
                                 if (navigator.platform.indexOf("iPhone") != -1 || (navigator.platform.indexOf("iPod") != -1) || (navigator.platform.indexOf("iPad") != -1)) {
                                     placeDetails.navLink = "maps://maps.google.com/maps?daddr=" + formatAddr(result.vicinity);
                                 } else {
-                                    placeDetails.navLink = "http://maps.google.com/maps?daddr=" + formatAddr(result.vicinity);
+                                    placeDetails.navLink = "https://maps.google.com/maps?daddr=" + formatAddr(result.vicinity);
                                 }
                                 // if image, display
                                 if (result.photos) {
@@ -536,7 +536,7 @@
                         if (localStorage.getItem('wic') === 'true') {
                             wic = true;
                             // if referrer = program_selection.html, bring up zip modal
-                            if (document.referrer === 'http://localhost:5000/program_selection.html') {
+                            if (document.referrer === 'https://cal-compass.firebaseapp.com/program_selection.html') {
                                 $('.wic-clearable').remove(); 
                                 // spanish speaker
                                 if (snap.val().language === 'spanish') {
