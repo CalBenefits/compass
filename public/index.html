@@ -8,9 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:500" rel="stylesheet">
     <style type="text/css">
-    body {
-        background-image: url('assets/img/freshest.jpg');
+    html {
+        background: url('assets/img/freshest.jpg') no-repeat center center fixed;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -18,7 +19,16 @@
         webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
+        font-family: 'Poppins', sans-serif;
+
     }
+    
+    body {
+        background: rgba(255, 255, 255, 0.5);
+        height:100%;
+        width:100%;
+    }
+
     
     .brand-logo {
         height: 1.5em;
@@ -28,6 +38,7 @@
     
     #EspButton,
     #EngButton {
+        font-family: 'Poppins', sans-serif;
         line-height: 1.2;
         font-size: x-large;
         display: flex;
@@ -42,6 +53,7 @@
     }
     
     .getStarted {
+        font-family: 'Poppins', sans-serif;
         margin-top: 20%;
         line-height: 1.2;
         font-size: 1.7em;
@@ -66,12 +78,12 @@
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
+                <li><a href="program_selection.html" class='waves-effect' id="programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
+                <li><a href="program_selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
             </ul>
         </div>
@@ -210,7 +222,7 @@
                                 $('#mobile-about').text(feedbackTrans.menu.about);
                                 $('#mobile-programs').text(feedbackTrans.menu.programs);
                                 $('#mobile-feedback').text(feedbackTrans.menu.feedback);
-                                window.location = "program-selection.html";
+                                window.location = "program_selection.html";
                             }
 
                         };
@@ -224,7 +236,7 @@
 
         // button directs to the program selection page
         $('#EngButton').on('click', function(event) {
-            window.location = "program-selection.html";
+            window.location = "program_selection.html";
         });
 
         // calling 'hide language buttons' global function 
