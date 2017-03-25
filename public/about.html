@@ -8,12 +8,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:500" rel="stylesheet">
     <style>
+
     .brand-logo {
         height: 1.5em;
         width: 1.5em;
         margin: .25em .15em;
     }
+    
+    html {
+        background: url('assets/img/family_eating.jpg') no-repeat center center fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+        background: rgba(255, 255, 255, 0.5);
+        height: 100%;
+        width: 100%;
+    }
+
+
     </style>
 </head>
 
@@ -27,6 +49,7 @@
                 <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
+                <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
                 <li><a href="program_selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
             </ul>
@@ -46,7 +69,7 @@
                 <!--  paragraph row -->
                 <div class="row">
                     <div class="col s11 m12 l12">
-                        <p class="flow-text" id="text-about">Compass is a resource anyone can use to locate local Supplemental Nutrition Assistance Program (SNAP) and Women, Infants, and Children (WIC) food and nutrition resources. Compass will tell you–in English or Spanish–whether you're likely to qualify and where to find the nearest office.</p>
+                        <p class="flow-text" id="text-about">Compass points low-income individuals, and families, in the right direction. Compass provides resources for the Supplemental Nutrition Assistance Program (SNAP) and Women Infants and Children (WIC). You can determine eligibility for WIC, apply for SNAP online, and find the nearest office. Whether you’re an English or Spanish speaker we’ve worked hard to point you in the right direction!</p>
                     </div>
                 </div>
             </section>
@@ -87,7 +110,7 @@
 
                                 body: {
                                     header_about: "Sobre",
-                                    text_about: "Compass es un recurso que cualquiera puede usar para localizar los recursos alimentarios y nutricionales del Supplemental Nutrition Assistance Program (SNAP) y Women, Infants, and Children (WIC). Compass te dirá - en inglés o español - si es probable calificar y dónde encontrar la oficina más cercana."
+                                    text_about: "Compass señala a las personas de bajos ingresos ya las familias, en la dirección correcta. Compass proporciona recursos para el Programa de Asistencia de Nutrición Suplementaria (SNAP) y Mujeres, Infantes y Niños (WIC). Puede determinar la elegibilidad para WIC, solicitar SNAP en línea y encontrar la oficina más cercana. Si usted es un orador Inglés o Español que hemos trabajado duro para señalar en la dirección correcta!"
                                 }
                             };
                             $('#home').text(feedbackTrans.menu.home);
