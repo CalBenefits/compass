@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<!-- FIX THE MOBILE VIEW HTML/BODY DON'T COVER ENTIRE SCREEN -->
 
 <head>
     <title>Feedback</title>
@@ -17,11 +18,30 @@
     }
     
     html {
+        background: url('assets/img/food_feedback.jpg') no-repeat center center fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        height: 100%;
+        width: 100%;
         font-family: 'Poppins', sans-serif;
     }
     
-    #submitButton {
-        margin: 10px 0 30px 0;
+    body {
+        background: rgba(255, 255, 255, 0.75);
+    }
+    
+    #submit {
+        margin-bottom: 0;
+    }
+    
+    label {
+        color: black !important;
+        font-size: x-large;
     }
     </style>
 </head>
@@ -47,21 +67,21 @@
                 <!-- header row -->
                 <div class="row">
                     <div class="col s12 m12 l12">
-                        <h2 class="section-header" id="header-feedback">Feedback</h2>
+                        <h2 class="section-header center-align" id="header-feedback">How can we improve?</h2>
                     </div>
                 </div>
                 <div class="divider"></div>
                 <!--  paragraph row -->
                 <div class="row">
-                    <div class="col s11 m12 l12">
-                        <p class="flow-text" id="callout1">Have a question, comment, feature suggestion, or a just want to rant? We're excited to have your feedback.</p>
-                        <p class="flow-text" id="callout2">Send us your message and we'll get back to you as soon as possible. </p>
+                    <div class="col m12 l12">
+                        <p class="flow-text" id="callout1">Have a question, comment, feature suggestion, or just want to rant? We're excited to have your feedback!</p>
+                        <p class="flow-text" id="callout2">Send us a message and we'll get back to you as soon as possible. </p>
                     </div>
                 </div>
             </section>
         </div>
         <div class="row">
-            <form id='feedback-form' class="col s10" class="card-panel hoverable">
+            <form>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="name" type="text" class="validate" pattern="^(?:[\u00c0-\u01ffa-zA-Z'-]){2,}(?:\s[\u00c0-\u01ffa-zA-Z'-]{2,})+$" required='' aria-required='true'>
@@ -88,7 +108,7 @@
                 </div>
             </form>
         </div>
-        <div class="row">
+        <div class="row" id="submit">
             <div class="input-field col s10">
                 <div class="right">
                     <button id="submit" class="btn waves-effect waves-light " type="submit" name="action"> Send
@@ -143,9 +163,9 @@
                                     feedback: 'Reacción'
                                 },
                                 body: {
-                                    header_feedback: "Reacción",
-                                    callout1: '¿Tiene una pregunta, un comentario, una sugerencia de funciones o simplemente desea hacer un comentario? Estamos muy contentos de recibir sus comentarios.',
-                                    callout2: 'Envíenos su mensaje y nos pondremos en contacto con usted lo antes posible.'
+                                    header_feedback: "¿Como podemos mejorar?",
+                                    callout1: '¿Tiene una pregunta, un comentario, una sugerencia de características o simplemente quiere hacer un comentario? ¡Estamos muy contentos de recibir sus comentarios!',
+                                    callout2: 'Envíenos un mensaje y nos pondremos en contacto con usted lo antes posible.'
                                 },
                                 form: {
                                     name: "Tu Nombre",
@@ -170,15 +190,14 @@
                             $('#email-field').text(feedbackTrans.form.email);
                             $('#subject-field').text(feedbackTrans.form.subject);
                             $('#message-field').text(feedbackTrans.form.message);
-                            $('#submit').text(feedbackTrans.form.submit)
-                        } else {
-                            console.log('No user is signed in.');
+                            $('#submit').html('<div class="input-field col s10"><div class="right"><button id="submit" class="btn waves-effect waves-light " type="submit" name="action"> Enviar<i class="material-icons right">send</i></button></div></div>');
                         }
-                    };
+                    } else {
+                        console.log('No user is signed in.');
+                    }
                 });
             };
         }); 
-
         $("#submit").on("click", function(event) {    
             event.preventDefault()
             var name = $("#name").val();
@@ -205,7 +224,6 @@
     });
 
     $(".button-collapse").sideNav();
-
     </script>
 </body>
 
