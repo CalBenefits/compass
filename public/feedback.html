@@ -41,6 +41,11 @@
         color: black !important;
         font-size: x-large;
     }
+
+    .error {
+        font-size: .8rem;
+        color: red;
+    }
     </style>
 </head>
 
@@ -111,18 +116,77 @@
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/additional-methods.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript">
     $(document).ready(() => {
 
         var languageStatus;
+
+        // $.validator.addMethod("zipcodeCA", function(value, element) {
+        //     return this.optional( element ) || /^9[0-6]\d\d\d$/.test(value);
+        // }, "Please enter a valid California zip code" );
+        $("#feedback-form").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 2
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                // zipcode: {
+                //     required: true,
+                //     zipcodeCA : true,
+                // },
+                subject: {
+                    required: true,
+                    minlength: 6   
+                },
+                
+                message: {
+                    required: true,
+                    minlength: 5
+                },
+            },
+            messages: {
+                name: {
+                    required: "Please enter your name",
+                    minlength: "This field must consist of at least 2 characters",
+                    
+                },
+                zipcode: {
+                    required: "Please provide your zip code",
+                },
+                subject: {
+                    required: "Please provide a subject line",
+                    minlength: "This field must be at least 6 characters long"
+                },
+                message: {
+                    required: "Please provide a message",
+                    minlength: "This field must be at least 5 characters long"
+                    
+                },
+                email: "Please enter your email address",   
+            },
+            errorElement: 'div',
+            errorPlacement: function(error, element) {
+                console.log('error:', error, 'element:', element); 
+                var placement = $(element).data('error');
+                if (placement) {
+                    $(placement).append(error)
+                } else {
+                    error.insertAfter(element);
+                } 
+            }
+        });
 
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
@@ -185,15 +249,17 @@
                         $('#email-field').text(feedbackTrans.form.email);
                         $('#subject-field').text(feedbackTrans.form.subject);
                         $('#message-field').text(feedbackTrans.form.message);
-                        $('#submit').html('<div class="input-field col s10"><div class="right"><button id="submit" class="btn waves-effect waves-light " type="submit" name="action"> Enviar<i class="material-icons right">send</i></button></div></div>');
+                        $('#submit-form').html('<div class="input-field col s10"><div class="right"><button id="submit" class="btn waves-effect waves-light " type="submit" name="action"> Enviar<i class="material-icons right">send</i></button></div></div>');
                     } else {
                         console.log('No user is signed in.');
                     }
                 });
             };
-        });
-        $("#submit").on("click", function(event) {
+        }); 
+
+        $("#submit").on("click", function(event) {   
             event.preventDefault()
+
             var name = $("#name").val();
             var email = $("#email").val();
             var subject = $("#subject").val();
@@ -216,8 +282,6 @@
             }
         });
     });
-
-    $(".button-collapse").sideNav();
     </script>
 </body>
 
