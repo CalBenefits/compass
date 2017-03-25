@@ -10,32 +10,32 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:500" rel="stylesheet">
     <style>
+        html {
+            background: url('assets/img/family_eating.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: rgba(255, 255, 255, 0.7);
+            height: 100%;
+            width: 100%;
+        }
+        .brand-logo {
+            height: 1.5em;
+            width: 1.5em;
+            margin: .25em .15em;
+        }
 
-    .brand-logo {
-        height: 1.5em;
-        width: 1.5em;
-        margin: .25em .15em;
-    }
-    
-    html {
-        background: url('assets/img/family_eating.jpg') no-repeat center center fixed;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-attachment: fixed;
-        webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        font-family: 'Poppins', sans-serif;
-    }
-    
-    body {
-        background: rgba(255, 255, 255, 0.7);
-        height: 100%;
-        width: 100%;
-    }
-
-
+        .nav-wrapper {
+            padding: 0 1em;
+        }
     </style>
 </head>
 
@@ -69,8 +69,8 @@
                 <!--  paragraph row -->
                 <div class="row center-align">
                     <div class="col m12 l12">
-                        <p class="flow-text" id="text-about">Compass points low-income individuals, and families, in the right direction by providing resources for SNAP (CalFresh) and WIC (Women Infants and Children). </p>
-                        <p class="flow-text" id="text-about">You can determine eligibility, apply for SNAP online, and find an office nearest you. Whether you’re an English or Spanish speaker we’ve worked hard to point you in the right direction! </p>
+                        <p class="flow-text" id="p1">Compass points low-income individuals, and families, in the right direction by providing resources for SNAP (CalFresh) and WIC (Women Infants and Children). </p>
+                        <p class="flow-text" id="p2">You can determine eligibility, apply for SNAP online, and find an office nearest you. Whether you’re an English or Spanish speaker we’ve worked hard to point you in the right direction! </p>
                     </div>
                 </div>
             </section>
@@ -116,7 +116,8 @@
 
                                 body: {
                                     header_about: "¿Qué es Compass?",
-                                    text_about: "'Compass' señala a las personas de bajos ingresos ya las familias, en la dirección correcta, proporcionando recursos para SNAP (CalFresh) y WIC (Mujeres Infantes y Niños). Puede determinar la elegibilidad, solicitar SNAP en línea y encontrar una oficina más cercana a usted. Si usted es un orador Inglés o Español que hemos trabajado duro para señalar en la dirección correcta!"
+                                    p1: "Compass señala a las personas y familias de bajos ingresos en la dirección correcta, proporcionando recursos para SNAP (CalFresh) y WIC (Mujeres Infantes y Niños).",
+                                    p2: "Usted puede determinar su elegibilidad para WIC, solicitar SNAP en línea, o encontrar una oficina SNAP o WIC más cercana a usted. ¡Si usted habla inglés o español, Compass espera señalarle en la dirección correcta!"
                                 }
                             };
                             $('#home').text(feedbackTrans.menu.home);
@@ -127,7 +128,8 @@
                             $('#mobile-about').text(feedbackTrans.menu.about);
                             $('#mobile-programs').text(feedbackTrans.menu.programs);
                             $('#header').text(feedbackTrans.body.header_about);
-                            $('#text-about').text(feedbackTrans.body.text_about);
+                            $('#p1').text(feedbackTrans.body.p1);
+                            $('#p2').text(feedbackTrans.body.p2); 
                         } else {
                             console.log('No user is signed in.');
                         }
