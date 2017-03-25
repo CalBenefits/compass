@@ -211,7 +211,6 @@
 
             // need noel's authorization code goes in that click event
             $('#google').on('click', function(event) {
-
                 showLang();
                 // calling 'hide #GetStarted button + show language buttons' on click event 
                 event.preventDefault();
@@ -243,6 +242,7 @@
 
             firebase.auth().onAuthStateChanged(function(user) {
                 if (user) {
+                    $('#typed-row').remove();
                     showLang();
                     var uid = user.uid;
                     var userRef = usersRef.child(uid);

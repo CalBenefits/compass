@@ -36,6 +36,10 @@
         .nav-wrapper {
             padding: 0 1em;
         }
+
+        #compass {
+            margin-top: 10% !important;
+        }
     </style>
 </head>
 
@@ -60,7 +64,7 @@
         <div class="row">
             <section class="col s12">
                 <!-- header row -->
-                <div class="row">
+                <div id='compass' class="row">
                     <div class="col s12 m12 l12">
                         <h2 class="section-header center-align" id="header">What is Compass?</h2>
                     </div>
@@ -126,6 +130,7 @@
                             $('#feedback').text(feedbackTrans.menu.feedback);
                             $('#mobile-home').text(feedbackTrans.menu.home);
                             $('#mobile-about').text(feedbackTrans.menu.about);
+                            $('#mobile-feedback').text(feedbackTrans.menu.feedback); 
                             $('#mobile-programs').text(feedbackTrans.menu.programs);
                             $('#header').text(feedbackTrans.body.header_about);
                             $('#p1').text(feedbackTrans.body.p1);

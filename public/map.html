@@ -626,7 +626,7 @@
                                     rootRef.update(updates);
                                     // render map
                                     if (langState === 'es') {
-                                        if (wic) {
+                                        if (snap.value().wicEligible === 'true') {
                                             $('.collection-header > h4').text(mapTrans.wic.reminderModal.headerEligible);
                                         } else {
                                             $('.collection-header > h4').text(mapTrans.wic.reminderModal.header);

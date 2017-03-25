@@ -15,7 +15,19 @@
     <style>
     
     html {
+        background: url('assets/img/prego.jpg') no-repeat center center fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
         font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background: rgba(255, 255, 255, 0.65);
     }
 
     .nav-wrapper {
@@ -30,6 +42,43 @@
 
     .nav-wrapper {
         padding: 0 1em;
+    }
+
+    #masthead {
+        margin-top: 6% !important;
+    }
+
+    #wicEligibility {
+        font-size: 3em;
+    }
+
+    #wicText1 {
+        margin-top: 8% !important;
+        margin-bottom: 2.5% !important;
+        font-size: x-large;
+    }
+
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: teal;
+      font-size: 1.25em !important;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+      color: teal;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+      color: teal;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+      color: teal;
+    }
+
+    label {
+        color: black !important;
+        font-size: large;
+    }
+
+    #submitForm {
+        margin-bottom: 15% !important;
     }
     </style>
 </head>
@@ -53,7 +102,7 @@
     </nav>
     <header id="masthead">
         <div class="container">
-            <h1 id="wicEligibility">Am I eligible for WIC Benefits? </h1>
+            <h1 id="wicEligibility">Am I eligible for WIC Benefits?</h1>
         </div>
     </header>
     <div class="container content">
@@ -61,22 +110,27 @@
             <section class="data">
                 <div class="panel panel-default panel-primary">
                     <div class="panel-heading" id="wicText1">Answer these questions to Determine Eligibility for WIC Benefits!</div>
+                    <br>
                     <div class="panel-body">
                         <form>
                             <div class="form-group">
                                 <label for="zip" id="zipCode">Enter Zip code</label>
                                 <input type="number" class="form-control" id="zip" placeholder="e.g. 94110">
                             </div>
+                            <br><br>
                             <label id="wicText2">Does at least one of the following describe someone in your household: 1) pregnant 2) has had a baby (or been pregnant) within the last 6 months 3) is currently breastfeeding a baby that is less than 12 months old 4) is a baby, child or foster child under the age of 5? </label>
+                            <br><br><br>
                             <select class="browser-default" id="pregnancy">
                                 <option value="0" disabled selected id="wicText3">Choose your option</option>
                                 <option value='1' id="yes">Yes</option>
                                 <option value='2' id="no">No</option>
                             </select>
+                            <br><br>
                             <div class="form-group">
                                 <label for="household" id="wicText4">Household size (excluding member that is age 60+, or is disabled)</label>
                                 <input type="number" class="form-control" id="household" placeholder="e.g. 3">
                             </div>
+                            <br><br>
                             <div class="form-group">
                                 <label for="income" id="wicText5">Monthly income (including social security) in dollars $</label>
                                 <input type="number" class="form-control" id="income" placeholder="e.g. 1287">
@@ -85,6 +139,7 @@
                         </form>
                     </div>
                 </div>
+            </section>
         </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
@@ -194,5 +249,4 @@
     });
     </script>
 </body>
-
 </html>

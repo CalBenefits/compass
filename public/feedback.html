@@ -53,6 +53,10 @@
         .container {
             height: 100%;
         }
+
+        #improve {
+            margin-top: 5% !important;
+        }
     </style>
 </head>
 
@@ -74,7 +78,7 @@
     <div class="container">
         <section>
             <!-- header row -->
-            <div class="row">
+            <div id='improve' class="row">
                 <div class="col m12 l12">
                     <h2 class="section-header center-align" id="header-feedback">How can we improve?</h2>
                 </div>
@@ -90,7 +94,7 @@
         </section>
     </div>
     <div id='bottom-container' class="container">
-        <form id='feedback-form' class="valign">
+        <form id='feedback-form'>
             <div class="row">
                 <div class="input-field">
                     <input id="name" type="text" class="validate" pattern="^(?:[\u00c0-\u01ffa-zA-Z'-]){2,}(?:\s[\u00c0-\u01ffa-zA-Z'-]{2,})+$" required='' aria-required='true'>
@@ -144,9 +148,6 @@
 
         var languageStatus;
 
-        // $.validator.addMethod("zipcodeCA", function(value, element) {
-        //     return this.optional( element ) || /^9[0-6]\d\d\d$/.test(value);
-        // }, "Please enter a valid California zip code" );
         $("#feedback-form").validate({
             rules: {
                 name: {
@@ -157,10 +158,6 @@
                     required: true,
                     email: true,
                 },
-                // zipcode: {
-                //     required: true,
-                //     zipcodeCA : true,
-                // },
                 subject: {
                     required: true,
                     minlength: 6   
@@ -226,8 +223,8 @@
                     }
                 });
                 firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
-                    console.log(snap.val().language);
                     if (snap.val().language === "spanish") {
+                        console.log('spanish block'); 
                         languageStatus = true;
                         var feedbackTrans = {
                             menu: {
@@ -265,15 +262,42 @@
                         $('#subject-field').text(feedbackTrans.form.subject);
                         $('#message-field').text(feedbackTrans.form.message);
                         $('#submit-form').html('<div class="input-field col s10"><div class="right"><button id="submit" class="btn waves-effect waves-light " type="submit" name="action"> Enviar<i class="material-icons right">send</i></button></div></div>');
-                    } else {
-                        console.log('No user is signed in.');
-                    }
+                        $("#submit").on("click", function(event) {   
+                            event.preventDefault()
+                            console.log('?');
+
+                            var name = $("#name").val();
+                            var email = $("#email").val();
+                            var subject = $("#subject").val();
+                            var message = $("#message").val();
+
+                            var feedback = {
+                                name: name,
+                                email: email,
+                                subject: subject,
+                                message: message
+                            };
+
+                            feedbackRef.push(feedback);
+
+                            console.log('languageStatus:', languageStatus); 
+                            // clears input and textarea forms after submitting 
+                            if (languageStatus === true) {
+                                $('#header-feedback').text('Gracias por sus comentarios!');
+                            } else {
+                                $("#header-feedback").text("Thanks for your feedback!");
+                            }
+                        });
+                    } 
                 });
-            };
+            } else {
+                console.log('No user is signed in.');
+            }
         }); 
 
         $("#submit").on("click", function(event) {   
             event.preventDefault()
+            console.log('?');
 
             var name = $("#name").val();
             var email = $("#email").val();
@@ -289,6 +313,7 @@
 
             feedbackRef.push(feedback);
 
+            console.log('languageStatus:', languageStatus); 
             // clears input and textarea forms after submitting 
             if (languageStatus === true) {
                 $('#header-feedback').text('Gracias por sus comentarios!');
