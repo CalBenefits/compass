@@ -536,7 +536,8 @@
                         if (localStorage.getItem('wic') === 'true') {
                             wic = true;
                             // if referrer = program_selection.html, bring up zip modal
-                            if (document.referrer === 'https://cal-compass.firebaseapp.com/program_selection.html') {
+                            console.log(document.referrer); 
+                            if (document.referrer === 'program_selection.html') {
                                 $('.wic-clearable').remove(); 
                                 // spanish speaker
                                 if (snap.val().language === 'spanish') {
