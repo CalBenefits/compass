@@ -60,16 +60,14 @@
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
+            <a href="program_selection.html" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
             </ul>
         </div>
@@ -100,7 +98,7 @@
         <div class="row">
             <div class="col m3 l1"></div>
             <div class="col s5 m3 l5">
-                <a class="waves-effect waves-light btn-large" id="applyFS">Apply Now!</a>
+                <a class="waves-effect waves-light btn-large" id="applyFS">Am I eligible?</a>
             </div>
             <div class="col s2"></div>
             <div class="col s5 m3 l5">
@@ -129,12 +127,9 @@
 
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
-                console.log(user.displayName);
                 firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
                     if (snap.val().language === "spanish") {
-                        console.log("Si!");
                         languageStatus = true;
-                        console.log(languageStatus);
                         if (languageStatus === true) {
                             var feedbackTrans = {
                                 menu: {
@@ -179,24 +174,39 @@
         // this button directs them to the form to determine eligibility for WIC
         $('#eligibleWIC').on('click', function(event) {
             event.preventDefault();
+            if (localStorage.getItem('snap') === 'true') {
+                localStorage.setItem('snap', 'false'); 
+            }
+            localStorage.setItem('wic', 'true');
             window.location = "wic_eligibility.html";
         });
 
         // this button directs them to the office locator -wic-(maps page)
         $('#mapsWIC').on('click', function(event) {
             event.preventDefault();
+            if (localStorage.getItem('snap') === 'true') {
+                localStorage.setItem('snap', 'false'); 
+            }
+            localStorage.setItem('wic', 'true');
             window.location = "map.html";
         });
 
         // this button directs them to the form to determine eleigibility for FS
         $('#applyFS').on('click', function(event) {
             event.preventDefault();
+            if (localStorage.getItem('wic') === 'true') {
+                localStorage.setItem('wic', 'false'); 
+            }
             window.location = "https://getcalfresh.org/";
         });
 
         // this button directs them to the office locator - fs-(maps page)
         $('#mapsFS').on('click', function(event) {
             event.preventDefault();
+            if (localStorage.getItem('wic') === 'true') {
+                localStorage.setItem('wic', 'false'); 
+            }
+            localStorage.setItem('snap', 'true');
             window.location = "map.html";
         });
     });

@@ -41,7 +41,7 @@
 
     #form-modal {
         top: 20% !important;
-        height: 70vh !important;
+        height: 55vh !important;
     }
 
     #language-modal {
@@ -50,8 +50,12 @@
         width: 55vw !important;
     }
 
-    #reminder-modal {
+    #reminder-modal-snap {
         height: 40vh !important;
+    }
+
+    #reminder-modal-wic {
+        height: 50vh !important;
     }
 
     .modal-content {
@@ -70,18 +74,16 @@
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
+            <a href="program_selection.html" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html" class='waves-effect home'>Home</a></li>
                 <li><a href="about.html" class='waves-effect about'>About</a></li>
-                <li><a href="program-selection.html" class='waves-effect programs'>Programs</a></li>
+                <li><a href="program_selection.html" class='waves-effect programs'>Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect feedback'>Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
-                <li><a href="index.html" class='waves-effect home'>Home</a></li>
                 <li><a href="about.html" class='waves-effect about'>About</a></li>
-                <li><a href="program-selection.html" class='waves-effect programs'>Programs</a></li>
+                <li><a href="program_selection.html" class='waves-effect programs'>Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect feedback'>Feedback</a></li>
             </ul>
         </div>
@@ -104,7 +106,7 @@
             </div>
         </div>
         <div id='form-modal' class='modal'>
-            <div id='flexbox' class='modal-content'>
+            <div class='modal-content'>
                 <form class='col s12'>
                     <div class="row">
                         <div class="input-field col s12">
@@ -113,36 +115,36 @@
                             <label for="zip">Zip Code</label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="prefix material-icons">people</i>
-                            <input id='houshold' name='household' type="number" class="validate" min='1' max='15'>
-                            <label for="household">Household Members</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="prefix material-icons">attach_money</i>
-                            <input id="income" name='income' type="number" class="validate" min='1'>
-                            <label for="email">Income</label>
-                        </div>
-                    </div>
                 </form>
                 <div class="row buttons">
-                    <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
-                        <i class="material-icons right">send</i>
-                    </button>
+                    <div class='row'>
+                        <button id='new-zip' class="btn waves-effect waves-light align-center" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id='reminder-modal' class='modal bottom-sheet'>
+        <div id='reminder-modal-snap' class='modal bottom-sheet'>
             <div class='modal-content'>
                 <ul class="collection with-header">
                     <li class="collection-header">
                         <h4>You may want to bring...</h4>
                     </li>
-                    <li class="collection-item">Your California ID</li>
-                    <li class="collection-item">Proof of income if employed</li>
+                    <li id='cal-id' class="collection-item">Your California ID</li>
+                    <li id='proof-income' class="collection-item">Proof of income if employed</li>
+                </ul>
+            </div>
+        </div>
+        <div id='reminder-modal-wic' class='modal bottom-sheet'>
+            <div class='modal-content'>
+                <ul class="collection with-header">
+                    <li class="collection-header">
+                        <h4>You may want to bring...</h4>
+                    </li>
+                    <li id='proof-id' class="collection-item">Proof of identity</li>
+                    <li id='proof-res' class="collection-item">Proof of residency</li>
+                    <li id='proof-preg' class='collection-item'>Proof of pregnancy</li>
                 </ul>
             </div>
         </div>
@@ -153,7 +155,6 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js'></script>
     <script>
         var zip, wic, langState; 
-
         // random element utility
         function getRandomElement(arr, n) {
             var result = new Array(n),
@@ -188,6 +189,7 @@
 
         // map render callback
         function init() { 
+            console.log('wic:', wic);
             // variable to contain LatLng object converted from the user's zip
             var zipLatLng;
             // setup our geocoder object
@@ -363,7 +365,7 @@
                     // run a .nearbySearch() for the closest SNAP office 
                     Service.nearbySearch({
                         location: zipLatLng,
-                        keyword: wic ? 'food stamps' : 'wic',
+                        keyword: wic ? 'wic' : 'food stamps',
                         radius: '10000',
                     }, function(results, status) {
                         if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -433,7 +435,6 @@
         }
         
         $(document).ready(function() {
-            console.log('hello?'); 
             // Initialize Firebase
             var config = {
                 apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
@@ -465,30 +466,179 @@
                 snap: {
                     formModal: {
                         zip: 'Código Postal',
-                        household: 'Miembros del Hogar',
-                        income: 'Ingresos'
+                        submit: 'Enviar'
                     },
                     reminderModal: {
-                        header: 'Quizás quieras traer',
+                        header: 'Quizás quieras traer...',
+                        headerEligible: '¡Podrías ser elegible! No te olvides de traer...',
                         id: 'Su identificación de California',
                         proof: 'Prueba de ingresos si se emplea'
                     }
                 },
-                wic: {}
+                wic: {
+                    reminderModal: {
+                        header: 'Quizás quieras traer...',
+                        headerEligible: '¡Podrías ser elegible! No te olvides de traer...',
+                        proofId: 'Prueba de identidad',
+                        proofRes: 'Prueba de residencia',
+                        proofPreg: 'Prueba de embarazo'
+                    }
+                }
             };
 
             // initialize modals
-            $('#language-modal').modal(); 
+            $('#language-modal').modal();
             $('#form-modal').modal({dismissible: false});
-            $('#reminder-modal').modal(); 
+            $('#reminder-modal-snap').modal(); 
+            $('#reminder-modal-wic').modal();
 
             firebase.auth().onAuthStateChanged(function(user) {
-                console.log('onAuthStateChanged callback'); 
                 // if user signed in
                 if (user) {
-                    console.log('user:', user); 
                     firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
-                        if (snap.val().language === 'spanish') {
+                        // if wic
+                        console.log(snap.val().wicEligible); 
+                        if (localStorage.getItem('wic') === 'true') {
+                            if (snap.val().wicEligible === 'true') {
+                                wic = true;
+                            }
+                            // if referrer = program_selection.html, bring up zip modal
+                            if (document.referrer === 'http://localhost:5000/program_selection.html') {
+                                $('.wic-clearable').remove(); 
+                                // spanish speaker
+                                if (snap.val().language === 'spanish') {
+                                    langState = 'es';
+                                    // translate nav to spanish
+                                    $('.home').text(mapTrans.home);
+                                    $('.about').text(mapTrans.about);
+                                    $('.programs').text(mapTrans.programs);
+                                    $('.feedback').text(mapTrans.feedback); 
+                                    // translate form modal to spanish
+                                    $("label[for='zip']").text(mapTrans.snap.formModal.zip);
+                                    $("input[type='submit']").text(mapTrans.snap.formModal.submit); 
+                                    // tranlsate reminder modal to spanish
+                                    if (wic) {
+                                        $('.collection-header > h4').text(mapTrans.wic.reminderModal.headerEligible);
+                                    } else {
+                                        $('.collection-header > h4').text(mapTrans.wic.reminderModal.header);
+                                    }
+                                    $('#proof-id').text(mapTrans.wic.reminderModal.proofId); 
+                                    $('#proof-res').text(mapTrans.wic.reminderModal.proofRes); 
+                                    $('#proof-preg').text(mapTrans.wic.reminderModal.proofPreg); 
+                                    // if we have a zipcode record for this user
+                                    if (snap.val().zipcode) {
+                                        zip = snap.val().zipcode; 
+                                        // zip is no longer required
+                                        $('#zip').attr('aria-required', 'false'); 
+                                        // append ('use current zip') 
+                                        $('.buttons').prepend("<div class='row'>" + 
+                                            "<button id='continue-zip' class='btn waves-effect align-center' type='submit' name='action'>" + "Usa " + snap.val().zipcode + 
+                                            "</button>" +
+                                        "</div>");   
+                                        // 'use current zip' event listener, which kicks off map and opens reminder-modal
+                                        $('#continue-zip').on('click', function(event) {
+                                            event.preventDefault();  
+                                            console.log('zip:', zip); 
+                                            // render map
+                                            if (langState === 'es') {
+                                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                                            } else {
+                                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
+                                            }
+                                            // close form-modal
+                                            $('#form-modal').modal('close'); 
+                                            // trigger reminder-modal
+                                            $('#reminder-modal-wic').modal('open'); 
+                                        }); 
+                                    }
+                                // english speaker
+                                } else {
+                                    if (snap.val().zipcode) {
+                                        zip = snap.val().zipcode; 
+                                        console.log('zipEng:', zip); 
+                                        // zip is no longer required
+                                        $('#zip').attr('aria-required', 'false'); 
+                                        // append ('use current zip') 
+                                        $('.buttons').prepend("<div class='row'>" + 
+                                            "<button id='continue-zip' class='btn waves-effect align-center' type='submit' name='action'>" + "Use " + snap.val().zipcode + 
+                                            "</button>" +
+                                        "</div>"); 
+                                        // 'use current zip' event listener, which kicks off map and opens reminder-modal
+                                        $('#continue-zip').on('click', function(event) {
+                                            event.preventDefault();  
+                                            console.log('zip:', zip); 
+                                            // render map
+                                            if (langState === 'es') {
+                                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                                            } else {
+                                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
+                                            }
+                                            // close form-modal
+                                            $('#form-modal').modal('close'); 
+                                            // trigger reminder-modal
+                                            $('#reminder-modal-wic').modal('open'); 
+                                        });
+                                    }
+                                }
+                                // open form modal
+                                $('#form-modal').modal('open');
+                                // submit event listener, which pushes zip to db, kicks off map and opens reminder-modal
+                                $('#new-zip').on('click', function(event) {
+                                    event.preventDefault(); 
+                                    zip = $('#zip').val().trim(); 
+                                    // push to firebase
+                                    var updates = {};
+                                    updates['/users/' + user.uid + '/zipcode/'] = zip;
+                                    rootRef.update(updates);
+                                    // render map
+                                    if (langState === 'es') {
+                                        if (wic) {
+                                            $('.collection-header > h4').text(mapTrans.wic.reminderModal.headerEligible);
+                                        } else {
+                                            $('.collection-header > h4').text(mapTrans.wic.reminderModal.header);
+                                        }
+                                        $('#proof-id').text(mapTrans.wic.reminderModal.proofId); 
+                                        $('#proof-res').text(mapTrans.wic.reminderModal.proofRes); 
+                                        $('#proof-preg').text(mapTrans.wic.reminderModal.proofPreg); 
+                                        $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                                    } else {
+                                        if (wic) {
+                                            $('.collection-header > h4').text("You're eligible! Remember to bring");
+                                        }
+                                        $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
+                                    }
+                                    // close form-modal
+                                    $('#form-modal').modal('close'); 
+                                    // trigger reminder-modal
+                                    $('#reminder-modal-wic').modal('open'); 
+                                });
+                            } else {
+                                zip = snap.val().zipcode; 
+                                if (snap.val().language === 'spanish') {
+                                    // tranlsate reminder modal to spanish
+                                    if (wic) {
+                                        $('.collection-header > h4').text(mapTrans.wic.reminderModal.headerEligible);
+                                    } else {
+                                        $('.collection-header > h4').text(mapTrans.wic.reminderModal.header);
+                                    }
+                                    $('#proof-id').text(mapTrans.wic.reminderModal.proofId); 
+                                    $('#proof-res').text(mapTrans.wic.reminderModal.proofRes); 
+                                    $('#proof-preg').text(mapTrans.wic.reminderModal.proofPreg); 
+                                    // spanish map
+                                    $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                                } else {
+                                    if (wic) {
+                                        $('.collection-header > h4').text("You're eligible! Remember to bring");
+                                    }
+                                    // english map
+                                    $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
+                                }
+                                // trigger reminder-modal
+                                $('#reminder-modal-wic').modal('open'); 
+                            }
+                        // if snap
+                        } else {
+                            if (snap.val().language === 'spanish') {
                             langState = 'es';
                             // translate nav to spanish
                             $('.home').text(mapTrans.home);
@@ -496,91 +646,98 @@
                             $('.programs').text(mapTrans.programs);
                             $('.feedback').text(mapTrans.feedback); 
                             // translate form modal to spanish
-                            $("label[for='zip']").text(mapTrans.formModal.zip);
-                            $("label[for='household']").text(mapTrans.formModal.household); 
-                            $("label[for='income']").text(mapTrans.formModal.income);
+                            $("label[for='zip']").text(mapTrans.snap.formModal.zip);
+                            $("input[type='submit']").text(mapTrans.snap.formModal.submit); 
                             // if we have a zipcode record for this user
                             if (snap.val().zipcode) {
                                 zip = snap.val().zipcode; 
                                 // zip is no longer required
                                 $('#zip').attr('aria-required', 'false'); 
                                 // append ('use current zip') 
-                                $('.button').prepend($('<button>', {
-                                    id: 'continue-zip',
-                                    'class': 'btn waves-effect waves-light',
-                                    text: 'Usa ' + snap.val().zipcode 
-                                })); 
+                                $('.buttons').prepend("<div class='row'>" + 
+                                    "<button id='continue-zip' class='btn waves-effect align-center' type='submit' name='action'>" + "Usa " + snap.val().zipcode + 
+                                    "</button>" +
+                                "</div>"); 
+                                // 'use current zip' event listener, which kicks off map and opens reminder-modal
+                                $('#continue-zip').on('click', function(event) {
+                                    event.preventDefault();  
+                                    // render map
+                                    if (langState === 'es') {
+                                        $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                                    } else {
+                                        $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
+                                    }
+                                    // close form-modal
+                                    $('#form-modal').modal('close'); 
+                                    // trigger reminder-modal
+                                    $('#reminder-modal-snap').modal('open'); 
+                                });
+                                
                             }
                             // translate reminder modal to spanish
                             $('.collection-header > h4').text(mapTrans.snap.reminderModal.header);
-                            $('.collection').children('colletion-item').eq[0].text(mapTrans.snap.reminderModal.id);
-                            $('.collection').children('colletion-item').eq[1].text(mapTrans.snap.reminderModal.proof);
-                        // if english 
-                        } else {
-                            if (snap.val().zipcode) {
-                                zip = snap.val().zipcode; 
-                                // zip is no longer required
-                                $('#zip').attr('aria-required', 'false'); 
-                                // append ('use current zip') 
-                                $('.button').prepend($('<button>', {
-                                    id: 'continue-zip',
-                                    'class': 'btn waves-effect waves-light',
-                                    text: 'Use ' + snap.val().zipcode 
-                                })); 
-                            }
-                        }
-                        console.log('where my modal'); 
-                        // open form modal
-                        $('#form-modal').modal('open');
-                        // 'use current zip' event listener, which kicks off map and opens reminder-modal
-                        $('#continue-zip').on('click', function(event) {
-                            event.preventDefault();  
-                            // render map
-                            if (langState === 'es') {
-                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                            $('#cal-id').text(mapTrans.snap.reminderModal.id);
+                            $('#proof-income').text(mapTrans.snap.reminderModal.proof);
+                            // if english 
                             } else {
-                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
+                                if (snap.val().zipcode) {
+                                    zip = snap.val().zipcode; 
+                                    // zip is no longer required
+                                    $('#zip').attr('aria-required', 'false'); 
+                                    // append ('use current zip') 
+                                    $('.buttons').prepend("<div class='row'>" + 
+                                        "<button id='continue-zip' class='btn waves-effect align-center' type='submit' name='action'>" + "Use " + snap.val().zipcode + 
+                                        "</button>" +
+                                    "</div>"); 
+                                    // 'use current zip' event listener, which kicks off map and opens reminder-modal
+                                    $('#continue-zip').on('click', function(event) {
+                                        event.preventDefault();  
+                                        // render map
+                                        if (langState === 'es') {
+                                            $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                                        } else {
+                                            $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
+                                        }
+                                        // close form-modal
+                                        $('#form-modal').modal('close'); 
+                                        // trigger reminder-modal
+                                        $('#reminder-modal-snap').modal('open'); 
+                                    });
+                                }
                             }
-                            // close form-modal
-                            $('#form-modal').modal('close'); 
-                            // trigger reminder-modal
-                            $('#reminder-modal').modal('open'); 
-                        });
-                        // submit event listener, which pushes zip to db, kicks off map and opens reminder-modal
-                        $('button[type="submit"]').on('click', function(event) {
-                            event.preventDefault(); 
-                            console.log(langState); 
-                            zip = $('#zip').val().trim(); 
-                            // push to firebase
-                            var updates = {};
-                            updates['/users/' + user.uid + '/zipcode/'] = zip;
-                            rootRef.update(updates);
-                            // render map
-                            if (langState === 'es') {
-                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
-                            } else {
-                                $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
-                            }
-                            // close form-modal
-                            $('#form-modal').modal('close'); 
-                            // trigger reminder-modal
-                            $('#reminder-modal').modal('open'); 
-                        });
+                            // open form modal
+                            $('#form-modal').modal('open');
+                            // submit event listener, which pushes zip to db, kicks off map and opens reminder-modal
+                            $('#new-zip').on('click', function(event) {
+                                event.preventDefault(); 
+                                zip = $('#zip').val().trim(); 
+                                // push to firebase
+                                var updates = {};
+                                updates['/users/' + user.uid + '/zipcode/'] = zip;
+                                rootRef.update(updates);
+                                // render map
+                                if (langState === 'es') {
+                                    console.log('zip:', zip); 
+                                    $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
+                                } else {
+                                    $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
+                                }
+                                // close form-modal
+                                $('#form-modal').modal('close'); 
+                                // trigger reminder-modal
+                                $('#reminder-modal-snap').modal('open'); 
+                            });
+                        }      
                     });
                 } 
             }); 
         });
         ////////// TO DO
-        // close infoWindow on next click
-        // window.referrer => which urls ref user to wic? 
-        // google translate api for infoWindows
-        // wic map up and running
         // how to enforce 'require' on modal forms? jquery validation + CSS
         // gmail feedback
+        // facebook sign-in
+        // tidy
         // wic vendor map
-        // js modules (import/export)
-        // chart js
-        // table feedback
     </script>
 </body>
 </html>
