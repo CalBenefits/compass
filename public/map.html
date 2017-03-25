@@ -636,7 +636,7 @@
                                         $('#proof-preg').text(mapTrans.wic.reminderModal.proofPreg); 
                                         $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
                                     } else {
-                                        if (wic) {
+                                        if (snap.val().wicEligible) {
                                             $('.collection-header > h4').text("You're eligible! Remember to bring");
                                         }
                                         $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
@@ -669,7 +669,7 @@
                                     // spanish map
                                     $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
                                 } else {
-                                    if (wic) {
+                                    if (snap.val().wicEligible) {
                                         $('.collection-header > h4').text("You're eligible! Remember to bring");
                                     }
                                     // english map
