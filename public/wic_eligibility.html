@@ -29,7 +29,7 @@
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
+            <a href="program_selection.html" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
@@ -84,6 +84,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
 
+        var incomeArray = [0, 1832, 2470, 3108, 3747, 4385, 5023, 5663, 6304];
         var languageStatus;
 
         $(".button-collapse").sideNav();
@@ -97,6 +98,7 @@
         };
 
         firebase.initializeApp(config);
+
         var rootRef = firebase.database().ref();
         // firebase.auth().onAuthStateChanged(function(user) {
         var usersRef = rootRef.child('users');
@@ -106,25 +108,27 @@
                 event.preventDefault();
                 var updates = {};
                 updates['/users/' + user.uid + '/zipcode/'] = $('#zip').val().trim();
-                updates['/users/' + user.id + '/famSize/'] = $('#household').val();
-                updates['/users/'] + user.id + '/income/'] = $('#income').val();
-                if ($('#pregnancy').val() === '1') {
-                    updates['/users/' + user.id + '/wicEligible/'] = "true"; 
+                updates['/users/' + user.uid + '/famSize/'] = $('#household').val();
+                updates['/users/' + user.uid + '/income/'] = $('#income').val();
+                if ($('#pregnancy').val() === '1' && $('#household').val() > 8 && ($('#income').val() <= (6304 + ($('#household').val() - 8) * 642))) {
+                    updates['/users/' + user.uid + '/wicEligible/'] = "true"; 
+                } else if ($('#pregnancy').val() === '1' && $('#household').val() <= 8 && (($('#income').val() <= incomeArray[$('#household').val()]))) {
+                    updates['/users/' + user.uid + '/wicEligible/'] = "true"; 
                 } else {
-                    updates['/users/' + user.id + '/wicEligible/'] = "false";
+                    updates['/users/' + user.uid + '/wicEligible/'] = "false";
                 }
                 // write updates
                 rootRef.update(updates);
+                if (localStorage.getItem('snap') === 'true') {
+                    localStorage.setItem('snap', 'false'); 
+                }
+                localStorage.setItem('wic', 'true'); 
                 window.location = "map.html";
             });
             if (user) {
                 firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
-                    console.log(snap.val().language);
                     if (snap.val().language === "spanish") {
-                        console.log("Si!");
                         languageStatus = true;
-                        console.log(languageStatus);
-
                         if (languageStatus === true) {
                             var feedbackTrans = {
                                 menu: {
@@ -173,24 +177,6 @@
                 console.log('No user is signed in.');
             }
         });
-
-        //$('select').material_select();
-        // provides nav bar with functionality
-
-        // this button directs them to the WIC Map, along with the eligibility result;
-        // var pregnancyCheck = $('#pregnancy').val();
-        // //console.log(pregnancyCheck)
-        // var householdCheck = $('#household').val();
-        // var incomeCheck = $('#income').val();
-
-        // var incomeArray = [0, 1832, 2470, 3108, 3747, 4385, 5023, 5663, 6304];
-        // if (pregnancyCheck === '1' && householdCheck > 8 && (incomeCheck <= (6304 + (householdCheck - 8) * 642))) {
-        //     window.location = 'mapWIC.html';
-        // } else if (pregnancyCheck === '1' && householdCheck <= 8 && (incomeCheck <= incomeArray[householdCheck])) {
-        //     window.location = "mapWIC.html";
-            // } else if (pregnancyCheck !== '0') {
-            // window.location = "https://getcalfresh.org/";
-        };
 
     });
     </script>

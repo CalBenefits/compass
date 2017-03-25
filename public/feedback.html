@@ -29,17 +29,15 @@
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a href="#!" class="brand-logo"><img src='assets/img/safari.svg'></a>
+            <a href="program_selection.html" class="brand-logo"><img src='assets/img/safari.svg'></a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
                 <li><a href="program_selection.html" class='waves-effect' id="programs">Programs</a></li>
-                <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
                 <li><a href="program_selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
-                <li><a href="feedback.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
             </ul>
         </div>
     </nav>
@@ -63,28 +61,28 @@
             </section>
         </div>
         <div class="row">
-            <form class="col s10" class="card-panel hoverable">
+            <form id='feedback-form' class="col s10" class="card-panel hoverable">
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="name" type="text" class="validate">
+                        <input id="name" type="text" class="validate" pattern="^(?:[\u00c0-\u01ffa-zA-Z'-]){2,}(?:\s[\u00c0-\u01ffa-zA-Z'-]{2,})+$" required='' aria-required='true'>
                         <label for="name" id="name-field" data-error="incorrect" data-success="correct">Your Name</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <input id="email" type="email" class="validate">
+                        <input id="email" type="email" class="validate" required='' aria-required='true'>
                         <label for="email" id="email-field" data-error="incorrect" data-success="correct">Email</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
                         <input id="subject" type="text" class="validate clearable">
-                        <label for="subject" id="subject-field" data-error="incorrect" data-success="correct">Subject</label>
+                        <label for="subject" id="subject-field" minlength='6' data-error="incorrect" data-success="correct" required='' aria-required='true'>Subject</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea id="message" class="materialize-textarea clearable" data-length="1000"></textarea>
+                        <textarea id="message" class="materialize-textarea clearable" minlength='10' data-success='' data-error='correct' required='correct' aria-required='true'></textarea>
                         <label for="textarea" id="message-field">Message</label>
                     </div>
                 </div>
@@ -102,11 +100,13 @@
     </div>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/additional-methods.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script type="text/javascript">
     $(document).ready(() => {
 
-        $(".button-collapse").sideNav();
+        var language; 
 
         var config = {
             apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
@@ -118,14 +118,22 @@
 
         firebase.initializeApp(config);
 
+        // Create a variable to reference the database
+        var rootRef = firebase.database().ref();
+        // feedback ref
+        var feedbackRef = rootRef.child('feedback');
+
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
+                    if (snap.val().language) {
+                        language = 'spanish'; 
+                    }
+                }); 
+                firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
                     console.log(snap.val().language);
                     if (snap.val().language === "spanish") {
-                        console.log("Si!");
                         languageStatus = true;
-                        console.log(languageStatus);
                         if (languageStatus === true) {
                             var feedbackTrans = {
                                 menu: {
@@ -169,18 +177,9 @@
                     };
                 });
             };
-        });
+        }); 
 
-        // Create a variable to reference the database
-        var rootRef = firebase.database().ref();
-        // feedback ref
-        var feedbackRef = rootRef.child('feedback');
-
-        $("#submit").on("click", function(event) {
-
-            // client id: 888186000127-qrqvdhb5efhu79p57kfue21jmccv9jom.apps.googleusercontent.com
-            // client secret: oPI_CKqGUjWmbNE8ApL4KAGD
-
+        $("#submit").on("click", function(event) {    
             event.preventDefault()
             var name = $("#name").val();
             var email = $("#email").val();
@@ -202,10 +201,11 @@
             } else {
                 $("#clear").replaceWith("<div class='container'><h2>Thanks for your feedback!</h2></div>");
             }
-
-
         });
     });
+
+    $(".button-collapse").sideNav();
+
     </script>
 </body>
 
