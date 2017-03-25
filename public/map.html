@@ -531,13 +531,16 @@
             firebase.auth().onAuthStateChanged(function(user) {
                 // if user signed in
                 if (user) {
+                    console.log('signed in'); 
                     firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
                         // if wic
+                        console.log(localStorage.getItem('wic')); 
                         if (localStorage.getItem('wic') === 'true') {
+                            console.log('wic true'); 
                             wic = true;
                             // if referrer = program_selection.html, bring up zip modal
-                            console.log(document.referrer); 
-                            if (document.referrer === 'program_selection.html') {
+                            console.log('referrer:', document.referrer); 
+                            if (document.referrer === 'https://cal-compass.firebaseapp.com/program_selection.html') {
                                 $('.wic-clearable').remove(); 
                                 // spanish speaker
                                 if (snap.val().language === 'spanish') {
