@@ -20,7 +20,6 @@
             -moz-background-size: cover;
             -o-background-size: cover;
             font-family: 'Poppins', sans-serif;
-
         }
         
         body {
@@ -28,14 +27,13 @@
             height:100%;
             width:100%;
         }
-
         
         .brand-logo {
             height: 1.5em;
             width: 1.5em;
             margin: .25em .15em;
         }
-
+      
         .nav-wrapper {
             padding: 0 1em;
         }
@@ -68,9 +66,34 @@
             color: white;
             width: auto;
             background: #26a69a;
-            margin-bottom: 10%;
-            padding: 5%;
+            padding: 3.5em;
             height: auto;
+        }
+
+        #button-wrapper {
+            width: 100%;
+        }
+
+        #google {
+            margin-right: 5%;
+        }
+
+        #facebook {
+            margin-left: 5%;
+        }
+
+        .fa {
+            font-size: 4.5em !important;
+        }
+
+        #typed-row {
+            margin-top: 5em;
+            margin-bottom: 0;
+        }
+
+        #call-to-action {
+            height: 2em;
+            width: 100%;
         }
     </style>
 </head>
@@ -90,160 +113,200 @@
             </ul>
         </div>
     </nav>
-    <div class="container" id="welcome_page-container">
+    <div id='typed-row' class='row'>
+        <div class='col s12 valign-wrapper'>
+            <h1 id='call-to-action' class='valign center-align'></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 valign-wrapper">
+            <div id='button-wrapper' class='valign center-align'>
+                <button class="waves-effect waves-light btn-large getStarted" id="google">
+                    <i class="fa fa-google fa-5x"></i>
+                </button>
+                <button class="waves-effect waves-light btn-large getStarted" id="facebook">
+                    <i class="fa fa-facebook-official fa-5x"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
         <div class="row">
             <div class="col m4 l4"></div>
             <div class="col s12 m4 l4">
-                <a class="waves-effect waves-light btn-large getStarted">
-                    Get started!    
-                </a>
-                <a class="waves-effect waves-light btn-large getStarted">
-                    ¡Empezar!
-                </a>
+                <a href="#create" class="btn-large waves-effect waves-light z-depth-5" id="EspButton">Español</a>
+                <a href="#learn" class="btn-large waves-effect waves-light z-depth-5" id="EngButton">English</a>
             </div>
             <div class="col m4 l4"></div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col m4 l4"></div>
-                <div class="col s12 m4 l4">
-                    <a href="#create" class="btn-large waves-effect waves-light z-depth-5" id="EspButton">Español</a>
-                    <a href="#learn" class="btn-large waves-effect waves-light z-depth-5" id="EngButton">English</a>
-                </div>
-                <div class="col m4 l4"></div>
-            </div>
-        </div>
+    </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+    <script src="https://use.fontawesome.com/33adee7eb0.js"></script>
+    <script src="assets/js/typed.js"></script>
     <script type="text/javascript">
-    $(document).ready(function() {
-        $(".button-collapse").sideNav();
-        var config = {
-            apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
-            authDomain: "cal-compass.firebaseapp.com",
-            databaseURL: "https://cal-compass.firebaseio.com",
-            storageBucket: "cal-compass.appspot.com",
-            messagingSenderId: "888186000127"
-        };
-        firebase.initializeApp(config);
-        var rootRef = firebase.database().ref();
-        var usersRef = rootRef.child('users');
-        var provider = new firebase.auth.GoogleAuthProvider();
+        $(document).ready(function() {
+            $(".button-collapse").sideNav();
 
-        // function hides language buttons when the page is loaded
-        var hideLang = function hideLang() {
-            $("#EspButton").hide();
-            $("#EngButton").hide();
-            $('.getStarted').show();
-        };
-
-        // function hides #GetStarted Button and shows language buttons when #GetStarted Button is clicked
-        var showLang = function showLang() {
-            console.log("is this being called")
-            $("#EspButton").show();
-            $("#EngButton").show();
-            $(".getStarted").hide();
-        };
-
-        // need noel's authorization code goes in that click event
-        $('.getStarted').on('click', function(event) {
-            showLang();
-            // calling 'hide #GetStarted button + show language buttons' on click event 
-            event.preventDefault();
-
-            firebase.auth().signInWithRedirect(provider);
-
-            firebase.auth().getRedirectResult().then(function(result) {
-                if (result.credential) {
-                    // This gives you a Google Access Token. You can use it to access the Google API.
-                    var token = result.credential.accessToken;
-                    var user = result.user;
-                    alert('user:', user.displayName);
-                }
-                // The signed-in user info.
-                // var user = result.user.displayName;
-            }).catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // The email of the user's account used.
-                var email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
-                var credential = error.credential;
-                // ...
+            $("#call-to-action").typed({
+                strings: ["Welcome, sign-in to find resources near you.^1000", "Bienvenido, inicia sesión para encontrar recursos cerca de ti.^1000"],
+                typeSpeed: 50,
+                backspeed: 300
             });
 
-        });
-
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                showLang();
-                var uid = user.uid;
-                var userRef = usersRef.child(uid);
-                const deets = {
-                    name: user.displayName,
-                    income: "",
-                    famSize: "",
-                    zipcode: "",
-                    language: "",
-                    wicEligible: "",
-                    snapEligible: ""
-                };
-                userRef.set(deets);
-                $('#EspButton').on('click', function(event) {
-                    var rootRef = firebase.database().ref();
-                    var updates = {};
-                    updates['/users/' + user.uid + '/language/'] = "spanish";
-                    // write updates
-                    rootRef.update(updates);
-
-                    // User is signed in.
-                    // add deets to updates obj
-                    firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
-                        console.log(snap.val().language);
-                        if (snap.val().language === "spanish") {
-                            console.log("Si!");
-                            languageStatus = true;
-                            console.log(languageStatus);
-                            if (languageStatus === true) {
-                                var feedbackTrans = {
-                                    menu: {
-                                        home: 'Casa',
-                                        about: 'Sobre',
-                                        programs: 'Programas',
-                                        feedback: 'Reacción'
-                                    }
-                                }
-                                $('#home').text(feedbackTrans.menu.home);
-                                $('#about').text(feedbackTrans.menu.about);
-                                $('#programs').text(feedbackTrans.menu.programs);
-                                $('#feedback').text(feedbackTrans.menu.feedback);
-                                $('#mobile-home').text(feedbackTrans.menu.home);
-                                $('#mobile-about').text(feedbackTrans.menu.about);
-                                $('#mobile-programs').text(feedbackTrans.menu.programs);
-                                $('#mobile-feedback').text(feedbackTrans.menu.feedback);
-                                window.location = "program_selection.html";
-                            }
-
-                        };
-                    });
+            var typeInterval = setInterval(function() {
+                $("#call-to-action").typed({
+                    strings: ["Welcome, sign-in to find resources near you.^1000", "Bienvenido, inicia sesión para encontrar recursos cerca de ti.^1000"],
+                    typeSpeed: 50
                 });
+            }, 16000); 
+
+            var config = {
+                apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
+                authDomain: "cal-compass.firebaseapp.com",
+                databaseURL: "https://cal-compass.firebaseio.com",
+                storageBucket: "cal-compass.appspot.com",
+                messagingSenderId: "888186000127"
             };
+            firebase.initializeApp(config);
+            var rootRef = firebase.database().ref();
+            var usersRef = rootRef.child('users');
+            // function hides language buttons when the page is loaded
+            var hideLang = function hideLang() {
+                $("#EspButton").hide();
+                $("#EngButton").hide();
+                $('.getStarted').show();
+            };
+
+            // function hides #GetStarted Button and shows language buttons when #GetStarted Button is clicked
+            var showLang = function showLang() {
+                console.log("is this being called")
+                $("#EspButton").show();
+                $("#EngButton").show();
+                $(".getStarted").hide();
+            };
+
+            $('#facebook').on('click', function(event) {
+                var provider = new firebase.auth.FacebookAuthProvider();
+                firebase.auth().signInWithRedirect(provider);
+                firebase.auth().getRedirectResult().then(function(result) {
+                    if (result.credential) {
+                        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+                        var token = result.credential.accessToken;
+                        // ...
+                    }
+                    // The signed-in user info.
+                    var user = result.user;
+                    console.log('hello:', user);
+                }).catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+                });
+
+
+            });
+
+            // need noel's authorization code goes in that click event
+            $('#google').on('click', function(event) {
+
+                showLang();
+                // calling 'hide #GetStarted button + show language buttons' on click event 
+                event.preventDefault();
+
+                var provider = new firebase.auth.GoogleAuthProvider();
+
+                firebase.auth().signInWithRedirect(provider);
+
+                firebase.auth().getRedirectResult().then(function(result) {
+                    if (result.credential) {
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        var token = result.credential.accessToken;
+                        var user = result.user;
+                        alert('user:', user.displayName);
+                    }
+                    // The signed-in user info.
+                    // var user = result.user.displayName;
+                }).catch(function(error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // The email of the user's account used.
+                    var email = error.email;
+                    // The firebase.auth.AuthCredential type that was used.
+                    var credential = error.credential;
+                });
+
+            });
+
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    showLang();
+                    var uid = user.uid;
+                    var userRef = usersRef.child(uid);
+                    const deets = {
+                        name: user.displayName,
+                        income: "",
+                        famSize: "",
+                        zipcode: "",
+                        language: "",
+                        wicEligible: "",
+                        snapEligible: ""
+                    };
+                    userRef.set(deets);
+                    $('#EspButton').on('click', function(event) {
+                        var rootRef = firebase.database().ref();
+                        var updates = {};
+                        updates['/users/' + user.uid + '/language/'] = "spanish";
+                        // write updates
+                        rootRef.update(updates);
+
+                        // User is signed in.
+                        // add deets to updates obj
+                        firebase.database().ref('/users/' + user.uid).once('value').then(function(snap) {
+                            console.log(snap.val().language);
+                            if (snap.val().language === "spanish") {
+                                console.log("Si!");
+                                languageStatus = true;
+                                console.log(languageStatus);
+                                if (languageStatus === true) {
+                                    var feedbackTrans = {
+                                        menu: {
+                                            home: 'Casa',
+                                            about: 'Sobre',
+                                            programs: 'Programas',
+                                            feedback: 'Reacción'
+                                        }
+                                    }
+                                    $('#home').text(feedbackTrans.menu.home);
+                                    $('#about').text(feedbackTrans.menu.about);
+                                    $('#programs').text(feedbackTrans.menu.programs);
+                                    $('#feedback').text(feedbackTrans.menu.feedback);
+                                    $('#mobile-home').text(feedbackTrans.menu.home);
+                                    $('#mobile-about').text(feedbackTrans.menu.about);
+                                    $('#mobile-programs').text(feedbackTrans.menu.programs);
+                                    $('#mobile-feedback').text(feedbackTrans.menu.feedback);
+                                    window.location = "program_selection.html";
+                                }
+
+                            };
+                        });
+                    });
+                };
+            });
+
+            $('#EngButton').on('click', function(event) {
+                window.location = "program_selection.html";
+            });
+
+            hideLang();
         });
-
-
-        // button initiates Google Translate API and directs to the program selection page
-
-        // button directs to the program selection page
-        $('#EngButton').on('click', function(event) {
-            window.location = "program_selection.html";
-        });
-
-        // calling 'hide language buttons' global function 
-        hideLang();
-    });
     </script>
 </body>
 
