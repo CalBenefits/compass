@@ -9,68 +9,73 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:500" rel="stylesheet">
     <style>
-    html,
-    body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        font-family: 'Poppins', sans-serif;
-    }
-    
-    .container {
-        height: 100%;
-        width: 100%;
-    }
-    
-    .nav-wrapper {
-        padding: 0 1em;
-    }
-    
-    .brand-logo {
-        height: 1.5em;
-        width: 1.5em;
-        margin: .25em .15em;
-    }
-    
-    #map {
-        height: 100%;
-        width: 100%;
-    }
-    
-    .collection {
-        margin: 0;
-    }
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .container {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .nav-wrapper {
+            padding: 0 1em;
+        }
+        
+        .brand-logo {
+            height: 1.5em;
+            width: 1.5em;
+            margin: .25em .15em;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .collection {
+            margin: 0;
+        }
 
-    #form-modal {
-        top: 20% !important;
-        height: 55vh !important;
-    }
+        #form-modal {
+            top: 20% !important;
+            height: 40vh !important;
+        }
 
-    #language-modal {
-        top: 30% !important;
-        height: 35vh !important;
-        width: 55vw !important;
-    }
+        #language-modal {
+            top: 30% !important;
+            height: 35vh !important;
+            width: 55vw !important;
+        }
 
-    #reminder-modal-snap {
-        height: 40vh !important;
-    }
+        #reminder-modal-snap {
+            height: 40vh !important;
+        }
 
-    #reminder-modal-wic {
-        height: 50vh !important;
-    }
+        #reminder-modal-wic {
+            height: 50vh !important;
+        }
 
-    .modal-content {
-        height: 35vh;
-    }
+        .modal-content {
+            height: 35vh;
+        }
 
-    .valign-wrapper {
-        height: 100%;
-    }
+        .valign-wrapper {
+            height: 100%;
+        }
 
-    .valign {
-        width: 100%;
-    }
+        .valign {
+            width: 100%;
+        }
+
+        .error {
+            font-size: .8rem;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -109,18 +114,18 @@
         </div>
         <div id='form-modal' class='modal'>
             <div class='modal-content'>
-                <form class='col s12'>
-                    <div class="row">
-                        <div class="input-field col s12">
+                <form id='zip-form' class='col s12'>
+                    <div class="row center-align">
+                        <div id='zipcode-div' class="input-field col s12">
                             <i class="prefix material-icons">location_on</i>
-                            <input id="zip" name='zip' type="text" class="validate" pattern='^[0-9]{5}(?:-[0-9]{4})?$' required='' aria-required='true'>
-                            <label for="zip">Zip Code</label>
+                            <input id="zipcode" name='zipcode' type="text" data-success='correct' data-error='incorrect'>
+                            <label for="zipcode">Zip Code</label>
                         </div>
                     </div>
                 </form>
                 <div class="row buttons">
-                    <div class='row'>
-                        <button id='new-zip' class="btn waves-effect waves-light align-center" type="submit" name="action">Submit
+                    <div class='row center-align'>
+                        <button id='new-zip' class="btn waves-effect waves-light" type="submit" name="action">Submit
                             <i class="material-icons right">send</i>
                         </button>
                     </div>
@@ -155,8 +160,10 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js'></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/jquery.validate.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/additional-methods.js"></script>
     <script>
-        var zip, wic, langState; 
+        var zip, wic, langState, zipError; 
         // random element utility
         function getRandomElement(arr, n) {
             var result = new Array(n),
@@ -191,7 +198,6 @@
 
         // map render callback
         function init() { 
-            console.log('wic:', wic);
             // variable to contain LatLng object converted from the user's zip
             var zipLatLng;
             // setup our geocoder object
@@ -207,8 +213,7 @@
                     var map = new google.maps.Map(document.getElementById('map'), {
                         center: zipLatLng,
                         // 4 is ~country-level, while 10 is ~city-level
-                        zoom: 10,
-                        scrollwheel: false
+                        zoom: 10
                     });
                     // style map (retro)
                     // configure our map's style
@@ -494,6 +499,35 @@
             $('#reminder-modal-snap').modal(); 
             $('#reminder-modal-wic').modal();
 
+            $.validator.addMethod("zipcodeCA", function(value, element) {
+                return this.optional(element) || /^9[0-6]\d\d\d$/.test(value);
+            }, "Please enter a valid California zip code" );
+
+            $("#zip-form").validate({
+                rules: {
+                    zipcode: {
+                        required: true,
+                        zipcodeCA : true,
+                    }
+                },
+                messages: {
+                    zipcode: {
+                        required: "Please provide your zip code",
+                        zipcodeCA: "Please enter a valid California zip code"
+                    }
+                },
+                // errorElement: 'div',
+                errorPlacement: function(error, element) {
+                    console.log('error:', error, 'element:', element); 
+                    var placement = $(element).data('error');
+                    if (placement) {
+                        $(placement).append(error)
+                    } else {
+                        error.insertAfter(element);
+                    } 
+                }
+            }); 
+
             firebase.auth().onAuthStateChanged(function(user) {
                 // if user signed in
                 if (user) {
@@ -506,18 +540,15 @@
                                 $('.wic-clearable').remove(); 
                                 // spanish speaker
                                 if (snap.val().language === 'spanish') {
-                                    console.log('espanish'); 
                                     langState = 'es';
                                     // translate nav to spanish
                                     $('.about').text(mapTrans.menu.about);
                                     $('.programs').text(mapTrans.menu.programs);
                                     $('.feedback').text(mapTrans.menu.feedback); 
                                     // translate form modal to spanish
-                                    console.log('form trans'); 
                                     $("label[for='zip']").text(mapTrans.snap.formModal.zip);
                                     $("button[type='submit']").text(mapTrans.snap.formModal.submit); 
                                     // tranlsate reminder modal to spanish
-                                    console.log('wicEligible:', snap.val().wicEligible); 
                                     if (snap.val().wicEligible === 'true') {
                                         $('.collection-header > h4').text(mapTrans.wic.reminderModal.headerEligible);
                                     } else {
@@ -529,17 +560,14 @@
                                     // if we have a zipcode record for this user
                                     if (snap.val().zipcode) {
                                         zip = snap.val().zipcode; 
-                                        // zip is no longer required
-                                        $('#zip').attr('aria-required', 'false'); 
                                         // append ('use current zip') 
-                                        $('.buttons').prepend("<div class='row'>" + 
-                                            "<button id='continue-zip' class='btn waves-effect align-center' type='submit' name='action'>" + "Usa " + snap.val().zipcode + 
+                                        $('.buttons').prepend("<div class='row center-align'>" + 
+                                            "<button id='continue-zip' class='btn waves-effect center-align' type='submit' name='action'>" + "Usa " + snap.val().zipcode + 
                                             "</button>" +
                                         "</div>");   
                                         // 'use current zip' event listener, which kicks off map and opens reminder-modal
                                         $('#continue-zip').on('click', function(event) {
                                             event.preventDefault();  
-                                            console.log('zip:', zip); 
                                             // render map
                                             if (langState === 'es') {
                                                 $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
@@ -555,18 +583,15 @@
                                 // english speaker
                                 } else {
                                     if (snap.val().zipcode) {
-                                        zip = snap.val().zipcode; 
-                                        // zip is no longer required
-                                        $('#zip').attr('aria-required', 'false'); 
+                                        zip = snap.val().zipcode;  
                                         // append ('use current zip') 
-                                        $('.buttons').prepend("<div class='row'>" + 
-                                            "<button id='continue-zip' class='btn waves-effect align-center' type='submit' name='action'>" + "Use " + snap.val().zipcode + 
+                                        $('.buttons').prepend("<div class='row center-align'>" + 
+                                            "<button id='continue-zip' class='btn waves-effect center-align' type='submit' name='action'>" + "Use " + snap.val().zipcode + 
                                             "</button>" +
                                         "</div>"); 
                                         // 'use current zip' event listener, which kicks off map and opens reminder-modal
                                         $('#continue-zip').on('click', function(event) {
                                             event.preventDefault();  
-                                            console.log('zip:', zip); 
                                             // render map
                                             if (langState === 'es') {
                                                 $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
@@ -585,7 +610,16 @@
                                 // submit event listener, which pushes zip to db, kicks off map and opens reminder-modal
                                 $('#new-zip').on('click', function(event) {
                                     event.preventDefault(); 
-                                    zip = $('#zip').val().trim(); 
+                                    if (!$('#zipcode').val().match(/^9[0-6]\d\d\d$/)) {
+                                        if ($('#zip-error').text()) {
+                                            return;
+                                        } else {
+                                            $('#zipcode-div').append($('<p>'));
+                                            $('#zipcode-div').find('p').attr('id', 'zip-error').addClass('error center-align').text("Please enter a valid California zip code"); 
+                                            return; 
+                                        }
+                                    };
+                                    zip = $('#zipcode').val().trim(); 
                                     // push to firebase
                                     var updates = {};
                                     updates['/users/' + user.uid + '/zipcode/'] = zip;
@@ -615,8 +649,16 @@
                             } else {
                                 zip = snap.val().zipcode; 
                                 if (snap.val().language === 'spanish') {
+                                    langState = 'es';
+                                    // translate nav to spanish
+                                    $('.about').text(mapTrans.menu.about);
+                                    $('.programs').text(mapTrans.menu.programs);
+                                    $('.feedback').text(mapTrans.menu.feedback); 
+                                    // translate form modal to spanish
+                                    $("label[for='zip']").text(mapTrans.snap.formModal.zip);
+                                    $("button[type='submit']").text(mapTrans.snap.formModal.submit)
                                     // tranlsate reminder modal to spanish
-                                    if (wic) {
+                                    if (snap.val().wicEligible === 'true') {
                                         $('.collection-header > h4').text(mapTrans.wic.reminderModal.headerEligible);
                                     } else {
                                         $('.collection-header > h4').text(mapTrans.wic.reminderModal.header);
@@ -639,7 +681,6 @@
                         // if snap
                         } else {
                             if (snap.val().language === 'spanish') {
-                                console.log('and we are spanish!'); 
                                 langState = 'es';
                                 // translate nav to spanish
                                 $('.about').text(mapTrans.menu.about);
@@ -651,11 +692,9 @@
                                 // if we have a zipcode record for this user
                                 if (snap.val().zipcode) {
                                     zip = snap.val().zipcode; 
-                                    // zip is no longer required
-                                    $('#zip').attr('aria-required', 'false'); 
                                     // append ('use current zip') 
-                                    $('.buttons').prepend("<div class='row'>" + 
-                                        "<button id='continue-zip' class='btn waves-effect align-center' type='submit' name='action'>" + "Usa " + snap.val().zipcode + 
+                                    $('.buttons').prepend("<div class='row center-align'>" + 
+                                        "<button id='continue-zip' class='btn waves-effect center-align' type='submit' name='action'>" + "Usa " + snap.val().zipcode + 
                                         "</button>" +
                                     "</div>"); 
                                     // 'use current zip' event listener, which kicks off map and opens reminder-modal
@@ -682,11 +721,9 @@
                             } else {
                                 if (snap.val().zipcode) {
                                     zip = snap.val().zipcode; 
-                                    // zip is no longer required
-                                    $('#zip').attr('aria-required', 'false'); 
                                     // append ('use current zip') 
-                                    $('.buttons').prepend("<div class='row'>" + 
-                                        "<button id='continue-zip' class='btn waves-effect align-center' type='submit' name='action'>" + "Use " + snap.val().zipcode + 
+                                    $('.buttons').prepend("<div class='row center-align'>" + 
+                                        "<button id='continue-zip' class='btn waves-effect' type='submit' name='action'>" + "Use " + snap.val().zipcode + 
                                         "</button>" +
                                     "</div>"); 
                                     // 'use current zip' event listener, which kicks off map and opens reminder-modal
@@ -710,14 +747,22 @@
                             // submit event listener, which pushes zip to db, kicks off map and opens reminder-modal
                             $('#new-zip').on('click', function(event) {
                                 event.preventDefault(); 
-                                zip = $('#zip').val().trim(); 
+                                if (!$('#zipcode').val().match(/^9[0-6]\d\d\d$/)) {
+                                    if ($('#zip-error').text()) {
+                                        return;
+                                    } else {
+                                        $('#zipcode-div').append($('<p>'));
+                                        $('#zipcode-div').find('p').attr('id', 'zip-error').addClass('error center-align').text("Please enter a valid California zip code"); 
+                                        return; 
+                                    }
+                                };
+                                zip = $('#zipcode').val().trim(); 
                                 // push to firebase
                                 var updates = {};
                                 updates['/users/' + user.uid + '/zipcode/'] = zip;
                                 rootRef.update(updates);
                                 // render map
                                 if (langState === 'es') {
-                                    console.log('zip:', zip); 
                                     $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&language=es&libraries=places&callback=init />");
                                 } else {
                                     $('body').append("<script async defer src=https://maps.googleapis.com/maps/api/js?key=AIzaSyCgsIvh_6KHhGiGv8XHfTP2rUm_T42eH2E&libraries=places&callback=init />");
@@ -729,16 +774,9 @@
                             });
                         }      
                     });
-                } 
+                }
             }); 
         });
-        ////////// TO DO
-        // fix wic eligibility logic
-        // how to enforce 'require' on modal forms? jquery validation + CSS
-        // gmail feedback
-        // facebook sign-in
-        // tidy
-        // wic vendor map
     </script>
 </body>
 </html>
