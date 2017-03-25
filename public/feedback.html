@@ -48,6 +48,7 @@
         .error {
             font-size: .8rem;
             color: red;
+            margin-bottom: .5em;
         }
 
         .container {
@@ -97,25 +98,25 @@
         <form id='feedback-form'>
             <div class="row">
                 <div class="input-field">
-                    <input id="name" type="text" class="validate" pattern="^(?:[\u00c0-\u01ffa-zA-Z'-]){2,}(?:\s[\u00c0-\u01ffa-zA-Z'-]{2,})+$" required='' aria-required='true'>
+                    <input id="name" type="text" name='name' class="validate">
                     <label for="name" id="name-field" data-error="incorrect" data-success="correct">Your Name</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field">
-                    <input id="email" type="email" class="validate" required='' aria-required='true'>
+                    <input id="email" type="email" name='email' class="validate" required='' aria-required='true'>
                     <label for="email" id="email-field" data-error="incorrect" data-success="correct">Email</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field">
-                    <input id="subject" type="text" class="validate clearable">
+                    <input id="subject" type="text" name='subject' class="validate clearable">
                     <label for="subject" id="subject-field" minlength='6' data-error="incorrect" data-success="correct" required='' aria-required='true'>Subject</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field">
-                    <textarea id="message" class="materialize-textarea clearable" minlength='10' data-success='' data-error='correct' required='correct' aria-required='true'></textarea>
+                    <textarea id="message" name='message' class="materialize-textarea clearable" minlength='10' data-success='' data-error='correct' required='correct' aria-required='true'></textarea>
                     <label for="textarea" id="message-field">Message</label>
                 </div>
             </div>
