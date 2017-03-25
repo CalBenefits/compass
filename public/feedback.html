@@ -216,7 +216,7 @@
 
             // clears input and textarea forms after submitting 
             if (languageStatus === true) {
-                $('#clear').text('Gracias por sus comentarios!');
+                $('#clear').replaceWith('<div class="container"><h2>Gracias por sus comentarios!</h2></div>');
             } else {
                 $("#clear").replaceWith("<div class='container'><h2>Thanks for your feedback!</h2></div>");
             }
