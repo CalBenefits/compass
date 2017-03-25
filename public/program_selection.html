@@ -8,7 +8,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:500" rel="stylesheet">
     <style type="text/css">
+    html {
+        background: url('assets/img/jumping_veggies.jpg') no-repeat center center fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+        background: rgba(255, 255, 255, 0.5);
+        height:100%;
+        width:100%;
+    }
+    
     .brand-logo {
         height: 1.5em;
         width: 1.5em;
@@ -23,6 +42,7 @@
     span {
         text-align: center;
     }
+    
     .row {
         margin-bottom: 0;
     }
@@ -32,6 +52,7 @@
         font-size: 1.6rem;
     }
     /*button padding*/
+    
     #mapsFS,
     #applyFS,
     #mapsWIC,
@@ -64,12 +85,12 @@
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="about.html" class='waves-effect' id="about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="programs">Programs</a></li>
+                <li><a href="program_selection.html" class='waves-effect' id="programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="feedback">Feedback</a></li>
             </ul>
             <ul class="side-nav" id="mobile-demo">
                 <li><a href="about.html" class='waves-effect' id="mobile-about">About</a></li>
-                <li><a href="program-selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
+                <li><a href="program_selection.html" class='waves-effect' id="mobile-programs">Programs</a></li>
                 <li><a href="feedback.html" class='waves-effect' id="mobile-feedback">Feedback</a></li>
             </ul>
         </div>
@@ -94,7 +115,8 @@
         </div>
         <div class="row">
             <div class="col s12 m12 l12" id="select-fs">
-                <span class="flow-text" id="fs-text">Supplemental Nutrition Assistance Program (SNAP, CalFresh, Foodstamps)</span>
+                <span class="flow-text" id="fs-text">Supplemental Nutrition Assistance Program 
+                (CalFresh)</span>
             </div>
         </div>
         <div class="row">
@@ -179,13 +201,13 @@
         // this button directs them to the form to determine eleigibility for WIC
         $('#eligibleWIC').on('click', function(event) {
             event.preventDefault();
-            window.location = "WIC-eligibility.html";
+            window.location = "wic_eligibility.html";
         });
 
         // this button directs them to the office locator -wic-(maps page)
         $('#mapsWIC').on('click', function(event) {
             event.preventDefault();
-            window.location = "mapWIC.html";
+            window.location = "map.html";
         });
 
         // this button directs them to the form to determine eleigibility for FS
@@ -197,7 +219,7 @@
         // this button directs them to the office locator - fs-(maps page)
         $('#mapsFS').on('click', function(event) {
             event.preventDefault();
-            window.location = "mapFS.html";
+            window.location = "map.html";
         });
     });
     </script>
