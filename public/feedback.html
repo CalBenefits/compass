@@ -46,6 +46,10 @@
         font-size: .8rem;
         color: red;
     }
+
+    .container {
+        height: 100%;
+    }
     </style>
 </head>
 
@@ -82,8 +86,8 @@
             </div>
         </section>
     </div>
-    <div class="container">
-        <form class="valign">
+    <div id='bottom-container' class="container">
+        <form id='feedback-form' class="valign">
             <div class="row">
                 <div class="input-field">
                     <input id="name" type="text" class="validate" pattern="^(?:[\u00c0-\u01ffa-zA-Z'-]){2,}(?:\s[\u00c0-\u01ffa-zA-Z'-]{2,})+$" required='' aria-required='true'>
@@ -109,14 +113,14 @@
                 </div>
             </div>
         </form>
-        <div class="row" id="submit">
+        <div class="row" id="submit-form">
             <div class="input-field">
                 <div class="right">
                     <button id="submit" class="btn waves-effect waves-light " type="submit" name="action"> Send
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
@@ -126,6 +130,14 @@
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.16.0/additional-methods.js"></script>
     <script type="text/javascript">
     $(document).ready(() => {
+
+        // initialize side nav
+        $(".button-collapse").sideNav({
+            menuWidth: 125,
+            edge: 'left',
+            closeOnClick: true,
+            draggable: true
+        });
 
         var languageStatus;
 

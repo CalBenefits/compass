@@ -192,7 +192,12 @@
         });
 
         // provides nav bar with functionality
-        $(".button-collapse").sideNav();
+        $(".button-collapse").sideNav({
+            menuWidth: 125,
+            edge: 'left',
+            closeOnClick: true,
+            draggable: true
+        });
         // this button directs them to the form to determine eligibility for WIC
         $('#eligibleWIC').on('click', function(event) {
             event.preventDefault();
