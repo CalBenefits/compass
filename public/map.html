@@ -437,6 +437,15 @@
         }
         
         $(document).ready(function() {
+            
+            // initialize side nav
+            $(".button-collapse").sideNav({
+                menuWidth: 125,
+                edge: 'left',
+                closeOnClick: true,
+                draggable: true
+            });
+
             // Initialize Firebase
             var config = {
                 apiKey: "AIzaSyDkStdhgEH45RGotVbSO6CakBFFYppiGLs",
@@ -449,14 +458,6 @@
             firebase.initializeApp(config); 
 
             var rootRef = firebase.database().ref(); 
-
-            // initialize side nav
-            $(".button-collapse").sideNav({
-                menuWidth: 125,
-                edge: 'left',
-                closeOnClick: true,
-                draggable: true
-            });
 
             var mapTrans = {
                 menu: {
