@@ -501,9 +501,7 @@
                         // if wic
                         console.log(snap.val().wicEligible); 
                         if (localStorage.getItem('wic') === 'true') {
-                            if (snap.val().wicEligible === 'true') {
-                                wic = true;
-                            }
+                            wic = true;
                             // if referrer = program_selection.html, bring up zip modal
                             if (document.referrer === 'http://localhost:5000/program_selection.html') {
                                 $('.wic-clearable').remove(); 
@@ -519,7 +517,7 @@
                                     $("label[for='zip']").text(mapTrans.snap.formModal.zip);
                                     $("input[type='submit']").text(mapTrans.snap.formModal.submit); 
                                     // tranlsate reminder modal to spanish
-                                    if (wic) {
+                                    if (snap.val().wicEligible) {
                                         $('.collection-header > h4').text(mapTrans.wic.reminderModal.headerEligible);
                                     } else {
                                         $('.collection-header > h4').text(mapTrans.wic.reminderModal.header);
