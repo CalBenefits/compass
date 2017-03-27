@@ -1,5 +1,7 @@
 # Compass
 
+https://cal-compass.firebaseapp.com/
+
 ## Contributing
 
 0. Pull changes from Master: `git pull origin master` 
