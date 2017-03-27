@@ -149,14 +149,16 @@
             $("#call-to-action").typed({
                 strings: ["Welcome, sign-in to find resources near you.^1000", "Bienvenido, inicia sesión para encontrar recursos cerca de ti.^1000"],
                 typeSpeed: 50,
-                backspeed: 300
+                backspeed: 300,
+                showCursor: false
             });
 
             var typeInterval = setInterval(function() {
                 $("#call-to-action").typed({
                     strings: ["Welcome, sign-in to find resources near you.^1000", "Bienvenido, inicia sesión para encontrar recursos cerca de ti.^1000"],
-                    typeSpeed: 50
-                });
+                    typeSpeed: 50,
+                    showCursor: false
+                }); 
             }, 16000); 
 
             var config = {

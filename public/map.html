@@ -545,7 +545,8 @@
                                     $('.programs').text(mapTrans.menu.programs);
                                     $('.feedback').text(mapTrans.menu.feedback); 
                                     // translate form modal to spanish
-                                    $("label[for='zip']").text(mapTrans.snap.formModal.zip);
+                                    console.log(mapTrans.snap.formModal.zip); 
+                                    $("label[for='zipcode']").text(mapTrans.snap.formModal.zip);
                                     $("button[type='submit']").text(mapTrans.snap.formModal.submit); 
                                     // tranlsate reminder modal to spanish
                                     if (snap.val().wicEligible === 'true') {
@@ -656,7 +657,7 @@
                                     $('.programs').text(mapTrans.menu.programs);
                                     $('.feedback').text(mapTrans.menu.feedback); 
                                     // translate form modal to spanish
-                                    $("label[for='zip']").text(mapTrans.snap.formModal.zip);
+                                    $("label[for='zipcode']").text(mapTrans.snap.formModal.zip);
                                     $("button[type='submit']").text(mapTrans.snap.formModal.submit)
                                     // tranlsate reminder modal to spanish
                                     if (snap.val().wicEligible === 'true') {
@@ -682,7 +683,7 @@
                                 $('#reminder-modal-wic').modal('open'); 
                             }
                         // if snap
-                        } else {
+                        } else { 
                             if (snap.val().language === 'spanish') {
                                 langState = 'es';
                                 // translate nav to spanish
@@ -690,7 +691,7 @@
                                 $('.programs').text(mapTrans.menu.programs);
                                 $('.feedback').text(mapTrans.menu.feedback); 
                                 // translate form modal to spanish
-                                $("label[for='zip']").text(mapTrans.snap.formModal.zip);
+                                $("label[for='zipcode']").text(mapTrans.snap.formModal.zip);
                                 $("button[type='submit']").text(mapTrans.snap.formModal.submit); 
                                 // if we have a zipcode record for this user
                                 if (snap.val().zipcode) {
